@@ -1,0 +1,13 @@
+.background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100dvw;
+  height: 100dvh;
+  image-rendering: pixelated;
+  clip-path: polygon(var(--pagePadding) var(--pagePadding),
+                     calc(100% - var(--pagePadding)) var(--pagePadding),
+                     calc(100% - var(--pagePadding)) calc(100% - var(--pagePadding)),
+                     var(--pagePadding) calc(100% - var(--pagePadding)));
+  z-index: -1;
+}

@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useRef } from "react";
 let Dither = require('canvas-dither');
+import styles from "./background.module.scss";
 
 const Background = (props) => {
   const canvasRef = useRef(null);
@@ -11,7 +12,7 @@ const Background = (props) => {
   let circleStartingRadius = 100; // In px
   let drawing = false;
   let mousePos = {x: 0, y: 0}; // Mouse coordinates
-  const circleMaxAge = 20; // In frames
+  const circleMaxAge = 10; // In frames
   const resoltionDivision = 2; // Size of each dither pixel
   
   // Start drawing once
@@ -144,16 +145,7 @@ const Background = (props) => {
   return (
     <canvas
       ref={canvasRef}
-      style={{
-        position: 'fixed',
-        top: '0',
-        left: '0',
-        width: '100dvw',
-        height: '100dvh',
-        imageRendering: 'pixelated',
-        clipPath: `polygon(var(--pagePadding) var(--pagePadding), calc(100% - var(--pagePadding)) var(--pagePadding), calc(100% - var(--pagePadding)) calc(100% - var(--pagePadding)), var(--pagePadding) calc(100% - var(--pagePadding)))`,
-        zIndex: -1
-      }}
+      className={styles.background}
     ></canvas>
   );
 }
