@@ -1,36 +1,36 @@
 'use client'
 
 import { useEffect, useState, useRef } from "react";
-let Dither = require('canvas-dither');
+import Dither from 'canvas-dither';
 import styles from "./background.module.scss";
 
 const Background = (props) => {
   const canvasRef = useRef(null);
   const [initialized, setInitialized] = useState(false);
+  let circles = useRef([]); // Place to put the circles
+  const circleStartingRadius = useRef(100); // In px
+  const drawing = useRef(false); // Whether or not to draw circles
+  const mousePos = useRef({x: 0, y: 0}); // Mouse coordinates
   
-  let circles = []; // Place to put the circles
-  let circleStartingRadius = 100; // In px
-  let drawing = false;
-  let mousePos = {x: 0, y: 0}; // Mouse coordinates
   const circleMaxAge = 10; // In frames
   const resoltionDivision = 2; // Size of each dither pixel
   
-  // Start drawing once
+  // Initial setup
   useEffect(() => {
     if( !initialized ){
       setInitialized(true);
       canvasRef.current.width = window.innerWidth / resoltionDivision;
       canvasRef.current.height = window.innerHeight / resoltionDivision;
-      circleStartingRadius = Math.min(Math.max(window.innerWidth / 10, 30), 100);
+      circleStartingRadius.current = Math.min(Math.max(window.innerWidth / 10, 30), 100);
 
       // Users with a mouse will see a cursor trail.
       // Users with a touchscreen will see a touch effect.
       if( window.matchMedia('(pointer: fine)').matches ){
         window.addEventListener("mousemove", (e) => updateMousePos(e, 'mouse'));
-        drawing = true;
+        drawing.current = true;
       } else {
-        document.addEventListener("touchstart", (e) => {updateMousePos(e, 'touch'); drawing = true;});
-        document.addEventListener("touchend", () => drawing = false);
+        document.addEventListener("touchstart", (e) => {updateMousePos(e, 'touch'); drawing.current = true;});
+        document.addEventListener("touchend", () => drawing.current = false);
         window.addEventListener("touchmove", (e) => updateMousePos(e, 'touch'));
       }
 
@@ -51,11 +51,11 @@ const Background = (props) => {
     }
 
     // We add a new circle every frame while drawing
-    if( drawing ){
-      circles.push({
-        x: mousePos.x,
-        y: mousePos.y,
-        radius: circleStartingRadius/resoltionDivision,
+    if( drawing.current ){
+      circles.current.push({
+        x: mousePos.current.x,
+        y: mousePos.current.y,
+        radius: circleStartingRadius.current/resoltionDivision,
         age: 0
       });
     }
@@ -73,10 +73,10 @@ const Background = (props) => {
     context.fill();
     
     // When we draw the circles, we want it to be blurry
-    context.filter = `blur(${circleStartingRadius/resoltionDivision}px)`;
+    context.filter = `blur(${circleStartingRadius.current/resoltionDivision}px)`;
 
     // Loop through the circles array and draw each one
-    circles.forEach((circle, i) => {
+    circles.current.forEach((circle, i) => {
       if( circle.age <= circleMaxAge ){
         context.beginPath();
         context.arc(circle.x, circle.y, circle.radius, 0, Math.PI * 2);
@@ -84,7 +84,7 @@ const Background = (props) => {
         context.fill();
 
       } else {
-        delete circles[i]; // Delete the circle when it gets too old
+        delete circles.current[i]; // Delete the circle when it gets too old
       }
 
       circle.age += 1;
@@ -124,12 +124,12 @@ const Background = (props) => {
   // Keep track of the mouse position
   const updateMousePos = (e, eventType) => {
     if( eventType === 'mouse' ){
-      mousePos = {
+      mousePos.current = {
         x: e.clientX / resoltionDivision,
         y: e.clientY / resoltionDivision
       };
     } else {
-      mousePos = {
+      mousePos.current = {
         x: e.touches[0].clientX / resoltionDivision,
         y: e.touches[0].clientY / resoltionDivision
       };
