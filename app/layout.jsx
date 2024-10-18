@@ -30,7 +30,10 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <GlobalContextContainer>
-        <body className={`${museoModerno.variable}`} style={{ '--bgColor': `rgb(${bgColor[0]}, ${bgColor[1]}, ${bgColor[2]})` }}>
+        <body className={`${museoModerno.variable}`} style={{
+          '--bgColor': `rgb(${bgColor[0]}, ${bgColor[1]}, ${bgColor[2]})`,
+          '--borderColor': `rgb(${fgColor[0]}, ${fgColor[1]}, ${fgColor[2]})`,
+          }}>
           <Background fgColor={fgColor} bgColor={bgColor}/>
           {children}
         </body>
