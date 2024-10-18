@@ -1,6 +1,8 @@
+import styles from './page.module.scss';
+
 export default function Home() {
   return (
-    <main>
+    <main className={styles.homePage}>
       <h1>Alex Berkowitz</h1>
       <a>Designer</a>
       <a>Developer</a>
