@@ -1,0 +1,25 @@
+@import 'css-reset';
+
+html, body {
+  min-width: 100%;
+  min-height: 100%;
+}
+
+body {
+  position: relative;
+  padding: var(--pagePadding);
+  background-color: var(--bgColor);
+  --pagePadding: 2rem;
+  --bgColor: #ffffff;
+
+  &:after {
+    content: '';
+    position: fixed;
+    top: var(--pagePadding);
+    bottom: var(--pagePadding);
+    left: var(--pagePadding);
+    right: var(--pagePadding);
+    border: solid 2px black;
+    pointer-events: none;
+  }
+}
