@@ -1,18 +1,21 @@
 .background {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100dvw;
-  height: 100dvh;
+  position: absolute;
+  top: var(--pagePadding);
+  bottom: var(--pagePadding);
+  left: var(--pagePadding);
+  right: var(--pagePadding);
   image-rendering: pixelated;
-  clip-path: polygon(var(--pagePadding) var(--pagePadding),
-                     calc(100% - var(--pagePadding)) var(--pagePadding),
-                     calc(100% - var(--pagePadding)) calc(100% - var(--pagePadding)),
-                     var(--pagePadding) calc(100% - var(--pagePadding)));
+  border: solid 2px var(--borderColor);
+  border-radius: var(--pagePadding);
+  overflow: hidden;
   z-index: -1;
 
   canvas {
-    width: 100% !important;
-    height: 100% !important;
+    position: absolute;
+    top: calc(var(--pagePadding) * -1);
+    left: calc(var(--pagePadding) * -1);
+    width: 100dvw !important;
+    height: 100dvh !important;
+    max-width: unset;
   }
 }
