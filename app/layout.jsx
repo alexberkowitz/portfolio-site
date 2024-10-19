@@ -1,8 +1,15 @@
 import { MuseoModerno, Oxanium } from "next/font/google";
 
 import GlobalContextContainer from './GlobalContext';
-import Background from '@/components/Background/Background';
-import Cursor from '@/components/Cursor/Cursor';
+import dynamic from 'next/dynamic'
+ 
+// These need to be imported dynamically because p5.js relies on the window object
+const DynamicBackground = dynamic(() => import('@/components/Background/Background'), {
+  ssr: false,
+});
+const DynamicCursor = dynamic(() => import('@/components/Cursor/Cursor'), {
+  ssr: false,
+});
 
 import "./styles/globals.scss";
 
@@ -41,13 +48,13 @@ export default function RootLayout({ children }) {
           '--bgColor': `rgb(${bgColor[0]}, ${bgColor[1]}, ${bgColor[2]})`,
           '--borderColor': `rgb(${fgColor[0]}, ${fgColor[1]}, ${fgColor[2]})`,
           }}>
-          <Background
+          <DynamicBackground
             fgColor={fgColor}
             bgColor={bgColor}
             pixelDensity={pixelDensity}
             />
           {children}
-          <Cursor
+          <DynamicCursor
             fgColor={fgColor}
             bgColor={bgColor}
             pixelDensity={pixelDensity}

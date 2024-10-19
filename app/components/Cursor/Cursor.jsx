@@ -4,7 +4,7 @@ import { useEffect, useState, useRef } from "react";
 import p5 from 'p5';
 import styles from "./cursor.module.scss";
 
-const Background = (props) => {
+const Cursor = (props) => {
   const renderRef = useRef();
   const [initialized, setInitialized] = useState(false);
   
@@ -26,7 +26,7 @@ const Background = (props) => {
         window.addEventListener("resize", () => {
           p.resizeCanvas(Math.floor(window.innerWidth), Math.floor(window.innerHeight));
         });
-    }
+      }
 
       p.draw = () => {
         p.frameRate(30);
@@ -56,4 +56,4 @@ const Background = (props) => {
   );
 }
 
-export default Background;
+export default Cursor;
