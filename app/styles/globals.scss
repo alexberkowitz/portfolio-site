@@ -12,20 +12,11 @@ body {
   padding: var(--pagePadding);
   background-color: var(--bgColor);
   overflow: hidden;
+  font-family: var(--font-oxanium);
+  cursor: none;
   --pagePadding: 2rem;
   --bgColor: white;
   --borderColor: black;
-
-  &:after {
-    content: '';
-    position: fixed;
-    top: var(--pagePadding);
-    bottom: var(--pagePadding);
-    left: var(--pagePadding);
-    right: var(--pagePadding);
-    border: solid 2px var(--borderColor);
-    pointer-events: none;
-  }
 
   @media( max-width: 640px ){
     --pagePadding: 1rem;

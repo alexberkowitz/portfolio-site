@@ -1,8 +1,15 @@
 h1 {
   max-width: 70ch;
+  margin-top: -.11em; // Accommodate the extra spacing around characters
   font-family: var(--font-museo-moderno);
   font-weight: 200;
   font-size: 4rem;
-  line-height: 1.5;
+  line-height: 1;
+  text-transform: uppercase;
   text-wrap: balance;
+}
+
+a:hover,
+a:focus-visible {
+  color: white;
 }
