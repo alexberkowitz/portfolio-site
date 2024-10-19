@@ -24,11 +24,11 @@ const Background = (props) => {
       // // Users with a touchscreen will see a touch effect.
       if( !window.matchMedia('(pointer: fine)').matches ){
         drawing.current = false;
-        document.addEventListener("touchstart", (e) => {drawing.current = true;});
+        document.addEventListener("touchstart", () => drawing.current = true);
         document.addEventListener("touchend", () => drawing.current = false);
       }
     }
-  }, [initialized]);
+  }, [initialized, drawP5]);
 
   const setLineWidth = () => {
     lineWidth.current = Math.min(Math.max(window.innerWidth / 4, 100), 300);
@@ -63,9 +63,6 @@ const Background = (props) => {
         generateDotGrid(p);
         
         p.updatePixels();
-
-        // Draw the cursor
-        // drawCursor(p);
       }
     });
   }
@@ -144,19 +141,6 @@ const Background = (props) => {
         p.pixels[x+3] = 255; // alpha
       }
     }
-  }
-
-  const drawCursor = (p) => {
-    const cursorSize = 16;
-    p.strokeWeight(2);
-    p.strokeCap(p.PROJECT);
-    p.stroke(0, 0, 0, 255);
-    const mousePos = { // Round coordinates so pixels are always clear
-      x: 2 * Math.round(p.mouseX / 2) + 1,
-      y: 2 * Math.round(p.mouseY / 2) + 1,
-    }
-    p.line(mousePos.x, mousePos.y - (cursorSize / 2), mousePos.x, mousePos.y + (cursorSize / 2),); // Vertical line
-    p.line(mousePos.x- (cursorSize / 2), mousePos.y, mousePos.x + (cursorSize / 2), mousePos.y,); // Horizontal line
   }
   
   return (
