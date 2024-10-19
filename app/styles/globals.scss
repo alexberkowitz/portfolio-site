@@ -1,4 +1,5 @@
 @import 'css-reset';
+@import 'typography';
 
 html, body {
   min-width: 100%;
@@ -7,8 +8,10 @@ html, body {
 
 body {
   position: relative;
+  height: 100vh;
   padding: var(--pagePadding);
   background-color: var(--bgColor);
+  overflow: hidden;
   --pagePadding: 2rem;
   --bgColor: white;
   --borderColor: black;

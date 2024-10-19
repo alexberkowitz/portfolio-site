@@ -2,26 +2,29 @@
 
 import { useEffect, useState, useRef } from "react";
 import Dither from 'canvas-dither';
+// import 'context-filter-polyfill';
 import styles from "./background.module.scss";
 
 const Background = (props) => {
   const canvasRef = useRef(null);
   const [initialized, setInitialized] = useState(false);
-  let circles = useRef([]); // Place to put the circles
-  const circleStartingRadius = useRef(100); // In px
+  let points = useRef([]); // Place to put the circles
+  const lineWidth = useRef(100); // In px
   const drawing = useRef(false); // Whether or not to draw circles
   const mousePos = useRef({x: 0, y: 0}); // Mouse coordinates
   
   const circleMaxAge = 10; // In frames
   const resoltionDivision = 2; // Size of each dither pixel
+  let ctx; // Canvas context
   
   // Initial setup
   useEffect(() => {
     if( !initialized ){
       setInitialized(true);
+      ctx = canvasRef.current.getContext('2d', { willReadFrequently: true });
       canvasRef.current.width = window.innerWidth / resoltionDivision;
       canvasRef.current.height = window.innerHeight / resoltionDivision;
-      circleStartingRadius.current = Math.min(Math.max(window.innerWidth / 10, 30), 100);
+      lineWidth.current = Math.min(Math.max(window.innerWidth / 10, 30), 100);
 
       // Users with a mouse will see a cursor trail.
       // Users with a touchscreen will see a touch effect.
@@ -41,60 +44,66 @@ const Background = (props) => {
   
   // Draw the circles and animate on canvas
   const draw = () => {
-    const context = canvasRef.current.getContext('2d', { willReadFrequently: true });
-
-    context.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height); // Clear the canvas.
+    ctx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height); // Clear the canvas.
 
     // Before the canvas loads there is no context
-    if( !context || context == null ) {
+    if( !ctx || ctx == null ) {
       return false;
     }
 
     // We add a new circle every frame while drawing
     if( drawing.current ){
-      circles.current.push({
+      points.current.push({
         x: mousePos.current.x,
         y: mousePos.current.y,
-        radius: circleStartingRadius.current/resoltionDivision,
+        radius: lineWidth.current/resoltionDivision,
         age: 0
       });
     }
 
     // Give the canvas a background
-    context.beginPath();
-    context.rect(0, 0, canvasRef.current.width, canvasRef.current.height);
-    context.fillStyle = "#eeeeee"; // Slightly off-white makes the dithering appear everywhere
-    context.fill();
+    ctx.beginPath();
+    ctx.rect(0, 0, canvasRef.current.width, canvasRef.current.height);
+    ctx.fillStyle = "#eeeeee"; // Slightly off-white makes the dithering appear everywhere
+    ctx.fill();
 
     // A "seed" shape ensures there is always a dithering effect even when we aren't drawing
-    context.fillStyle = "#000000";
-    context.beginPath();
-    context.rect(0, 0, 1, 1);
-    context.fill();
+    ctx.fillStyle = "#000000";
+    ctx.beginPath();
+    ctx.rect(0, 0, 1, 1);
+    ctx.fill();
     
     // When we draw the circles, we want it to be blurry
-    context.filter = `blur(${circleStartingRadius.current/resoltionDivision}px)`;
+    ctx.filter = `blur(${lineWidth.current/resoltionDivision/4}px)`;
 
-    // Loop through the circles array and draw each one
-    circles.current.forEach((circle, i) => {
-      if( circle.age <= circleMaxAge ){
-        context.beginPath();
-        context.arc(circle.x, circle.y, circle.radius, 0, Math.PI * 2);
-        context.fillStyle = `rgba(35, 35, 35, ${1 - (circle.age / circleMaxAge)})`;
-        context.fill();
+    // Loop through the points array and draw each one
+    let prevPoint = {};
+    points.current.forEach((point, i) => {
+      if( point.age <= circleMaxAge ){
+        // Draw a line connecting each point to the previous one
+        if( i > 0 ){
+          ctx.beginPath();
+          ctx.moveTo(prevPoint.x, prevPoint.y);
+          ctx.lineTo(point.x, point.y);
+          ctx.strokeStyle = `rgba(35, 35, 35, ${1 - (point.age / circleMaxAge)})`;
+          ctx.lineWidth = lineWidth.current;
+          ctx.lineCap = "round";
+          ctx.stroke();
+        }
+        prevPoint = point;
 
       } else {
-        delete circles.current[i]; // Delete the circle when it gets too old
+        delete points.current[i]; // Delete the circle when it gets too old
       }
 
-      circle.age += 1;
+      point.age += 1;
     });
 
     // Reset the filter to perform the dithering operation
-    context.filter = 'none';
+    ctx.filter = 'none';
 
     // // Retrieve the image data of the canvas
-    let image = context.getImageData(0, 0, canvasRef.current.width, canvasRef.current.height);
+    let image = ctx.getImageData(0, 0, canvasRef.current.width, canvasRef.current.height);
 
     // // Dither the data using the Atkinson algoritm
     Dither.bayer(image, 128);
@@ -115,7 +124,7 @@ const Background = (props) => {
     }
 
     // Place the image data back on the canvas
-    context.putImageData(image, 0, 0);
+    ctx.putImageData(image, 0, 0);
 
     // Call the next animation frame
     requestAnimationFrame(draw);
