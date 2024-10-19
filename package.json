@@ -9,8 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "canvas-dither": "^1.0.1",
     "next": "14.2.15",
+    "p5": "^1.11.0",
     "react": "^18",
     "react-dom": "^18",
     "sass": "^1.80.2"

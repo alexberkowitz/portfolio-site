@@ -1,161 +1,127 @@
 'use client'
 
 import { useEffect, useState, useRef } from "react";
-import Dither from 'canvas-dither';
-// import 'context-filter-polyfill';
+import p5 from 'p5';
 import styles from "./background.module.scss";
 
 const Background = (props) => {
-  const canvasRef = useRef(null);
+  const renderRef = useRef();
   const [initialized, setInitialized] = useState(false);
   let points = useRef([]); // Place to put the circles
-  const lineWidth = useRef(100); // In px
-  const drawing = useRef(false); // Whether or not to draw circles
-  const mousePos = useRef({x: 0, y: 0}); // Mouse coordinates
-  
-  const circleMaxAge = 10; // In frames
-  const resoltionDivision = 2; // Size of each dither pixel
-  let ctx; // Canvas context
+  const drawing = useRef(true); // Whether or not to draw circles
+  const lineWidth = useRef(300); // In px
+  const pointMaxAge = 10; // In frames
+  const pixelDensity = 2; // Number of screen pixels each canvas pixel occupies
   
   // Initial setup
   useEffect(() => {
     if( !initialized ){
       setInitialized(true);
-      ctx = canvasRef.current.getContext('2d', { willReadFrequently: true });
-      canvasRef.current.width = window.innerWidth / resoltionDivision;
-      canvasRef.current.height = window.innerHeight / resoltionDivision;
-      lineWidth.current = Math.min(Math.max(window.innerWidth / 10, 30), 100);
+      
+      setLineWidth();
+      drawP5(); // Start the drawing
 
-      // Users with a mouse will see a cursor trail.
-      // Users with a touchscreen will see a touch effect.
-      if( window.matchMedia('(pointer: fine)').matches ){
-        window.addEventListener("mousemove", (e) => updateMousePos(e, 'mouse'));
-        drawing.current = true;
-      } else {
-        document.addEventListener("touchstart", (e) => {updateMousePos(e, 'touch'); drawing.current = true;});
+      // // Users with a mouse will see a cursor trail.
+      // // Users with a touchscreen will see a touch effect.
+      if( !window.matchMedia('(pointer: fine)').matches ){
+        drawing.current = false;
+        document.addEventListener("touchstart", (e) => {drawing.current = true;});
         document.addEventListener("touchend", () => drawing.current = false);
-        window.addEventListener("touchmove", (e) => updateMousePos(e, 'touch'));
       }
-
-      window.addEventListener("resize", updateCanvasSize);
-      draw();
     }
   }, [initialized]);
-  
-  // Draw the circles and animate on canvas
-  const draw = () => {
-    ctx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height); // Clear the canvas.
 
-    // Before the canvas loads there is no context
-    if( !ctx || ctx == null ) {
-      return false;
+  const setLineWidth = () => {
+    lineWidth.current = Math.min(Math.max(window.innerWidth / 4, 100), 300);
+  }
+
+  const drawP5 = () => {
+    new p5(p => {
+      p.setup = () => {
+        p.createCanvas(Math.floor(window.innerWidth), Math.floor(window.innerHeight)).parent(renderRef.current);
+        p.pixelDensity(1 / pixelDensity);
+
+        // When the window resizes, update the drawing parameters
+        window.addEventListener("resize", () => {
+          p.resizeCanvas(Math.floor(window.innerWidth), Math.floor(window.innerHeight));
+          setLineWidth();
+        });
     }
 
-    // We add a new circle every frame while drawing
-    if( drawing.current ){
-      points.current.push({
-        x: mousePos.current.x,
-        y: mousePos.current.y,
-        radius: lineWidth.current/resoltionDivision,
-        age: 0
-      });
-    }
-
-    // Give the canvas a background
-    ctx.beginPath();
-    ctx.rect(0, 0, canvasRef.current.width, canvasRef.current.height);
-    ctx.fillStyle = "#eeeeee"; // Slightly off-white makes the dithering appear everywhere
-    ctx.fill();
-
-    // A "seed" shape ensures there is always a dithering effect even when we aren't drawing
-    ctx.fillStyle = "#000000";
-    ctx.beginPath();
-    ctx.rect(0, 0, 1, 1);
-    ctx.fill();
-    
-    // When we draw the circles, we want it to be blurry
-    ctx.filter = `blur(${lineWidth.current/resoltionDivision/4}px)`;
-
-    // Loop through the points array and draw each one
-    let prevPoint = {};
-    points.current.forEach((point, i) => {
-      if( point.age <= circleMaxAge ){
-        // Draw a line connecting each point to the previous one
-        if( i > 0 ){
-          ctx.beginPath();
-          ctx.moveTo(prevPoint.x, prevPoint.y);
-          ctx.lineTo(point.x, point.y);
-          ctx.strokeStyle = `rgba(35, 35, 35, ${1 - (point.age / circleMaxAge)})`;
-          ctx.lineWidth = lineWidth.current;
-          ctx.lineCap = "round";
-          ctx.stroke();
-        }
-        prevPoint = point;
-
-      } else {
-        delete points.current[i]; // Delete the circle when it gets too old
-      }
-
-      point.age += 1;
-    });
-
-    // Reset the filter to perform the dithering operation
-    ctx.filter = 'none';
-
-    // // Retrieve the image data of the canvas
-    let image = ctx.getImageData(0, 0, canvasRef.current.width, canvasRef.current.height);
-
-    // // Dither the data using the Atkinson algoritm
-    Dither.bayer(image, 128);
-
-    // Remap the colors
-    const data = image.data;
-    for (let i = 0; i < data.length; i += 4) {
-      if( data[i] === 255 ) { // White parts of the image become the background
-        data[i] = props.bgColor[0];     // R
-        data[i + 1] = props.bgColor[1]; // G
-        data[i + 2] = props.bgColor[2]; // B
+      p.draw = () => {
+        p.frameRate(30);
+        p.background(255,255,255);
         
-      } else { // Black parts of the image become the foregound
-        data[i] = props.fgColor[0];     // R
-        data[i + 1] = props.fgColor[1]; // G
-        data[i + 2] = props.fgColor[2]; // B
+        if( drawing.current ){
+          points.current.push({
+            x: p.mouseX,
+            y: p.mouseY,
+            age: 0
+          });
+        }
+
+        p.strokeWeight(lineWidth.current);
+
+        // Loop through the points array and draw each one
+        let prevPoint = {};
+        points.current.forEach((point, i) => {
+          if( point.age <= pointMaxAge ){
+            // Draw a line connecting each point to the previous one
+            if( i > 0 ){
+              const value = 255 * (point.age / pointMaxAge);
+              p.stroke(value, value, value);
+              p.line(prevPoint.x, prevPoint.y, point.x, point.y);
+            }
+            prevPoint = point;
+
+          } else {
+            delete points.current[i]; // Delete the circle when it gets too old
+          }
+
+          point.age += 1;
+        });
+        p.filter(p.BLUR, lineWidth.current / 4);
+
+        const normalizedWidth = Math.floor(p.width / pixelDensity);
+
+        // Apply dither effect
+        const m = [
+          [3, 1],
+          [0, 2],
+        ];
+
+        p.loadPixels();
+        for (let i = 0; i < p.pixels.length; i += 4) {
+          let x = (i / 4 | 0) % normalizedWidth;
+          let y = (i / 4 / normalizedWidth | 0);
+          let thresh = m[x%2][y%2] * 20 + 60;
+          let pixel = (p.pixels[i] + p.pixels[i + 1] + p.pixels[i + 2]) / 3; // Pixel brightness as an average of the R,G,B values
+      
+          p.pixels[i] = pixel < thresh ? props.fgColor[0] : props.bgColor[0]; // Red
+          p.pixels[i + 1] = pixel < thresh ? props.fgColor[1] : props.bgColor[1]; // Green
+          p.pixels[i + 2] = pixel < thresh ? props.fgColor[2] : props.bgColor[2]; // Blue
+          p.pixels[i + 3] = 255; // Alpha
+        }
+
+        // Apply grid
+        const gridSpace = 4;
+        const rowLength = normalizedWidth * 4; // There are four entries for each pixel
+        for( let y = 0; y < p.pixels.length; y += rowLength * gridSpace ){
+          for (let x = y; x < y + rowLength; x+= 4 * gridSpace) {
+            p.pixels[x] = props.fgColor[0] // red;
+            p.pixels[x+1] = props.fgColor[1]; // green
+            p.pixels[x+2] = props.fgColor[2]; // blue;
+            p.pixels[x+3] = 255; // alpha
+          }
+        }
+        
+        p.updatePixels();
       }
-    }
-
-    // Place the image data back on the canvas
-    ctx.putImageData(image, 0, 0);
-
-    // Call the next animation frame
-    requestAnimationFrame(draw);
-  }
-  
-  // Keep track of the mouse position
-  const updateMousePos = (e, eventType) => {
-    if( eventType === 'mouse' ){
-      mousePos.current = {
-        x: e.clientX / resoltionDivision,
-        y: e.clientY / resoltionDivision
-      };
-    } else {
-      mousePos.current = {
-        x: e.touches[0].clientX / resoltionDivision,
-        y: e.touches[0].clientY / resoltionDivision
-      };
-    }
-  }
-
-  // Update the canvas dimensions
-  const updateCanvasSize = () => {
-    canvasRef.current.width = window.innerWidth / resoltionDivision;
-    canvasRef.current.height = window.innerHeight / resoltionDivision;
+    });
   }
   
   return (
-    <canvas
-      ref={canvasRef}
-      className={styles.background}
-    ></canvas>
+    <div className={styles.background} ref={renderRef}></div>
   );
 }
 

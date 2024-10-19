@@ -10,4 +10,9 @@
                      calc(100% - var(--pagePadding)) calc(100% - var(--pagePadding)),
                      var(--pagePadding) calc(100% - var(--pagePadding)));
   z-index: -1;
+
+  canvas {
+    width: 100% !important;
+    height: 100% !important;
+  }
 }
