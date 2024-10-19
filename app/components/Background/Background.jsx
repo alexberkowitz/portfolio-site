@@ -28,7 +28,7 @@ const Background = (props) => {
         document.addEventListener("touchend", () => drawing.current = false);
       }
     }
-  }, [initialized, drawP5]);
+  }, [initialized]);
 
   const setLineWidth = () => {
     lineWidth.current = Math.min(Math.max(window.innerWidth / 4, 100), 300);
