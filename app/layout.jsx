@@ -7,7 +7,7 @@ import dynamic from 'next/dynamic'
 const DynamicBackground = dynamic(() => import('@/components/Background/Background'), {
   ssr: false,
 });
-const DynamicCursor = dynamic(() => import('@/components/Cursor/Cursor'), {
+const DynamicOverlay = dynamic(() => import('@/components/Overlay/Overlay'), {
   ssr: false,
 });
 
@@ -54,7 +54,7 @@ export default function RootLayout({ children }) {
             pixelDensity={pixelDensity}
             />
           {children}
-          <DynamicCursor
+          <DynamicOverlay
             fgColor={fgColor}
             bgColor={bgColor}
             pixelDensity={pixelDensity}

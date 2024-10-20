@@ -2,6 +2,8 @@
 
 import { useEffect, useState, useRef } from "react";
 import p5 from 'p5';
+import { dither } from '@/utils/drawing';
+
 import styles from "./background.module.scss";
 
 const Background = (props) => {
@@ -57,7 +59,7 @@ const Background = (props) => {
         drawCursorTrail(p);
 
         // Apply dither effect
-        makeDithered(p);
+        dither(p, props.fgColor, props.bgColor, props.pixelDensity, 60);
 
         // Apply dot grid
         generateDotGrid(p);
@@ -98,32 +100,6 @@ const Background = (props) => {
       point.age += 1;
     });
     p.filter(p.BLUR, lineWidth.current / 4);
-  }
-
-  // Apply the dither effect
-  // Based on Bayer Dithering by illus0r
-  // https://editor.p5js.org/illus0r/sketches/YkkcqhLmY
-  // p.updatePixels() must be called after calling this function
-  const makeDithered = (p) => {
-    const normalizedWidth = Math.floor(p.width / props.pixelDensity);
-    const m = [
-      [3, 1],
-      [0, 2],
-    ];
-
-    p.loadPixels();
-
-    for (let i = 0; i < p.pixels.length; i += 4) {
-      let x = (i / 4 | 0) % normalizedWidth;
-      let y = (i / 4 / normalizedWidth | 0);
-      let thresh = m[x%2][y%2] * 20 + 60;
-      let pixel = (p.pixels[i] + p.pixels[i + 1] + p.pixels[i + 2]) / 3; // Pixel brightness as an average of the R,G,B values
-  
-      p.pixels[i] = pixel < thresh ? props.fgColor[0] : props.bgColor[0]; // Red
-      p.pixels[i + 1] = pixel < thresh ? props.fgColor[1] : props.bgColor[1]; // Green
-      p.pixels[i + 2] = pixel < thresh ? props.fgColor[2] : props.bgColor[2]; // Blue
-      p.pixels[i + 3] = 255; // Alpha
-    }
   }
 
   // Generate the dot grid

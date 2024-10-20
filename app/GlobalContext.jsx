@@ -7,6 +7,7 @@ const GlobalContext = createContext();
 export default function GlobalContextContainer(props) {
   const router = useRouter();
   const [transition, setTransition] = useState(false);
+  const transitionDuration = 1; // In seconds
 
   // Navigate between pages with a transition
   const navigate = (destination, incomplete) => {
@@ -29,7 +30,8 @@ export default function GlobalContextContainer(props) {
     <GlobalContext.Provider value={{
       navigate,
       transition,
-      setTransition
+      setTransition,
+      transitionDuration
     }}>
       {props.children}
     </GlobalContext.Provider>
