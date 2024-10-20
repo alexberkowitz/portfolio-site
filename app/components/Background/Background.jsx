@@ -59,7 +59,7 @@ const Background = (props) => {
         drawCursorTrail(p);
 
         // Apply dither effect
-        dither(p, props.fgColor, props.bgColor, props.pixelDensity, 60);
+        dither(p, props.fgColor, props.bgColor, props.pixelDensity, false);
 
         // Apply dot grid
         generateDotGrid(p);
