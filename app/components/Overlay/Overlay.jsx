@@ -3,6 +3,7 @@
 import { useEffect, useState, useRef } from "react";
 import { useGlobalContext } from '@/GlobalContext';
 import p5 from 'p5';
+import { dither } from '@/utils/drawing';
 
 import styles from "./overlay.module.scss";
 
@@ -11,8 +12,11 @@ const Overlay = (props) => {
   const renderRef = useRef();
   const [initialized, setInitialized] = useState(false);
   const transitionActive = useRef(globalContext.transition);
-  const [showCursor, setShowCursor] = useState(true);
+  const [hasCursor, setHasCursor] = useState(true);
+  const showCursor = useRef(true);
   const transitionAmount = useRef(globalContext.transition ? 1 : 0);
+
+  let transitionBuffer;
   
   // Initial setup
   useEffect(() => {
@@ -21,8 +25,24 @@ const Overlay = (props) => {
 
       // Don't show the cursor if the user is using a touch screen
       if( !window.matchMedia('(pointer: fine)').matches ){
-        setShowCursor(false);
+        setHasCursor(false);
       }
+
+      // Users with a mouse will see a cursor trail.
+      // Users with a touchscreen will see a touch effect.
+      if( !window.matchMedia('(pointer: fine)').matches ){
+        showCursor.current = false;
+      } else {
+        // Only show the cursor when it is over the document
+        // to avoid the image being "left behind"
+        document.addEventListener("mouseleave", () => {
+          showCursor.current = false;
+        });
+        document.addEventListener("mouseenter", () => {
+          showCursor.current = true;
+        });
+      }
+
       drawP5(); // Start the drawing
     }
   }, [initialized]);
@@ -37,6 +57,9 @@ const Overlay = (props) => {
         p.createCanvas(Math.floor(window.innerWidth), Math.floor(window.innerHeight)).parent(renderRef.current);
         p.pixelDensity(1 / props.pixelDensity);
 
+        // Transition Buffer
+        transitionBuffer = p.createGraphics(p.width, p.height, p.P2D);
+
         // When the window resizes, update the drawing parameters
         window.addEventListener("resize", () => {
           p.resizeCanvas(Math.floor(window.innerWidth), Math.floor(window.innerHeight));
@@ -48,31 +71,43 @@ const Overlay = (props) => {
         p.clear();
         
         // Draw the transition
-        drawTransition(p);
+        drawTransition(transitionBuffer);
+        p.image(transitionBuffer, 0, 0);
 
         // Draw the cursor
-        if( showCursor ){
+        if( hasCursor && showCursor.current ){
           drawCursor(p);
         }
       }
     });
   }
 
+
+
   // Apply a transition effect to the page
-  const drawTransition = (p) => {
+  const drawTransition = (context) => {
+    const blurAmount = 50;
     const transitionDuration = globalContext.transitionDuration * 30; // Converting ms to frames
-
-    // Animate the transition in or out
-    transitionAmount.current = transitionActive.current ? Math.min(transitionAmount.current + (1 / transitionDuration), 1) : Math.max(transitionAmount.current - (1 / transitionDuration), 0);
-
-    const transitionTop = p.map (transitionAmount.current, 0, 1, window.innerHeight * -1, 0);
-
-    p.stroke(0, 0, 0, 0);
-    p.fill(props.fgColor[0], props.fgColor[1], props.fgColor[2]);
+    const explosionEndSize = (Math.sqrt(Math.pow(context.width, 2), Math.pow(context.height, 2)) + blurAmount) * 2.5;
     
-    // Draw the rectangle
-    p.rect(0, transitionTop, window.innerWidth, window.innerHeight);
+    // Animate the transition in or out
+    // Animates from 0 - 1 or 1 - 0
+    transitionAmount.current = transitionActive.current ? Math.min(transitionAmount.current + (1 / transitionDuration), 1) : Math.max(transitionAmount.current - (1 / transitionDuration), 0);
+    
+    context.background(255);
+    context.fill(0);
+    const explosionSize = context.map(transitionAmount.current, 0, 1, 0, explosionEndSize);
+    context.circle(globalContext.transitionPos.current.x, globalContext.transitionPos.current.y, explosionSize);
+
+    // Apply blur
+    context.filter(context.BLUR, blurAmount);
+
+    // Apply dither effect
+    const bgColor = [0, 0, 0, 0]; // Transparent
+    dither(context, props.accentColor, bgColor, 150, props.pixelDensity, true);
   }
+
+
 
   // Draw a crosshair at the cursor location
   const drawCursor = (p) => {

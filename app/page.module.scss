@@ -4,18 +4,18 @@
   grid-template-columns: 1fr 1fr;
   grid-template-areas: "name maker"
                        "designer developer";
+  
+  a {
+  padding: 1rem;
+  margin: -1rem;
+  text-transform: uppercase;
+  font-size: 1.5em;
+  font-weight: 300;
+  }
 
   //Name
   h1 {
     grid-area: name;
-  }
-
-  a {
-    padding: 1rem;
-    margin: -1rem;
-    text-transform: uppercase;
-    font-size: 1.5em;
-    font-weight: 300;
   }
 
   // Designer

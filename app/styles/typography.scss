@@ -7,6 +7,10 @@ h1 {
   line-height: 1;
   text-transform: uppercase;
   text-wrap: balance;
+
+  @media(max-width: 720px) {
+    font-size: 2rem;
+  }
 }
 
 a:hover,

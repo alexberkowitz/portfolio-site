@@ -9,114 +9,201 @@ import styles from "./background.module.scss";
 const Background = (props) => {
   const renderRef = useRef();
   const [initialized, setInitialized] = useState(false);
-  let points = useRef([]); // Place to put the circles
-  const drawing = useRef(true); // Whether or not to draw circles
-  const lineWidth = useRef(300); // In px
-  const pointMaxAge = 10; // In frames
+
+  // Grid setup
+  let gridBuffer;
+  
+  // Cursor trail setup
+  let cursorBuffer;
+  let cursorPoints = useRef([]); // Cursor trail points
+  const cursorPointMaxAge = 10; // In frames
+  const cursorLineWidth = useRef(300); // In px
+  const cursorDraw = useRef(true); // Whether or not to draw cursor trail
+  
+  // Explosions setup
+  let explosionBuffer;
+  let explosions = useRef([]); // Click effect explosions
+  const explosionDuration = 10; // In frames
+  const explosionStartSize = 100; // In px
+  const explosionEndSize = 500; // In px
   
   // Initial setup
   useEffect(() => {
     if( !initialized ){
       setInitialized(true);
       
-      setLineWidth();
+      setCursorTrailLineWidth();
       drawP5(); // Start the drawing
 
-      // // Users with a mouse will see a cursor trail.
-      // // Users with a touchscreen will see a touch effect.
+      // Users with a mouse will see a cursor trail.
+      // Users with a touchscreen will see a touch effect.
       if( !window.matchMedia('(pointer: fine)').matches ){
-        drawing.current = false;
-        document.addEventListener("touchstart", () => drawing.current = true);
-        document.addEventListener("touchend", () => drawing.current = false);
+        cursorDraw.current = false;
+        document.addEventListener("touchstart", () => cursorDraw.current = true);
+        document.addEventListener("touchend", () => cursorDraw.current = false);
       }
     }
   }, [initialized]);
 
-  const setLineWidth = () => {
-    lineWidth.current = Math.min(Math.max(window.innerWidth / 4, 100), 300);
-  }
-
   const drawP5 = () => {
     new p5(p => {
       p.setup = () => {
-        p.createCanvas(Math.floor(window.innerWidth), Math.floor(window.innerHeight)).parent(renderRef.current);
+        p.createCanvas(Math.round(Math.floor(window.innerWidth) / props.pixelDensity) * props.pixelDensity, Math.round(Math.floor(window.innerHeight) / props.pixelDensity) * props.pixelDensity).parent(renderRef.current);
         p.pixelDensity(1 / props.pixelDensity);
+
+        // Graphics buffers
+        gridBuffer = p.createGraphics(p.width, p.height, p.P2D);
+        cursorBuffer = p.createGraphics(p.width, p.height, p.P2D);
+        explosionBuffer = p.createGraphics(p.width, p.height, p.P2D);
 
         // When the window resizes, update the drawing parameters
         window.addEventListener("resize", () => {
-          p.resizeCanvas(Math.floor(window.innerWidth), Math.floor(window.innerHeight));
-          setLineWidth();
+          const calculatedWidth = Math.round(Math.floor(window.innerWidth) / props.pixelDensity) * props.pixelDensity;
+          const calculatedHeight = Math.round(Math.floor(window.innerHeight) / props.pixelDensity) * props.pixelDensity;
+          p.resizeCanvas(calculatedWidth, calculatedHeight);
+          gridBuffer.resizeCanvas(calculatedWidth, calculatedHeight);
+          cursorBuffer.resizeCanvas(calculatedWidth, calculatedHeight);
+          explosionBuffer.resizeCanvas(calculatedWidth, calculatedHeight);
+          setCursorTrailLineWidth();
         });
-    }
+
+        // Make explosions when the user clicks
+        p.mouseClicked = () => {
+          explosions.current.push({
+            x: p.mouseX,
+            y: p.mouseY,
+            age: 0
+          });
+        }
+      }
 
       p.draw = () => {
         p.frameRate(30);
 
         // Draw the background
-        p.background(255,255,255);
-        
-        // Draw the cursor trail
-        drawCursorTrail(p);
-
-        // Apply dither effect
-        dither(p, props.fgColor, props.bgColor, props.pixelDensity, false);
+        p.background(props.bgColor[0], props.bgColor[1], props.bgColor[2]);
 
         // Apply dot grid
-        generateDotGrid(p);
+        drawDotGrid(gridBuffer);
+        p.image(gridBuffer, 0, 0);
         
-        p.updatePixels();
+        // Draw the cursor trail
+        drawCursorTrail(cursorBuffer, p);
+        p.image(cursorBuffer, 0, 0);
+        
+        // Draw click explosions
+        // drawExplosions(explosionBuffer);
+        // p.image(explosionBuffer, 0, 0);
       }
     });
   }
 
-  const drawCursorTrail = (p) => {
+
+
+  // Update cursor trail line width
+  const setCursorTrailLineWidth = () => {
+    cursorLineWidth.current = Math.min(Math.max(window.innerWidth / 4, 100), 250);
+  }
+  
+  // Draw a fading trail following the cursor
+  const drawCursorTrail = (context, p) => {
+    context.noFill();
+
     // Add the current cursor position to the points list
-    if( drawing.current ){
-      points.current.push({
+    if( cursorDraw.current ){
+      cursorPoints.current.push({
         x: p.mouseX,
         y: p.mouseY,
         age: 0
       });
     }
 
-    // Loop through the points array and draw each one
-    let prevPoint = {};
-    p.strokeWeight(lineWidth.current);
-    p.strokeCap(p.ROUND);
-    points.current.forEach((point, i) => {
-      if( point.age <= pointMaxAge ){
-        // Draw a line connecting each point to the previous one
-        if( i > 0 ){
-          const value = 255 * (point.age / pointMaxAge);
-          p.stroke(value, value, value);
-          p.line(prevPoint.x, prevPoint.y, point.x, point.y);
+    if( cursorPoints.current.length > 0 ){
+      context.background(255);
+
+      // Loop through the points array and draw each one
+      let prevPoint = {};
+      context.strokeWeight(cursorLineWidth.current);
+      context.strokeCap(context.ROUND);
+      cursorPoints.current.forEach((point, i) => {
+        if( point.age <= cursorPointMaxAge ){
+          // Draw a line connecting each point to the previous one
+          if( i > 0 ){
+            const value = 255 * (point.age / cursorPointMaxAge);
+            context.stroke(value, value, value);
+            context.line(prevPoint.x, prevPoint.y, point.x, point.y);
+          }
+          prevPoint = point;
+
+        } else {
+          delete cursorPoints.current[i]; // Delete the circle when it gets too old
         }
-        prevPoint = point;
 
-      } else {
-        delete points.current[i]; // Delete the circle when it gets too old
-      }
+        point.age += 1;
+      });
 
-      point.age += 1;
-    });
-    p.filter(p.BLUR, lineWidth.current / 4);
+      // Apply blur
+      context.filter(context.BLUR, cursorLineWidth.current / 4);
+
+      // Apply dither effect
+      const bgColor = [0, 0, 0, 0]; // Transparent
+      dither(context, props.fgColor, bgColor, 60, props.pixelDensity, true);
+    }
   }
+
+
+
+  // Draw "explosions" when the user clicks
+  const drawExplosions = (context) => {
+    if( explosions.current.length > 0 ){ // Don't try to draw explosions if there aren't any
+      context.background(255);
+      context.noFill();
+      context.stroke(0, 0, 0, 255);
+
+      explosions.current.forEach((explosion, i) => {
+        if( explosion.age <= explosionDuration ){
+          const explosionSize = context.map(explosion.age, 0, explosionDuration, explosionStartSize, explosionEndSize);
+
+          context.strokeWeight((1 - (explosion.age / explosionDuration)) * explosionStartSize);
+          context.circle(explosion.x, explosion.y, explosionSize);
+          
+        } else {
+          delete explosions.current[i];
+        }
+
+        explosion.age += 1;
+      });
+
+      // Apply blur
+      context.filter(context.BLUR, explosionStartSize / 4);
+
+      // Apply dither effect
+      const bgColor = [0, 0, 0, 0]; // Transparent
+      dither(context, props.accentColor, bgColor, 90, props.pixelDensity, true);
+    }
+  }
+
+
 
   // Generate the dot grid
   // p.updatePixels() must be called after calling this function
-  const generateDotGrid = (p) => {
-    const normalizedWidth = Math.floor(p.width / props.pixelDensity);
+  const drawDotGrid = (context) => {
+    const normalizedWidth = Math.floor(context.width / props.pixelDensity);
     const gridSpace = 8;
     const rowLength = normalizedWidth * 4; // There are four entries for each pixel
 
-    for( let y = rowLength * gridSpace / 2; y < p.pixels.length; y += rowLength * gridSpace ){
+    context.loadPixels();
+
+    for( let y = rowLength * gridSpace / 2; y < context.pixels.length; y += rowLength * gridSpace ){
       for (let x = y + (gridSpace * 2); x < y + rowLength; x+= 4 * gridSpace) {
-        p.pixels[x] = props.fgColor[0] // red;
-        p.pixels[x+1] = props.fgColor[1]; // green
-        p.pixels[x+2] = props.fgColor[2]; // blue;
-        p.pixels[x+3] = 255; // alpha
+        context.pixels[x] = props.fgColor[0] // red;
+        context.pixels[x+1] = props.fgColor[1]; // green
+        context.pixels[x+2] = props.fgColor[2]; // blue;
+        context.pixels[x+3] = 255; // alpha
       }
     }
+
+    context.updatePixels();
   }
   
   return (

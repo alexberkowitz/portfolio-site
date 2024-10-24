@@ -36,8 +36,9 @@ export const viewport = {
   initialScale: 1
 }
 
-const fgColor = [255, 43, 6];
-const bgColor = [219, 216, 206];
+const bgColor = [219, 216, 206, 255];
+const fgColor = [255, 43, 6, 255];
+const accentColor = [19, 43, 255, 255];
 const pixelDensity = 2;
 
 export default function RootLayout({ children }) {
@@ -51,12 +52,14 @@ export default function RootLayout({ children }) {
           <DynamicBackground
             fgColor={fgColor}
             bgColor={bgColor}
+            accentColor={accentColor}
             pixelDensity={pixelDensity}
             />
           {children}
           <DynamicOverlay
             fgColor={fgColor}
             bgColor={bgColor}
+            accentColor={accentColor}
             pixelDensity={pixelDensity}
             />
         </body>
