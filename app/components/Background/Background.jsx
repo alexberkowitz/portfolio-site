@@ -43,7 +43,7 @@ const Background = (props) => {
         document.addEventListener("touchend", () => cursorDraw.current = false);
       }
     }
-  }, [initialized, drawP5]);
+  }, [initialized]);
 
   const drawP5 = () => {
     new p5(p => {
