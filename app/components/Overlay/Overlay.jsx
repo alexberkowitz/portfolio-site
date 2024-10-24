@@ -96,17 +96,21 @@ const Overlay = (props) => {
       Math.min(transitionAmount.current + (1 / transitionDuration), 1)
       : Math.max(transitionAmount.current - (1 / transitionDuration), 0);
     
-    context.background(255);
-    context.fill(0);
-    const explosionSize = context.map(transitionAmount.current, 0, 1, 0, explosionEndSize);
-    context.circle(globalContext.transitionPos.current.x, globalContext.transitionPos.current.y, explosionSize);
-
-    // Apply blur
-    context.filter(context.BLUR, blurAmount);
-
-    // Apply dither effect
-    const bgColor = [0, 0, 0, 0]; // Transparent
-    dither(context, props.accentColor, bgColor, 150, props.pixelDensity, true);
+    if( transitionAmount.current > 0 ){
+      context.background(255);
+      context.fill(0);
+      const explosionSize = context.map(transitionAmount.current, 0, 1, 0, explosionEndSize);
+      context.circle(globalContext.transitionPos.current.x, globalContext.transitionPos.current.y, explosionSize);
+  
+      // Apply blur
+      context.filter(context.BLUR, blurAmount);
+  
+      // Apply dither effect
+      const bgColor = [0, 0, 0, 0]; // Transparent
+      dither(context, props.accentColor, bgColor, 150, props.pixelDensity, true);
+    } else {
+      context.clear();
+    }
   }
 
 
@@ -119,13 +123,15 @@ const Overlay = (props) => {
     p.stroke(0, 0, 0, 255);
     p.fill(0, 0, 0, 0);
     const mousePos = { // Round coordinates so pixels are always clear
-      x: 2 * Math.round(p.mouseX / 2) + 1,
-      y: 2 * Math.round(p.mouseY / 2) + 1,
+      x: 2 * Math.round(p.mouseX / 2) - 1,
+      y: 2 * Math.round(p.mouseY / 2) - 1,
     }
     p.line(mousePos.x, mousePos.y - (cursorSize / 2), mousePos.x, mousePos.y + (cursorSize / 2),); // Vertical line
     p.line(mousePos.x- (cursorSize / 2), mousePos.y, mousePos.x + (cursorSize / 2), mousePos.y,); // Horizontal line
   }
   
+
+
   return (
     <div className={styles.cursor} ref={renderRef}></div>
   );

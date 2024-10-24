@@ -193,7 +193,6 @@ const Background = (props) => {
 
 
   // Generate the dot grid
-  // p.updatePixels() must be called after calling this function
   const drawDotGrid = (context) => {
     const normalizedWidth = Math.floor(context.width / props.pixelDensity);
     const gridSpace = 8;
@@ -212,6 +211,8 @@ const Background = (props) => {
 
     context.updatePixels();
   }
+  
+
   
   return (
     <div className={styles.background} ref={renderRef}></div>

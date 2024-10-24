@@ -12,13 +12,13 @@ export default function Home() {
         <h1>Alex Berkowitz</h1>
       </div>
       <div className={styles.designer}>
-        <a onClick={(e) => globalContext.navigate(e)}>Designer</a>
+        <a onClick={(e) => globalContext.navigate(e, '/designer')}>Designer</a>
       </div>
       <div className={styles.developer}>
-        <a onClick={(e) => globalContext.navigate(e)}>Developer</a>
+        <a onClick={(e) => globalContext.navigate(e, '/developer')}>Developer</a>
       </div>
       <div className={styles.maker}>
-        <a onClick={(e) => globalContext.navigate(e)}>Maker</a>
+        <a onClick={(e) => globalContext.navigate(e, '/maker')}>Maker</a>
       </div>
     </main>
   );
