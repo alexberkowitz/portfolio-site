@@ -1,6 +1,7 @@
 'use client'
 
 import { useGlobalContext } from '@/GlobalContext';
+import Link from '@/components/Link/Link';
 import styles from './page.module.scss';
 
 export default function Home() {
@@ -12,13 +13,25 @@ export default function Home() {
         <h1>Alex Berkowitz</h1>
       </div>
       <div className={styles.designer}>
-        <a onClick={(e) => globalContext.navigate(e, '/designer')}>Designer</a>
+        <Link
+          href='/designer'
+          >
+          Designer
+        </Link>
       </div>
       <div className={styles.developer}>
-        <a onClick={(e) => globalContext.navigate(e, '/developer')}>Developer</a>
+        <Link
+          href='/developer'
+          >
+          Developer
+        </Link>
       </div>
       <div className={styles.maker}>
-        <a onClick={(e) => globalContext.navigate(e, '/maker')}>Maker</a>
+        <Link
+          href='/maker'
+          >
+          Maker
+        </Link>
       </div>
     </main>
   );

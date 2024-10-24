@@ -1,6 +1,7 @@
 'use client'
 
 import { useGlobalContext } from '@/GlobalContext';
+import Link from '@/components/Link/Link';
 
 import styles from "./backButton.module.scss";
 
@@ -8,12 +9,12 @@ const BackButton = () => {
   const globalContext = useGlobalContext();
 
   return (
-    <a
+    <Link
       className={styles.backButton}
-      onClick={(e) => globalContext.navigate(e, '/')}
+      href="/"
       >
       Go Back
-    </a>
+    </Link>
   );
 }
 

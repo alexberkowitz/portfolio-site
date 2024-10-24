@@ -6,46 +6,61 @@ const GlobalContext = createContext();
 
 export default function GlobalContextContainer(props) {
   const router = useRouter();
-  const [transition, setTransition] = useState(false);
-  const transitionPos = useRef({x: 0, y: 0});
+  const hover = useRef({active: false, x: 0, y: 0, w: 0, h: 0});
+  const transition = useRef({active: false, x: 0, y: 0});
   const transitionDuration = .3; // In seconds
   const [cursorState, setCursorState] = useState('default');
 
   // Navigate between pages with a transition
   const navigate = (e, destination, incomplete) => {
     document.activeElement.blur();
-    const coords = {
+    transition.current = {
+      active: true,
       x: e.clientX,
       y: e.clientY
-    }
-    transitionPos.current = coords;
-    setTransition(true);
+    };
 
     setTimeout(() => { // Redirect after 0.5s
       router.push(destination);
-      transitionPos.current = {
-        x: window.innerWidth / 2,
-        y: window.innerHeight / 2
-      }
+      hover.current = {
+        ...hover.current,
+        active: false
+      };
 
       // It's possible to only transition halfway, allowing another function to control the rest of the transition
       if( incomplete === undefined || incomplete === false ) {
         setTimeout(() => { // End the transition after an additional 0.5s
-          setTransition(false);
+          transition.current = {
+            active: false,
+            x: window.innerWidth / 2,
+            y: window.innerHeight / 2
+          };
         }, transitionDuration * 1000 + 500);
       }
     }, transitionDuration * 1000);
+  }
+
+  // Set the hover state
+  const setHover = (e, active) => {
+    const coords = e.target.getBoundingClientRect();
+    hover.current = {
+      active: active,
+      x: coords.x,
+      y: coords.y,
+      w: coords.width,
+      h: coords.height
+    };
   }
 
   return (
     <GlobalContext.Provider value={{
       cursorState,
       setCursorState,
+      hover,
+      setHover,
       navigate,
       transition,
-      setTransition,
-      transitionDuration,
-      transitionPos
+      transitionDuration
     }}>
       {props.children}
     </GlobalContext.Provider>

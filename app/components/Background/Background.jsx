@@ -129,11 +129,11 @@ const Background = (props) => {
 
     if( cursorPoints.current.length > 0 ){
       context.background(255);
+      context.strokeWeight(cursorLineWidth.current);
+      context.strokeCap(context.ROUND);
 
       // Loop through the points array and draw each one
       let prevPoint = {};
-      context.strokeWeight(cursorLineWidth.current);
-      context.strokeCap(context.ROUND);
       cursorPoints.current.forEach((point, i) => {
         if( point.age <= cursorPointMaxAge ){
           const fadeIn = cursorPointMaxAge * 3; // In frames

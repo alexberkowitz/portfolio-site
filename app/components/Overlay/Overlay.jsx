@@ -3,7 +3,7 @@
 import { useEffect, useState, useRef } from "react";
 import { useGlobalContext } from '@/GlobalContext';
 import p5 from 'p5';
-import { dither } from '@/utils/drawing';
+import { dither, ease } from '@/utils/drawing';
 
 import styles from "./overlay.module.scss";
 
@@ -11,12 +11,16 @@ const Overlay = (props) => {
   const globalContext = useGlobalContext();
   const renderRef = useRef();
   const [initialized, setInitialized] = useState(false);
-  const transitionActive = useRef(globalContext.transition);
+
+  const transitionAmount = useRef(globalContext.transition.current.active ? 1 : 0);
+  
   const [hasCursor, setHasCursor] = useState(true);
   const showCursor = useRef(true);
-  const transitionAmount = useRef(globalContext.transition ? 1 : 0);
+  const hoverAmount = useRef(globalContext.hover.active ? 1 : 0);
 
+  // Graphics buffers
   let transitionBuffer;
+  let cursorBuffer;
   
   // Initial setup
   useEffect(() => {
@@ -47,10 +51,6 @@ const Overlay = (props) => {
     }
   }, [initialized]);
 
-  useEffect(() => {
-    transitionActive.current = globalContext.transition;
-  }, [globalContext]);
-
   const drawP5 = () => {
     /*-------------------------------------------------------*/
     /* SETUP
@@ -60,8 +60,9 @@ const Overlay = (props) => {
         p.createCanvas(Math.floor(window.innerWidth), Math.floor(window.innerHeight)).parent(renderRef.current);
         p.pixelDensity(1 / props.pixelDensity);
 
-        // Transition Buffer
+        // Graphics Buffers
         transitionBuffer = p.createGraphics(p.width, p.height, p.P2D);
+        cursorBuffer = p.createGraphics(p.width, p.height, p.WEBGL);
 
         // When the window resizes, update the drawing parameters
         window.addEventListener("resize", () => {
@@ -79,7 +80,8 @@ const Overlay = (props) => {
 
         // Draw the cursor
         if( hasCursor && showCursor.current ){
-          drawCursor(p);
+          drawCursor(cursorBuffer, p);
+          p.image(cursorBuffer, 0, 0);
         }
       }
     });
@@ -92,13 +94,14 @@ const Overlay = (props) => {
   /*-------------------------------------------------------*/
 
   const drawTransition = (context) => {
+    const transition = globalContext.transition.current;
     const blurAmount = 50;
     const transitionDuration = globalContext.transitionDuration * 30; // Converting ms to frames
     const explosionEndSize = (Math.sqrt(Math.pow(context.width, 2), Math.pow(context.height, 2)) + blurAmount) * 2.5;
     
     // Animate the transition in or out
-    // Animates from 0 - 1 or 1 - 0
-    transitionAmount.current = transitionActive.current ?
+    // Animates from 0-1 or 1-0
+    transitionAmount.current = transition.active ?
       Math.min(transitionAmount.current + (1 / transitionDuration), 1)
       : Math.max(transitionAmount.current - (1 / transitionDuration), 0);
     
@@ -106,7 +109,7 @@ const Overlay = (props) => {
       context.background(255);
       context.fill(0);
       const explosionSize = context.map(transitionAmount.current, 0, 1, 0, explosionEndSize);
-      context.circle(globalContext.transitionPos.current.x, globalContext.transitionPos.current.y, explosionSize);
+      context.circle(transition.x, transition.y, explosionSize);
   
       // Apply blur
       context.filter(context.BLUR, blurAmount);
@@ -125,18 +128,49 @@ const Overlay = (props) => {
   /* CURSOR
   /*-------------------------------------------------------*/
   
-  const drawCursor = (p) => {
-    const cursorSize = 16;
-    p.strokeWeight(2);
-    p.strokeCap(p.PROJECT);
-    p.stroke(0, 0, 0, 255);
-    p.fill(0, 0, 0, 0);
+  const drawCursor = (context, p) => {
+    const hover = globalContext.hover.current;
     const mousePos = { // Round coordinates so pixels are always clear
-      x: 2 * Math.round(p.mouseX / 2) - 1,
-      y: 2 * Math.round(p.mouseY / 2) - 1,
+      x: props.pixelDensity * Math.round(p.mouseX / props.pixelDensity) - (context.width / 2) - (props.pixelDensity / 2),
+      y: props.pixelDensity * Math.round(p.mouseY / props.pixelDensity) - (context.height / 2) - (props.pixelDensity / 2),
     }
-    p.line(mousePos.x, mousePos.y - (cursorSize / 2), mousePos.x, mousePos.y + (cursorSize / 2),); // Vertical line
-    p.line(mousePos.x- (cursorSize / 2), mousePos.y, mousePos.x + (cursorSize / 2), mousePos.y,); // Horizontal line
+
+    // Animate the transition in or out
+    // Animates from 0-1 or 1-0
+    const transitionDuration = 10; // In frames
+    hoverAmount.current = hover.active ?
+      Math.min(hoverAmount.current + (1 / transitionDuration), 1)
+      : Math.max(hoverAmount.current - (1 / transitionDuration), 0);
+      
+    const strokeWeight = 1 * props.pixelDensity;
+    context.clear();
+    context.noSmooth();
+    context.strokeWeight(strokeWeight);
+    context.strokeCap(context.PROJECT);
+    context.stroke(0, 0, 0, 255);
+    context.noFill();
+
+    // Crosshair
+    const crosshairSize = 14 * props.pixelDensity;
+    const crosshairInnerSize = 6 * props.pixelDensity;
+
+    context.line(mousePos.x, mousePos.y - (crosshairSize / 2), mousePos.x, mousePos.y - (crosshairInnerSize / 2),); // Top line
+    context.line(mousePos.x, mousePos.y + (crosshairSize / 2), mousePos.x, mousePos.y + (crosshairInnerSize / 2),); // Bottom line
+    context.line(mousePos.x - (crosshairSize / 2), mousePos.y, mousePos.x - (crosshairInnerSize / 2), mousePos.y,); // Left line
+    context.line(mousePos.x + (crosshairSize / 2), mousePos.y, mousePos.x + (crosshairInnerSize / 2), mousePos.y,); // Right line
+
+    // Hover elements
+    const cursorBox = {
+      x: context.lerp(mousePos.x, hover.x - (context.width / 2) + (hover.w / 2), ease(hoverAmount.current, 'inOutcubic')),
+      y: context.lerp(mousePos.y, hover.y - (context.height / 2) + (hover.h / 2), ease(hoverAmount.current, 'inOutcubic')),
+      w: context.lerp(4, hover.w, ease(hoverAmount.current, 'inOutCubic')),
+      h: context.lerp(4, hover.h, ease(hoverAmount.current, 'inOutCubic')),
+      corner: Math.min(hover.w / 2, hover.h / 2)
+    };
+
+    context.rectMode(context.CENTER);
+    context.rect(cursorBox.x, cursorBox.y, cursorBox.w, cursorBox.h, cursorBox.corner, cursorBox.corner, cursorBox.corner, cursorBox.corner);
+
   }
   
 

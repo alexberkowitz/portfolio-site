@@ -36,34 +36,55 @@ export const dither = (context, fgColor, bgColor, threshold, pixelDensity, autoU
 /* Based on Easing Functions Animated by rjgilmour
 /* https://editor.p5js.org/rjgilmour/sketches/eqP7q0Y4B
 /*-------------------------------------------------------*/
-export const ease = (x, type) => {
+export const ease = (x, type, reverse) => {
   // Input and output are between 0 and 1
+
+  if ( reverse ){
+    x = 1 - x;
+  }
+
+  let output = 0;
+
   switch( type ){
     case 'backForthSettle2':
-      return easeBackForthSettle2(x);
+      output = easeBackForthSettle2(x);
+      break;
     case 'inOutSineScaled':
-      return easeInOutSineScaled(x);
+      output = easeInOutSineScaled(x);
+      break;
     case 'outSlowBackFast':
-      return easeOutSlowBackFast(x);
+      output = easeOutSlowBackFast(x);
+      break;
     case 'backAndForth':
-      return easeBackAndForth(x);
+      output = easeBackAndForth(x);
+      break;
     case 'outElastic':
-      return easeOutElastic(x);
+      output = easeOutElastic(x);
+      break;
     case 'linear':
-      return easeLinear(x);
+      output = easeLinear(x);
+      break;
     case 'backAndForthSettle':
-      return easeBackAndForthSettle(x);
+      output = easeBackAndForthSettle(x);
+      break;
     case 'inOutCubic':
-      return easeInOutCubic(x);
+      output = easeInOutCubic(x);
+      break;
     case 'new':
-      return easeNew(x);
+      output = easeNew(x);
+      break;
     case 'new2':
-      return easeNew2(x);
+      output =  easeNew2(x);
+      break;
     case 'new3':
-      return easeNew3(x);
+      output = easeNew3(x);
+      break;
     default:
-      return easeInOutSine(x);
+      output = easeInOutSine(x);
+      break;
   }
+
+  return reverse ? 1 - output : output;
 }
 
 function easeInOutSine(x){
@@ -96,12 +117,12 @@ function easeBackAndForth(x){
 }
 
 function easeOutElastic(x){
-  const c4 = (2 * Math.Math.PI) / 3;
+  const c4 = (2 * Math.PI) / 3;
   return x === 0
     ? 0
     : x === 1
     ? 1
-    : Math.pow(2, -10 * x) * Math.Math.sin((x * 10 - 0.75) * c4) + 1;
+    : Math.pow(2, -10 * x) * Math.sin((x * 10 - 0.75) * c4) + 1;
 }
 
 function easeLinear(x) {
