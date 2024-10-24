@@ -125,9 +125,9 @@ function easeNew(x) {
   x += 0.15
   // return 1 / (1 + Math.exp(-(x-0.5)*15))  // Sigmoid
   
-  let sig = 1 / (1 + Math.exp(-(x-0.5)*15))
+  // let sig = 1 / (1 + Math.exp(-(x-0.5)*15))
   
-  let sinUp = Math.sin(Math.PI*x*2.5)  // ends on 1 rather than 0
+  // let sinUp = Math.sin(Math.PI*x*2.5)  // ends on 1 rather than 0
   
   let sd = 0.12;
   let mean = 0.5;
@@ -167,7 +167,7 @@ function easeNew2(x) {
 }
 
 function easeNew3(x) {
-  let sig = 1 / (1 + Math.exp(-(x-0.5)*15))
+  // let sig = 1 / (1 + Math.exp(-(x-0.5)*15))
   
   let sd = 0.15;
   let mean = 0.5;
@@ -175,7 +175,7 @@ function easeNew3(x) {
   
   sd = 0.1;
   mean = 0.333;
-  let offsetBell1 = -Math.exp(-0.5 * ((x-mean)/sd)**2) / (sd*Math.sqrt(2*Math.PI)) / 10
+  // let offsetBell1 = -Math.exp(-0.5 * ((x-mean)/sd)**2) / (sd*Math.sqrt(2*Math.PI)) / 10
   
   sd = 0.1;
   mean = 0.67;
