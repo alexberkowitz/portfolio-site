@@ -92,7 +92,9 @@ const Overlay = (props) => {
     
     // Animate the transition in or out
     // Animates from 0 - 1 or 1 - 0
-    transitionAmount.current = transitionActive.current ? Math.min(transitionAmount.current + (1 / transitionDuration), 1) : Math.max(transitionAmount.current - (1 / transitionDuration), 0);
+    transitionAmount.current = transitionActive.current ?
+      Math.min(transitionAmount.current + (1 / transitionDuration), 1)
+      : Math.max(transitionAmount.current - (1 / transitionDuration), 0);
     
     context.background(255);
     context.fill(0);

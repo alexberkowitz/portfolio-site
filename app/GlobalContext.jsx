@@ -7,7 +7,7 @@ const GlobalContext = createContext();
 export default function GlobalContextContainer(props) {
   const router = useRouter();
   const [transition, setTransition] = useState(false);
-  const transitionPos = useRef({x: window.innerWidth/2, y: window.innerHeight/2});
+  const transitionPos = useRef({x: 0, y: 0});
   const transitionDuration = .3; // In seconds
   const [cursorState, setCursorState] = useState('default');
 

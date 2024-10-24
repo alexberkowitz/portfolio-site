@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useRef } from "react";
 import p5 from 'p5';
-import { dither } from '@/utils/drawing';
+import { dither, ease } from '@/utils/drawing';
 
 import styles from "./background.module.scss";
 
@@ -127,8 +127,15 @@ const Background = (props) => {
       context.strokeCap(context.ROUND);
       cursorPoints.current.forEach((point, i) => {
         if( point.age <= cursorPointMaxAge ){
+          const fadeIn = cursorPointMaxAge * 3; // In frames
+          const delay = 10; // In frames
+
           // Draw a line connecting each point to the previous one
           if( i > 0 ){
+            if( p.frameCount - delay < fadeIn ){
+              const strokeWeight = ease(Math.max(0, p.frameCount - delay) / fadeIn, 'new3') * cursorLineWidth.current;
+              context.strokeWeight(strokeWeight);
+            }
             const value = 255 * (point.age / cursorPointMaxAge);
             context.stroke(value, value, value);
             context.line(prevPoint.x, prevPoint.y, point.x, point.y);
