@@ -1,13 +1,13 @@
 'use client'
 
-import { useGlobalContext } from '@/GlobalContext';
+import BackButton from '@/components/BackButton/BackButton';
+
 import styles from './page.module.scss';
 
 export default function Designer() {
-  const globalContext = useGlobalContext();
-
   return (
     <main className={styles.designerPage}>
+      <BackButton />
       <h1>Designer</h1>
     </main>
   );

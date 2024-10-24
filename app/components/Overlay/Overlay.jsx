@@ -52,6 +52,9 @@ const Overlay = (props) => {
   }, [globalContext]);
 
   const drawP5 = () => {
+    /*-------------------------------------------------------*/
+    /* SETUP
+    /*-------------------------------------------------------*/
     new p5(p => {
       p.setup = () => {
         p.createCanvas(Math.floor(window.innerWidth), Math.floor(window.innerHeight)).parent(renderRef.current);
@@ -84,7 +87,10 @@ const Overlay = (props) => {
 
 
 
-  // Apply a transition effect to the page
+  /*-------------------------------------------------------*/
+  /* TRANSITIONS
+  /*-------------------------------------------------------*/
+
   const drawTransition = (context) => {
     const blurAmount = 50;
     const transitionDuration = globalContext.transitionDuration * 30; // Converting ms to frames
@@ -115,7 +121,10 @@ const Overlay = (props) => {
 
 
 
-  // Draw a crosshair at the cursor location
+  /*-------------------------------------------------------*/
+  /* CURSOR
+  /*-------------------------------------------------------*/
+  
   const drawCursor = (p) => {
     const cursorSize = 16;
     p.strokeWeight(2);

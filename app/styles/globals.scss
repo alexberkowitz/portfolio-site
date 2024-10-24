@@ -11,12 +11,15 @@ body {
   height: 100vh;
   padding: var(--pagePadding);
   background-color: var(--bgColor);
+  color: var(--bodyColor);
   overflow: hidden;
   font-family: var(--font-oxanium);
   cursor: none;
   --pagePadding: 2rem;
   --bgColor: white;
-  --borderColor: black;
+  --fgColor: green;
+  --bodyColor: blue;
+  --accentColor: yellow;
 
   @media( max-width: 640px ){
     --pagePadding: 1rem;

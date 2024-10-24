@@ -23,9 +23,9 @@ const Background = (props) => {
   // Explosions setup
   let explosionBuffer;
   let explosions = useRef([]); // Click effect explosions
-  // const explosionDuration = 10; // In frames
-  // const explosionStartSize = 100; // In px
-  // const explosionEndSize = 500; // In px
+  const explosionDuration = 10; // In frames
+  const explosionStartSize = 100; // In px
+  const explosionEndSize = 500; // In px
   
   // Initial setup
   useEffect(() => {
@@ -45,7 +45,13 @@ const Background = (props) => {
     }
   }, [initialized]);
 
+
+  
   const drawP5 = () => {
+    /*-------------------------------------------------------*/
+    /* SETUP
+    /*-------------------------------------------------------*/
+
     new p5(p => {
       p.setup = () => {
         p.createCanvas(Math.round(Math.floor(window.innerWidth) / props.pixelDensity) * props.pixelDensity, Math.round(Math.floor(window.innerHeight) / props.pixelDensity) * props.pixelDensity).parent(renderRef.current);
@@ -92,13 +98,16 @@ const Background = (props) => {
         p.image(cursorBuffer, 0, 0);
         
         // Draw click explosions
-        // drawExplosions(explosionBuffer);
-        // p.image(explosionBuffer, 0, 0);
+        drawExplosions(explosionBuffer);
+        p.image(explosionBuffer, 0, 0);
       }
     });
   }
 
 
+  /*-------------------------------------------------------*/
+  /* CURSOR TRAIL
+  /*-------------------------------------------------------*/
 
   // Update cursor trail line width
   const setCursorTrailLineWidth = () => {
@@ -160,39 +169,45 @@ const Background = (props) => {
 
 
 
-  // Draw "explosions" when the user clicks
-  // const drawExplosions = (context) => {
-  //   if( explosions.current.length > 0 ){ // Don't try to draw explosions if there aren't any
-  //     context.background(255);
-  //     context.noFill();
-  //     context.stroke(0, 0, 0, 255);
+  /*-------------------------------------------------------*/
+  /* CLICK EXPLOSIONS
+  /*-------------------------------------------------------*/
 
-  //     explosions.current.forEach((explosion, i) => {
-  //       if( explosion.age <= explosionDuration ){
-  //         const explosionSize = context.map(explosion.age, 0, explosionDuration, explosionStartSize, explosionEndSize);
+  const drawExplosions = (context) => {
+    if( explosions.current.length > 0 ){ // Don't try to draw explosions if there aren't any
+      context.background(255);
+      context.noFill();
+      context.stroke(0, 0, 0, 255);
 
-  //         context.strokeWeight((1 - (explosion.age / explosionDuration)) * explosionStartSize);
-  //         context.circle(explosion.x, explosion.y, explosionSize);
+      explosions.current.forEach((explosion, i) => {
+        if( explosion.age <= explosionDuration ){
+          const explosionSize = context.map(explosion.age, 0, explosionDuration, explosionStartSize, explosionEndSize);
+
+          context.strokeWeight((1 - (explosion.age / explosionDuration)) * explosionStartSize);
+          context.circle(explosion.x, explosion.y, explosionSize);
           
-  //       } else {
-  //         delete explosions.current[i];
-  //       }
+        } else {
+          delete explosions.current[i];
+        }
 
-  //       explosion.age += 1;
-  //     });
+        explosion.age += 1;
+      });
 
-  //     // Apply blur
-  //     context.filter(context.BLUR, explosionStartSize / 4);
+      // Apply blur
+      context.filter(context.BLUR, explosionStartSize / 4);
 
-  //     // Apply dither effect
-  //     const bgColor = [0, 0, 0, 0]; // Transparent
-  //     dither(context, props.accentColor, bgColor, 90, props.pixelDensity, true);
-  //   }
-  // }
+      // Apply dither effect
+      const bgColor = [0, 0, 0, 0]; // Transparent
+      dither(context, props.fgColor, bgColor, 90, props.pixelDensity, true);
+    }
+  }
 
 
 
-  // Generate the dot grid
+  /*-------------------------------------------------------*/
+  /* DOT GRID
+  /*-------------------------------------------------------*/
+
   const drawDotGrid = (context) => {
     const normalizedWidth = Math.floor(context.width / props.pixelDensity);
     const gridSpace = 8;
@@ -213,7 +228,7 @@ const Background = (props) => {
   }
   
 
-  
+
   return (
     <div className={styles.background} ref={renderRef}></div>
   );

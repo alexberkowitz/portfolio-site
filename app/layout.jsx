@@ -38,6 +38,7 @@ export const viewport = {
 
 const bgColor = [219, 216, 206, 255];
 const fgColor = [255, 43, 6, 255];
+const bodyColor = [0, 0, 0, 255];
 const accentColor = [19, 43, 255, 255];
 const pixelDensity = 2;
 
@@ -47,7 +48,9 @@ export default function RootLayout({ children }) {
       <GlobalContextContainer>
         <body className={`${museoModerno.variable} ${oxanium.variable}`} style={{
           '--bgColor': `rgb(${bgColor[0]}, ${bgColor[1]}, ${bgColor[2]})`,
-          '--borderColor': `rgb(${fgColor[0]}, ${fgColor[1]}, ${fgColor[2]})`,
+          '--fgColor': `rgb(${fgColor[0]}, ${fgColor[1]}, ${fgColor[2]})`,
+          '--bodyColor': `rgb(${bodyColor[0]}, ${bodyColor[1]}, ${bodyColor[2]})`,
+          '--accentColor': `rgb(${accentColor[0]}, ${accentColor[1]}, ${accentColor[2]})`,
           }}>
           <DynamicBackground
             fgColor={fgColor}

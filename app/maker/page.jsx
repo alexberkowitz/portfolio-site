@@ -1,13 +1,13 @@
 'use client'
 
-import { useGlobalContext } from '@/GlobalContext';
+import BackButton from '@/components/BackButton/BackButton';
+
 import styles from './page.module.scss';
 
 export default function Maker() {
-  const globalContext = useGlobalContext();
-
   return (
     <main className={styles.makerPage}>
+      <BackButton />
       <h1>Maker</h1>
     </main>
   );
