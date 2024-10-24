@@ -1,12 +1,9 @@
 'use client'
 
-import { useGlobalContext } from '@/GlobalContext';
 import Link from '@/components/Link/Link';
 import styles from './page.module.scss';
 
 export default function Home() {
-  const globalContext = useGlobalContext();
-
   return (
     <main className={styles.homePage}>
       <div className={styles.title}>
