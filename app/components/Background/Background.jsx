@@ -23,9 +23,9 @@ const Background = (props) => {
   // Explosions setup
   let explosionBuffer;
   let explosions = useRef([]); // Click effect explosions
-  const explosionDuration = 10; // In frames
-  const explosionStartSize = 100; // In px
-  const explosionEndSize = 500; // In px
+  // const explosionDuration = 10; // In frames
+  // const explosionStartSize = 100; // In px
+  // const explosionEndSize = 500; // In px
   
   // Initial setup
   useEffect(() => {
@@ -43,7 +43,7 @@ const Background = (props) => {
         document.addEventListener("touchend", () => cursorDraw.current = false);
       }
     }
-  }, [initialized]);
+  }, [initialized, drawP5]);
 
   const drawP5 = () => {
     new p5(p => {
@@ -154,34 +154,34 @@ const Background = (props) => {
 
 
   // Draw "explosions" when the user clicks
-  const drawExplosions = (context) => {
-    if( explosions.current.length > 0 ){ // Don't try to draw explosions if there aren't any
-      context.background(255);
-      context.noFill();
-      context.stroke(0, 0, 0, 255);
+  // const drawExplosions = (context) => {
+  //   if( explosions.current.length > 0 ){ // Don't try to draw explosions if there aren't any
+  //     context.background(255);
+  //     context.noFill();
+  //     context.stroke(0, 0, 0, 255);
 
-      explosions.current.forEach((explosion, i) => {
-        if( explosion.age <= explosionDuration ){
-          const explosionSize = context.map(explosion.age, 0, explosionDuration, explosionStartSize, explosionEndSize);
+  //     explosions.current.forEach((explosion, i) => {
+  //       if( explosion.age <= explosionDuration ){
+  //         const explosionSize = context.map(explosion.age, 0, explosionDuration, explosionStartSize, explosionEndSize);
 
-          context.strokeWeight((1 - (explosion.age / explosionDuration)) * explosionStartSize);
-          context.circle(explosion.x, explosion.y, explosionSize);
+  //         context.strokeWeight((1 - (explosion.age / explosionDuration)) * explosionStartSize);
+  //         context.circle(explosion.x, explosion.y, explosionSize);
           
-        } else {
-          delete explosions.current[i];
-        }
+  //       } else {
+  //         delete explosions.current[i];
+  //       }
 
-        explosion.age += 1;
-      });
+  //       explosion.age += 1;
+  //     });
 
-      // Apply blur
-      context.filter(context.BLUR, explosionStartSize / 4);
+  //     // Apply blur
+  //     context.filter(context.BLUR, explosionStartSize / 4);
 
-      // Apply dither effect
-      const bgColor = [0, 0, 0, 0]; // Transparent
-      dither(context, props.accentColor, bgColor, 90, props.pixelDensity, true);
-    }
-  }
+  //     // Apply dither effect
+  //     const bgColor = [0, 0, 0, 0]; // Transparent
+  //     dither(context, props.accentColor, bgColor, 90, props.pixelDensity, true);
+  //   }
+  // }
 
 
 
