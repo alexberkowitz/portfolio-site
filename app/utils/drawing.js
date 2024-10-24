@@ -131,7 +131,7 @@ function easeNew(x) {
   
   let sd = 0.12;
   let mean = 0.5;
-  let bell = -Math.exp(-0.5 * ((x-mean)/sd)**2) / (sd*Math.sqrt(2*Math.PI)) / 3 
+  // let bell = -Math.exp(-0.5 * ((x-mean)/sd)**2) / (sd*Math.sqrt(2*Math.PI)) / 3 
   
   sd = 0.12;
   mean = 0.5;
