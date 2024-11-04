@@ -3,10 +3,11 @@
 import { useEffect, useState, useRef } from "react";
 import p5 from 'p5';
 import { dither, ease } from '@/utils/drawing';
+import * as Constants from '@/Constants';
 
 import styles from "./background.module.scss";
 
-const Background = (props) => {
+const Background = () => {
   const renderRef = useRef();
   const [initialized, setInitialized] = useState(false);
 
@@ -54,8 +55,8 @@ const Background = (props) => {
 
     new p5(p => {
       p.setup = () => {
-        p.createCanvas(Math.round(Math.floor(window.innerWidth) / props.pixelDensity) * props.pixelDensity, Math.round(Math.floor(window.innerHeight) / props.pixelDensity) * props.pixelDensity).parent(renderRef.current);
-        p.pixelDensity(1 / props.pixelDensity);
+        p.createCanvas(Math.round(Math.floor(window.innerWidth) / Constants.pixelDensity) * Constants.pixelDensity, Math.round(Math.floor(window.innerHeight) / Constants.pixelDensity) * Constants.pixelDensity).parent(renderRef.current);
+        p.pixelDensity(1 / Constants.pixelDensity);
 
         // Graphics buffers
         gridBuffer = p.createGraphics(p.width, p.height, p.P2D);
@@ -64,8 +65,8 @@ const Background = (props) => {
 
         // When the window resizes, update the drawing parameters
         window.addEventListener("resize", () => {
-          const calculatedWidth = Math.round(Math.floor(window.innerWidth) / props.pixelDensity) * props.pixelDensity;
-          const calculatedHeight = Math.round(Math.floor(window.innerHeight) / props.pixelDensity) * props.pixelDensity;
+          const calculatedWidth = Math.round(Math.floor(window.innerWidth) / Constants.pixelDensity) * Constants.pixelDensity;
+          const calculatedHeight = Math.round(Math.floor(window.innerHeight) / Constants.pixelDensity) * Constants.pixelDensity;
           p.resizeCanvas(calculatedWidth, calculatedHeight);
           gridBuffer.resizeCanvas(calculatedWidth, calculatedHeight);
           cursorBuffer.resizeCanvas(calculatedWidth, calculatedHeight);
@@ -87,7 +88,7 @@ const Background = (props) => {
         p.frameRate(30);
 
         // Draw the background
-        p.background(props.bgColor[0], props.bgColor[1], props.bgColor[2]);
+        p.background(Constants.bgColor[0], Constants.bgColor[1], Constants.bgColor[2]);
 
         // Apply dot grid
         drawDotGrid(gridBuffer);
@@ -163,7 +164,7 @@ const Background = (props) => {
 
       // Apply dither effect
       const bgColor = [0, 0, 0, 0]; // Transparent
-      dither(context, props.fgColor, bgColor, 60, props.pixelDensity, true);
+      dither(context, Constants.fgColor, bgColor, 60, true);
     }
   }
 
@@ -198,7 +199,7 @@ const Background = (props) => {
 
       // Apply dither effect
       const bgColor = [0, 0, 0, 0]; // Transparent
-      dither(context, props.fgColor, bgColor, 90, props.pixelDensity, true);
+      dither(context, Constants.fgColor, bgColor, 90, true);
     }
   }
 
@@ -209,7 +210,7 @@ const Background = (props) => {
   /*-------------------------------------------------------*/
 
   const drawDotGrid = (context) => {
-    const normalizedWidth = Math.floor(context.width / props.pixelDensity);
+    const normalizedWidth = Math.floor(context.width / Constants.pixelDensity);
     const gridSpace = 8;
     const rowLength = normalizedWidth * 4; // There are four entries for each pixel
 
@@ -217,9 +218,9 @@ const Background = (props) => {
 
     for( let y = rowLength * gridSpace / 2; y < context.pixels.length; y += rowLength * gridSpace ){
       for (let x = y + (gridSpace * 2); x < y + rowLength; x+= 4 * gridSpace) {
-        context.pixels[x] = props.fgColor[0] // red;
-        context.pixels[x+1] = props.fgColor[1]; // green
-        context.pixels[x+2] = props.fgColor[2]; // blue;
+        context.pixels[x] = Constants.fgColor[0] // red;
+        context.pixels[x+1] = Constants.fgColor[1]; // green
+        context.pixels[x+2] = Constants.fgColor[2]; // blue;
         context.pixels[x+3] = 255; // alpha
       }
     }

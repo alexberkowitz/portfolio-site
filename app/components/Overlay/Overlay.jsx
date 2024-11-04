@@ -3,11 +3,19 @@
 import { useEffect, useState, useRef } from "react";
 import { useGlobalContext } from '@/GlobalContext';
 import p5 from 'p5';
-import { dither, ease } from '@/utils/drawing';
+import {
+  roundToPixel,
+  pixelCoord,
+  pixelDim,
+  updateTransition,
+  dither,
+  ease
+} from '@/utils/drawing';
+import * as Constants from '@/Constants';
 
 import styles from "./overlay.module.scss";
 
-const Overlay = (props) => {
+const Overlay = () => {
   const globalContext = useGlobalContext();
   const renderRef = useRef();
   const [initialized, setInitialized] = useState(false);
@@ -58,7 +66,7 @@ const Overlay = (props) => {
     new p5(p => {
       p.setup = () => {
         p.createCanvas(Math.floor(window.innerWidth), Math.floor(window.innerHeight)).parent(renderRef.current);
-        p.pixelDensity(1 / props.pixelDensity);
+        p.pixelDensity(1 / Constants.pixelDensity);
 
         // Graphics Buffers
         transitionBuffer = p.createGraphics(p.width, p.height, p.P2D);
@@ -66,8 +74,8 @@ const Overlay = (props) => {
 
         // When the window resizes, update the drawing parameters
         window.addEventListener("resize", () => {
-          const calculatedWidth = Math.round(Math.floor(window.innerWidth) / props.pixelDensity) * props.pixelDensity;
-          const calculatedHeight = Math.round(Math.floor(window.innerHeight) / props.pixelDensity) * props.pixelDensity;
+          const calculatedWidth = Math.round(Math.floor(window.innerWidth) / Constants.pixelDensity) * Constants.pixelDensity;
+          const calculatedHeight = Math.round(Math.floor(window.innerHeight) / Constants.pixelDensity) * Constants.pixelDensity;
           p.resizeCanvas(calculatedWidth, calculatedHeight);
           transitionBuffer.resizeCanvas(calculatedWidth, calculatedHeight);
           cursorBuffer.resizeCanvas(calculatedWidth, calculatedHeight);
@@ -86,7 +94,7 @@ const Overlay = (props) => {
         // Draw the cursor
         if( hasCursor && showCursor.current ){
           drawCursor(cursorBuffer, p);
-          p.image(cursorBuffer, 0, 0);
+          p.image(cursorBuffer, 0, 0, p.width, p.height);
         }
       }
     });
@@ -101,14 +109,11 @@ const Overlay = (props) => {
   const drawTransition = (context) => {
     const transition = globalContext.transition.current;
     const blurAmount = 50;
-    const transitionDuration = globalContext.transitionDuration * 30; // Converting ms to frames
-    const explosionEndSize = (Math.sqrt(Math.pow(context.width, 2), Math.pow(context.height, 2)) + blurAmount) * 2.5;
+    const explosionEndSize = (Math.sqrt(Math.pow(context.width, 2), Math.pow(context.height, 2)) + blurAmount) * Constants.pixelDensity * 2;
     
     // Animate the transition in or out
-    // Animates from 0-1 or 1-0
-    transitionAmount.current = transition.active ?
-      Math.min(transitionAmount.current + (1 / transitionDuration), 1)
-      : Math.max(transitionAmount.current - (1 / transitionDuration), 0);
+    const transitionDuration = globalContext.transitionDuration * 30; // Converting ms to frames
+    transitionAmount.current = updateTransition(transitionAmount.current, transitionDuration, transition.active);
     
     if( transitionAmount.current > 0 ){
       context.background(255);
@@ -121,7 +126,7 @@ const Overlay = (props) => {
   
       // Apply dither effect
       const bgColor = [0, 0, 0, 0]; // Transparent
-      dither(context, props.fgColor, bgColor, 150, props.pixelDensity, true);
+      dither(context, Constants.fgColor, bgColor, 150, true);
     } else {
       context.clear();
     }
@@ -134,31 +139,30 @@ const Overlay = (props) => {
   /*-------------------------------------------------------*/
   
   const drawCursor = (context, p) => {
-    const strokeWeight = 1 * props.pixelDensity;
+    const pixelDensity = Constants.pixelDensity;
+    const strokeWeight = pixelDensity;
     const hover = globalContext.hover.current;
     
     context.clear();
     context.noSmooth();
     context.strokeWeight(strokeWeight);
     context.strokeCap(context.PROJECT);
-    context.stroke(0, 0, 0, 255);
+    context.stroke(0);
     context.noFill();
 
     const mousePos = { // Round coordinates so pixels are always clear
-      x: props.pixelDensity * Math.round(p.mouseX / props.pixelDensity) - Math.round(context.width / 2) - Math.round(props.pixelDensity / 2) + (props.pixelDensity/2),
-      y: props.pixelDensity * Math.round(p.mouseY / props.pixelDensity) - Math.round(context.height / 2) - Math.round(props.pixelDensity / 2),
+      x: pixelCoord(p.mouseX, p.width),
+      y: pixelCoord(p.mouseY, p.height)
     }
 
     // Animate the transition in or out
-    // Animates from 0-1 or 1-0
     const transitionDuration = 10; // In frames
-    hoverAmount.current = hover.active ?
-      Math.min(hoverAmount.current + (1 / transitionDuration), 1)
-      : Math.max(hoverAmount.current - (1 / transitionDuration), 0);
+    hoverAmount.current = updateTransition(hoverAmount.current, transitionDuration, hover.active);
+
 
     // Crosshair
-    const crosshairSize = 14 * props.pixelDensity;
-    const crosshairInnerSize = 12 * props.pixelDensity;
+    const crosshairSize = pixelDim(20);
+    const crosshairInnerSize = pixelDim(12);
     context.line(mousePos.x, mousePos.y - (crosshairSize / 2), // Top line
                  mousePos.x, mousePos.y - (crosshairInnerSize / 2),);
 
@@ -172,27 +176,55 @@ const Overlay = (props) => {
     context.line(mousePos.x + (crosshairSize / 2), // Right line
                  mousePos.y, mousePos.x + (crosshairInnerSize / 2),
                  mousePos.y,);
-    context.rect(mousePos.x, mousePos.y, 1,1);
+
 
     // Hover elements
-    const targetBoxCorner = 999999;
-    const targetBoxMinSize = 4 * props.pixelDensity;
+    const targetBoxMinSize = pixelDim(4);
     const targetBox = {
-      x: context.lerp(mousePos.x, hover.x - (context.width / 2) + (hover.w / 2), ease(hoverAmount.current, 'inOutcubic')),
-      y: context.lerp(mousePos.y, hover.y - (context.height / 2) + (hover.h / 2), ease(hoverAmount.current, 'inOutcubic')),
-      w: context.lerp(targetBoxMinSize, hover.w, ease(hoverAmount.current, 'inOutCubic')),
-      h: context.lerp(targetBoxMinSize, hover.h, ease(hoverAmount.current, 'inOutCubic')),
+      x: context.lerp(
+          mousePos.x,
+          pixelCoord(hover.x, p.width) + roundToPixel(hover.w / 2),
+          ease(hoverAmount.current, 'inOutcubic')
+        ),
+      y: context.lerp(
+          mousePos.y,
+          pixelCoord(hover.y, p.height) + roundToPixel(hover.h / 2),
+          ease(hoverAmount.current, 'inOutcubic')
+        ),
+      w: roundToPixel(
+          context.lerp(
+            targetBoxMinSize,
+            hover.w,
+            ease(hoverAmount.current, 'inOutCubic')
+          )
+        ),
+      h: roundToPixel(
+          context.lerp(
+            targetBoxMinSize,
+            hover.h,
+            ease(hoverAmount.current, 'inOutCubic')
+          )
+        ),
+      corner: context.lerp(
+        0,
+        40,
+        ease(hoverAmount.current, 'inOutCubic')
+      ),
     };
 
     context.rectMode(context.CENTER);
-    context.rect(targetBox.x, targetBox.y, targetBox.w, targetBox.h, targetBoxCorner, targetBoxCorner, targetBoxCorner, targetBoxCorner);
+    context.rect(targetBox.x, targetBox.y, targetBox.w, targetBox.h, targetBox.corner, targetBox.corner, targetBox.corner, targetBox.corner);
 
+    // Center Dot
+    context.noStroke();
+    context.fill(0);
+    context.rect(mousePos.x, mousePos.y, 1,1);
   }
   
 
 
   return (
-    <div className={styles.cursor} ref={renderRef}></div>
+    <div className={styles.overlay} ref={renderRef}></div>
   );
 }
 

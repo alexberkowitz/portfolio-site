@@ -1,11 +1,44 @@
+import * as Constants from '@/Constants';
+/*-------------------------------------------------------*/
+/* Utilities
+/*-------------------------------------------------------*/
+
+// Round a number to the nearest multiple of the pixel density
+export const roundToPixel = (value) => {
+  return Constants.pixelDensity * Math.round(value / Constants.pixelDensity);
+}
+
+// Convert a screen-space coordinate to render pixels
+export const pixelCoord = (value, globalSizeModifier) => { // globalSizeModifier is usually the canvas width or height
+  return roundToPixel(value - (globalSizeModifier / Constants.pixelDensity));
+}
+
+// Convert a render pixel dimension to screen-space
+export const pixelDim = (value) => {
+  return value * Constants.pixelDensity;
+}
+
+// Update the value of a transition control variable
+// Linearly animates between 0 and 1 based on the active param
+export const updateTransition = (amount, duration, active) => {
+  if( active ) {
+    return Math.min(amount + (1 / duration), 1);
+  } else {
+    return Math.max(amount - (1 / duration), 0);
+  }
+}
+
+
+
 /*-------------------------------------------------------*/
 /* DITHERING
 /*-------------------------------------------------------*/
 /* Based on Bayer Dithering by illus0r
 /* https://editor.p5js.org/illus0r/sketches/YkkcqhLmY
 /*-------------------------------------------------------*/
-export const dither = (context, fgColor, bgColor, threshold, pixelDensity, autoUpdate) => {
-  const normalizedWidth = Math.floor(context.width / pixelDensity);
+
+export const dither = (context, fgColor, bgColor, threshold, autoUpdate) => {
+  const normalizedWidth = Math.floor(context.width / Constants.pixelDensity);
   const m = [
     [3, 1],
     [0, 2],
@@ -30,12 +63,15 @@ export const dither = (context, fgColor, bgColor, threshold, pixelDensity, autoU
   }
 }
 
+
+
 /*-------------------------------------------------------*/
 /* EASING FUNCTIONS
 /*-------------------------------------------------------*/
 /* Based on Easing Functions Animated by rjgilmour
 /* https://editor.p5js.org/rjgilmour/sketches/eqP7q0Y4B
 /*-------------------------------------------------------*/
+
 export const ease = (x, type, reverse) => {
   // Input and output are between 0 and 1
 

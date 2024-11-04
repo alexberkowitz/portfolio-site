@@ -23,6 +23,7 @@ body {
   --fgColor: green;
   --bodyColor: blue;
   --accentColor: yellow;
+  --lineWidth: 2px;
 
   @media( max-width: 640px ){
     --pagePadding: 1rem;

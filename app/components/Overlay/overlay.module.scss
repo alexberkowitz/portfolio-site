@@ -1,4 +1,4 @@
-.cursor {
+.overlay {
   position: fixed;
   top: 0;
   bottom: 0;
@@ -7,4 +7,9 @@
   image-rendering: pixelated;
   pointer-events: none;
   z-index: 99999;
+
+  canvas {
+    width: 100% !important;
+    height: 100% !important;
+  }
 }
