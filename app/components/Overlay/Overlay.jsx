@@ -66,12 +66,17 @@ const Overlay = (props) => {
 
         // When the window resizes, update the drawing parameters
         window.addEventListener("resize", () => {
-          p.resizeCanvas(Math.floor(window.innerWidth), Math.floor(window.innerHeight));
+          const calculatedWidth = Math.round(Math.floor(window.innerWidth) / props.pixelDensity) * props.pixelDensity;
+          const calculatedHeight = Math.round(Math.floor(window.innerHeight) / props.pixelDensity) * props.pixelDensity;
+          p.resizeCanvas(calculatedWidth, calculatedHeight);
+          transitionBuffer.resizeCanvas(calculatedWidth, calculatedHeight);
+          cursorBuffer.resizeCanvas(calculatedWidth, calculatedHeight);
         });
       }
 
       p.draw = () => {
         p.frameRate(30);
+        p.noSmooth();
         p.clear();
         
         // Draw the transition
@@ -116,7 +121,7 @@ const Overlay = (props) => {
   
       // Apply dither effect
       const bgColor = [0, 0, 0, 0]; // Transparent
-      dither(context, props.accentColor, bgColor, 150, props.pixelDensity, true);
+      dither(context, props.fgColor, bgColor, 150, props.pixelDensity, true);
     } else {
       context.clear();
     }
@@ -129,10 +134,19 @@ const Overlay = (props) => {
   /*-------------------------------------------------------*/
   
   const drawCursor = (context, p) => {
+    const strokeWeight = 1 * props.pixelDensity;
     const hover = globalContext.hover.current;
+    
+    context.clear();
+    context.noSmooth();
+    context.strokeWeight(strokeWeight);
+    context.strokeCap(context.PROJECT);
+    context.stroke(0, 0, 0, 255);
+    context.noFill();
+
     const mousePos = { // Round coordinates so pixels are always clear
-      x: props.pixelDensity * Math.round(p.mouseX / props.pixelDensity) - (context.width / 2) - (props.pixelDensity / 2),
-      y: props.pixelDensity * Math.round(p.mouseY / props.pixelDensity) - (context.height / 2) - (props.pixelDensity / 2),
+      x: props.pixelDensity * Math.round(p.mouseX / props.pixelDensity) - Math.round(context.width / 2) - Math.round(props.pixelDensity / 2) + (props.pixelDensity/2),
+      y: props.pixelDensity * Math.round(p.mouseY / props.pixelDensity) - Math.round(context.height / 2) - Math.round(props.pixelDensity / 2),
     }
 
     // Animate the transition in or out
@@ -141,35 +155,37 @@ const Overlay = (props) => {
     hoverAmount.current = hover.active ?
       Math.min(hoverAmount.current + (1 / transitionDuration), 1)
       : Math.max(hoverAmount.current - (1 / transitionDuration), 0);
-      
-    const strokeWeight = 1 * props.pixelDensity;
-    context.clear();
-    context.noSmooth();
-    context.strokeWeight(strokeWeight);
-    context.strokeCap(context.PROJECT);
-    context.stroke(0, 0, 0, 255);
-    context.noFill();
 
     // Crosshair
     const crosshairSize = 14 * props.pixelDensity;
-    const crosshairInnerSize = 6 * props.pixelDensity;
+    const crosshairInnerSize = 12 * props.pixelDensity;
+    context.line(mousePos.x, mousePos.y - (crosshairSize / 2), // Top line
+                 mousePos.x, mousePos.y - (crosshairInnerSize / 2),);
 
-    context.line(mousePos.x, mousePos.y - (crosshairSize / 2), mousePos.x, mousePos.y - (crosshairInnerSize / 2),); // Top line
-    context.line(mousePos.x, mousePos.y + (crosshairSize / 2), mousePos.x, mousePos.y + (crosshairInnerSize / 2),); // Bottom line
-    context.line(mousePos.x - (crosshairSize / 2), mousePos.y, mousePos.x - (crosshairInnerSize / 2), mousePos.y,); // Left line
-    context.line(mousePos.x + (crosshairSize / 2), mousePos.y, mousePos.x + (crosshairInnerSize / 2), mousePos.y,); // Right line
+    context.line(mousePos.x, mousePos.y + (crosshairSize / 2), // Bottom line
+                 mousePos.x, mousePos.y + (crosshairInnerSize / 2),);
+
+    context.line(mousePos.x - (crosshairSize / 2), // Left line
+                 mousePos.y, mousePos.x - (crosshairInnerSize / 2),
+                 mousePos.y,);
+
+    context.line(mousePos.x + (crosshairSize / 2), // Right line
+                 mousePos.y, mousePos.x + (crosshairInnerSize / 2),
+                 mousePos.y,);
+    context.rect(mousePos.x, mousePos.y, 1,1);
 
     // Hover elements
-    const cursorBox = {
+    const targetBoxCorner = 999999;
+    const targetBoxMinSize = 4 * props.pixelDensity;
+    const targetBox = {
       x: context.lerp(mousePos.x, hover.x - (context.width / 2) + (hover.w / 2), ease(hoverAmount.current, 'inOutcubic')),
       y: context.lerp(mousePos.y, hover.y - (context.height / 2) + (hover.h / 2), ease(hoverAmount.current, 'inOutcubic')),
-      w: context.lerp(4, hover.w, ease(hoverAmount.current, 'inOutCubic')),
-      h: context.lerp(4, hover.h, ease(hoverAmount.current, 'inOutCubic')),
-      corner: Math.min(hover.w / 2, hover.h / 2)
+      w: context.lerp(targetBoxMinSize, hover.w, ease(hoverAmount.current, 'inOutCubic')),
+      h: context.lerp(targetBoxMinSize, hover.h, ease(hoverAmount.current, 'inOutCubic')),
     };
 
     context.rectMode(context.CENTER);
-    context.rect(cursorBox.x, cursorBox.y, cursorBox.w, cursorBox.h, cursorBox.corner, cursorBox.corner, cursorBox.corner, cursorBox.corner);
+    context.rect(targetBox.x, targetBox.y, targetBox.w, targetBox.h, targetBoxCorner, targetBoxCorner, targetBoxCorner, targetBoxCorner);
 
   }
   
