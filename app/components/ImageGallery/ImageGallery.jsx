@@ -1,12 +1,12 @@
 'use client'
 
 import { useEffect, useState, useRef } from "react";
-import p5 from 'p5';
-import {
-  roundToPixel,
-  dither,
-} from '@/utils/drawing';
-import * as Constants from '@/Constants';
+// import p5 from 'p5';
+// import {
+//   roundToPixel,
+//   dither,
+// } from '@/utils/drawing';
+// import * as Constants from '@/Constants';
 
 import styles from "./imageGallery.module.scss";
 
