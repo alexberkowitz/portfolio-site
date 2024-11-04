@@ -23,7 +23,7 @@ const ImageGallery = (props) => {
 
       // Add a random rotation to each item
       let mutableItems = items;
-      mutableItems.forEach((item, index) => {
+      mutableItems.forEach((item) => {
         item.rotation = Math.random() * 30 - 15;
       });
       setItems(mutableItems);
@@ -50,7 +50,7 @@ const ImageGallery = (props) => {
 
         // Add a preloaded p5js image element to each entry
         let mutableItems = items;
-        mutableItems.forEach((item, index) => {
+        mutableItems.forEach((item) => {
           item.image = p.loadImage(item.src);
         });
         setItems(mutableItems);
