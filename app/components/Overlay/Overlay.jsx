@@ -196,7 +196,7 @@ const Overlay = () => {
         ),
       y: context.lerp(
           mousePos.y,
-          pixelCoord(hover.y, p.height) + roundToPixel(hover.h / 2),
+          pixelCoord(hover.y - Constants.pixelDensity, p.height) + roundToPixel(hover.h / 2),
           ease(hoverAmount.current, 'inOutcubic')
         ),
       w: roundToPixel(
