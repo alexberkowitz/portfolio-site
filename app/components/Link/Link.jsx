@@ -2,6 +2,8 @@
 
 import { useGlobalContext } from '@/GlobalContext';
 
+import styles from './link.module.scss';
+
 const Link = (props) => {
   const globalContext = useGlobalContext();
 
@@ -10,7 +12,7 @@ const Link = (props) => {
       onClick={(e) => globalContext.navigate(e, props.href)}
       onMouseEnter={(e) => globalContext.setHover(e, true)}
       onMouseLeave={(e) => globalContext.setHover(e, false)}
-      className={props.className}
+      className={`${styles.link} ${props.className}`}
       >
       {props.children}
     </a>

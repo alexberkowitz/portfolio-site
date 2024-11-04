@@ -88,7 +88,7 @@ const Overlay = () => {
         p.clear();
         
         // Draw the transition
-        drawTransition(transitionBuffer);
+        drawTransition(transitionBuffer, p);
         p.image(transitionBuffer, 0, 0);
 
         // Draw the cursor
@@ -106,8 +106,12 @@ const Overlay = () => {
   /* TRANSITIONS
   /*-------------------------------------------------------*/
 
-  const drawTransition = (context) => {
+  const drawTransition = (context, p) => {
     const transition = globalContext.transition.current;
+    // The default center point for the transition is the cursor position
+    transition.x = transition.x === undefined ? p.mouseX : transition.x;
+    transition.y = transition.y === undefined ? p.mouseY : transition.y;
+
     const blurAmount = 50;
     const explosionEndSize = (Math.sqrt(Math.pow(context.width, 2), Math.pow(context.height, 2)) + blurAmount) * Constants.pixelDensity * 2;
     
@@ -118,7 +122,11 @@ const Overlay = () => {
     if( transitionAmount.current > 0 ){
       context.background(255);
       context.fill(0);
-      const explosionSize = context.map(transitionAmount.current, 0, 1, 0, explosionEndSize);
+      const explosionSize = context.lerp(
+        0,
+        explosionEndSize,
+        ease(transitionAmount.current, 'inOutcubic')
+      );
       context.circle(transition.x, transition.y, explosionSize);
   
       // Apply blur
@@ -147,7 +155,7 @@ const Overlay = () => {
     context.noSmooth();
     context.strokeWeight(strokeWeight);
     context.strokeCap(context.PROJECT);
-    context.stroke(0);
+    context.stroke(hover.active ? Constants.accentColor : Constants.bodyColor);
     context.noFill();
 
     const mousePos = { // Round coordinates so pixels are always clear
@@ -207,7 +215,7 @@ const Overlay = () => {
         ),
       corner: context.lerp(
         0,
-        40,
+        Constants.interactiveCornerRadius,
         ease(hoverAmount.current, 'inOutCubic')
       ),
     };

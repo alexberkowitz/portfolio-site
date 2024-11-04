@@ -46,7 +46,8 @@ export default function RootLayout({ children }) {
           '--fgColor': `rgb(${Constants.fgColor[0]}, ${Constants.fgColor[1]}, ${Constants.fgColor[2]})`,
           '--bodyColor': `rgb(${Constants.bodyColor[0]}, ${Constants.bodyColor[1]}, ${Constants.bodyColor[2]})`,
           '--accentColor': `rgb(${Constants.accentColor[0]}, ${Constants.accentColor[1]}, ${Constants.accentColor[2]})`,
-          '--lineWidth': `${Constants.pixelDensity}px`
+          '--lineWidth': `${Constants.pixelDensity}px`,
+          '--interactiveCornerRadius': `${Constants.interactiveCornerRadius}px`
           }}>
           <DynamicBackground />
           {children}

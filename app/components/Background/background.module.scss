@@ -4,8 +4,6 @@
   bottom: var(--pagePadding);
   left: var(--pagePadding);
   right: var(--pagePadding);
-  image-rendering: pixelated;
-  border: solid var(--lineWidth) var(--fgColor);
   border-radius: var(--pagePadding);
   overflow: hidden;
   z-index: -1;

@@ -28,12 +28,12 @@ export default function GlobalContextContainer(props) {
       };
 
       // It's possible to only transition halfway, allowing another function to control the rest of the transition
-      if( incomplete === undefined || incomplete === false ) {
+      if( incomplete !== true ) {
         setTimeout(() => { // End the transition after an additional 0.5s
           transition.current = {
             active: false,
-            x: window.innerWidth / 2,
-            y: window.innerHeight / 2
+            x: undefined,
+            y: undefined
           };
         }, transitionDuration * 1000 + 500);
       }

@@ -24,6 +24,22 @@ body {
   --bodyColor: blue;
   --accentColor: yellow;
   --lineWidth: 2px;
+  --interactiveCornerRadius: 40px;
+
+  &:after {
+    content: '';
+    box-sizing: content-box;
+    position: fixed;
+    top: var(--pagePadding);
+    bottom: var(--pagePadding);
+    left: var(--pagePadding);
+    right: var(--pagePadding);
+    border: solid 2px var(--fgColor);
+    border-radius: var(--pagePadding);
+    outline: solid calc(var(--pagePadding) * 2) var(--bgColor);
+    pointer-events: none;
+    z-index: 10;
+  }
 
   @media( max-width: 640px ){
     --pagePadding: 1rem;
@@ -31,7 +47,13 @@ body {
 }
 
 main {
-  min-width: 100%;
-  min-height: 100%;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
   padding: var(--pagePadding);
+}
+
+canvas {
+  image-rendering: pixelated;
 }

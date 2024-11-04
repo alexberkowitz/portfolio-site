@@ -52,10 +52,18 @@ export const dither = (context, fgColor, bgColor, threshold, autoUpdate) => {
     let thresh = m[x%2][y%2] * 20 + threshold;
     let pixel = (context.pixels[i] + context.pixels[i + 1] + context.pixels[i + 2]) / 3; // Pixel brightness as an average of the R,G,B values
 
-    context.pixels[i] = pixel < thresh ? fgColor[0] : bgColor[0]; // Red
-    context.pixels[i + 1] = pixel < thresh ? fgColor[1] : bgColor[1]; // Green
-    context.pixels[i + 2] = pixel < thresh ? fgColor[2] : bgColor[2]; // Blue
-    context.pixels[i + 3] = pixel < thresh ? fgColor[3] : bgColor[3]; // Alpha
+    if( context.pixels[i + 3] === 0 ){ // Support transparency
+      context.pixels[i] = 0; // Red
+      context.pixels[i + 1] = 0; // Green
+      context.pixels[i + 2] = 0; // Blue
+      context.pixels[i + 3] = 0; // Alpha
+
+    } else {
+      context.pixels[i] = pixel < thresh ? fgColor[0] : bgColor[0]; // Red
+      context.pixels[i + 1] = pixel < thresh ? fgColor[1] : bgColor[1]; // Green
+      context.pixels[i + 2] = pixel < thresh ? fgColor[2] : bgColor[2]; // Blue
+      context.pixels[i + 3] = pixel < thresh ? fgColor[3] : bgColor[3]; // Alpha
+    }
   }
 
   if( autoUpdate !== undefined && autoUpdate ){

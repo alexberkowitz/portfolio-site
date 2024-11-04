@@ -7,11 +7,18 @@ import styles from './page.module.scss';
 
 export default function Designer() {
   const items = [
-    {src: "https://fastly.picsum.photos/id/909/200/300.jpg"},
-    {src: "https://fastly.picsum.photos/id/909/300/300.jpg"},
-    {src: "https://fastly.picsum.photos/id/909/300/200.jpg"},
-    {src: "https://fastly.picsum.photos/id/909/300/300.jpg"},
-    {src: "https://fastly.picsum.photos/id/909/200/200.jpg"},
+    {src: "https://loremflickr.com/200/300"},
+    {src: "https://loremflickr.com/300/300"},
+    {src: "https://loremflickr.com/300/200"},
+    {src: "https://loremflickr.com/300/300"},
+    {src: "https://loremflickr.com/200/200"},
+    {src: "https://loremflickr.com/301/200"},
+    {src: "https://loremflickr.com/302/200"},
+    {src: "https://loremflickr.com/303/200"},
+    {src: "https://loremflickr.com/200/201"},
+    {src: "https://loremflickr.com/200/202"},
+    {src: "https://loremflickr.com/200/203"},
+    {src: "https://loremflickr.com/200/204"},
   ];
 
   return (
