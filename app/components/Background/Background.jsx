@@ -44,7 +44,7 @@ const Background = () => {
         document.addEventListener("touchend", () => cursorDraw.current = false);
       }
     }
-  }, [initialized]);
+  }, []);
 
 
   

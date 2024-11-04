@@ -1,7 +1,5 @@
 'use client'
 
-import Link from '@/components/Link/Link';
-
 import styles from "./imageGallery.module.scss";
 
 const ImageGallery = (props) => {
