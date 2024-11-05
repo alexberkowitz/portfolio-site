@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState, useRef } from "react";
+import Link from '@/components/Link/Link';
 // import p5 from 'p5';
 // import {
 //   roundToPixel,
@@ -88,7 +89,7 @@ const ImageGallery = (props) => {
   //   });
 
   //   // Apply dither effect
-  //   dither(context, Constants.accentColor, Constants.fgColor, 60, true);
+  //   dither(context, Constants.accentColor, Constants.bodyColor, 100, true);
   // }
 
   return (
@@ -97,9 +98,11 @@ const ImageGallery = (props) => {
         {items.map((item, index) => {
           return(
             <li key={index} style={{'--rotation': `${item.rotation}deg`}}>
-              <img
-                src={item.src}
-                />
+              <Link>
+                <img
+                  src={item.src}
+                  />
+              </Link>
             </li>
           )
         })}

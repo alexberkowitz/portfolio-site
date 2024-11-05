@@ -15,9 +15,35 @@
       z-index: 1;
       --rotation: 0deg;
 
-      img {
+      a {
+        display: block;
+        position: relative;
+        transform-origin: 50% 50%;
         transform: rotate(var(--rotation));
+        padding: var(--padding);
+        --padding: 2rem;
+      }
+      
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
         filter: saturate(0%);
+      }
+
+      a:hover,
+      a:focus-visible {
+        &:after {
+          content: '';
+          position: absolute;
+          top: var(--padding);
+          bottom: var(--padding);
+          left: var(--padding);
+          right: var(--padding);
+          background-color: var(--fgColor);
+          mix-blend-mode: screen;
+          z-index: 2;
+        }
       }
     }
   }

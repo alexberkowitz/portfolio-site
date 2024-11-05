@@ -9,6 +9,7 @@ const BackButton = () => {
     <Link
       className={styles.backButton}
       href="/"
+      hoverTarget={true}
       >
       Go Back
     </Link>

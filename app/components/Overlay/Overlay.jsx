@@ -170,7 +170,7 @@ const Overlay = () => {
 
     // Hover elements
     context.stroke(hover.active ? Constants.accentColor : Constants.bodyColor);
-    context.fill(Constants.accentColor[0], Constants.accentColor[1], Constants.accentColor[2], Constants.accentColor[3] * (1 - hoverAmount.current));
+    context.fill(Constants.accentColor[0], Constants.accentColor[1], Constants.accentColor[2], hoverAmount.current === 0 ? 255 : 0);
     const targetBoxMinSize = pixelDim(4);
     const targetBox = {
       x: context.lerp(
