@@ -125,7 +125,7 @@ const Overlay = () => {
       const explosionSize = context.lerp(
         0,
         explosionEndSize,
-        ease(transitionAmount.current, 'inOutcubic')
+        ease(transitionAmount.current, 'inOutCubic')
       );
       context.circle(transition.x, transition.y, explosionSize);
   
@@ -176,12 +176,12 @@ const Overlay = () => {
       x: context.lerp(
           mousePos.x,
           pixelCoord(hover.x, p.width) + roundToPixel(hover.w / 2),
-          ease(hoverAmount.current, 'inOutcubic')
+          ease(hoverAmount.current, 'inOutCubic')
         ),
       y: context.lerp(
           mousePos.y,
           pixelCoord(hover.y - Constants.pixelDensity, p.height) + roundToPixel(hover.h / 2),
-          ease(hoverAmount.current, 'inOutcubic')
+          ease(hoverAmount.current, 'inOutCubic')
         ),
       w: roundToPixel(
           context.lerp(

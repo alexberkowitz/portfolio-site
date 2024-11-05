@@ -80,55 +80,46 @@ export const dither = (context, fgColor, bgColor, threshold, autoUpdate) => {
 /* https://editor.p5js.org/rjgilmour/sketches/eqP7q0Y4B
 /*-------------------------------------------------------*/
 
-export const ease = (x, type, reverse) => {
+export const ease = (input, timingFunction, strength, reverse) => {
   // Input and output are between 0 and 1
 
+  const easings = {
+    sine: easeInOutSine,
+    easeIn: easeIn,
+    easeOut: easeOut,
+    backForthSettle2: easeBackForthSettle2,
+    inOutSineScaled: easeInOutSineScaled,
+    outSlowBackFast: easeOutSlowBackFast,
+    backAndForth: easeBackAndForth,
+    outElastic: easeOutElastic,
+    backAndForthSettle: easeBackAndForthSettle,
+    inOutCubic: easeInOutCubic,
+    new: easeNew,
+    new2: easeNew2,
+    new3: easeNew3
+  }
+
   if ( reverse ){
-    x = 1 - x;
+    input = 1 - input;
   }
 
   let output = 0;
 
-  switch( type ){
-    case 'backForthSettle2':
-      output = easeBackForthSettle2(x);
-      break;
-    case 'inOutSineScaled':
-      output = easeInOutSineScaled(x);
-      break;
-    case 'outSlowBackFast':
-      output = easeOutSlowBackFast(x);
-      break;
-    case 'backAndForth':
-      output = easeBackAndForth(x);
-      break;
-    case 'outElastic':
-      output = easeOutElastic(x);
-      break;
-    case 'linear':
-      output = easeLinear(x);
-      break;
-    case 'backAndForthSettle':
-      output = easeBackAndForthSettle(x);
-      break;
-    case 'inOutCubic':
-      output = easeInOutCubic(x);
-      break;
-    case 'new':
-      output = easeNew(x);
-      break;
-    case 'new2':
-      output =  easeNew2(x);
-      break;
-    case 'new3':
-      output = easeNew3(x);
-      break;
-    default:
-      output = easeInOutSine(x);
-      break;
+  if (typeof easings[timingFunction] === 'function') {
+    output = easings[timingFunction](input, strength);
+  } else {
+    console.error('Invalid timing function provided!');
   }
 
   return reverse ? 1 - output : output;
+}
+
+function easeIn(t, strength = 3) {
+  return Math.pow(t, strength);
+}
+
+function easeOut(t, strength = 3) {
+  return 1 - Math.pow(1 - t, strength);
 }
 
 function easeInOutSine(x){
@@ -167,10 +158,6 @@ function easeOutElastic(x){
     : x === 1
     ? 1
     : Math.pow(2, -10 * x) * Math.sin((x * 10 - 0.75) * c4) + 1;
-}
-
-function easeLinear(x) {
-  return x;
 }
 
 function easeBackAndForthSettle(x){

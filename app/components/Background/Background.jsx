@@ -17,16 +17,12 @@ const Background = () => {
   // Cursor trail setup
   let cursorBuffer;
   let cursorPoints = useRef([]); // Cursor trail points
-  const cursorPointMaxAge = 10; // In frames
   const cursorLineWidth = useRef(300); // In px
   const cursorDraw = useRef(true); // Whether or not to draw cursor trail
   
   // Explosions setup
   let explosionBuffer;
   let explosions = useRef([]); // Click effect explosions
-  const explosionDuration = 10; // In frames
-  const explosionStartSize = 100; // In px
-  const explosionEndSize = 500; // In px
   
   // Initial setup
   useEffect(() => {
@@ -117,6 +113,7 @@ const Background = () => {
   
   // Draw a fading trail following the cursor
   const drawCursorTrail = (context, p) => {
+    const cursorPointMaxAge = 10; // In frames
     context.noFill();
 
     // Add the current cursor position to the points list
@@ -173,8 +170,11 @@ const Background = () => {
   /*-------------------------------------------------------*/
   /* CLICK EXPLOSIONS
   /*-------------------------------------------------------*/
-
   const drawExplosions = (context) => {
+    const explosionDuration = 10; // In frames
+    const explosionStartSize = 100; // In px
+    const explosionEndSize = 400; // In px
+
     if( explosions.current.length > 0 ){ // Don't try to draw explosions if there aren't any
       context.background(255);
       context.noFill();
@@ -182,7 +182,12 @@ const Background = () => {
 
       explosions.current.forEach((explosion, i) => {
         if( explosion.age <= explosionDuration ){
-          const explosionSize = context.map(explosion.age, 0, explosionDuration, explosionStartSize, explosionEndSize);
+          // const explosionSize = context.map(explosion.age, 0, explosionDuration, explosionStartSize, explosionEndSize);
+          const explosionSize = context.lerp(
+            explosionStartSize,
+            explosionEndSize,
+            ease(explosion.age / explosionDuration, 'easeOut', 4)
+          )
 
           context.strokeWeight((1 - (explosion.age / explosionDuration)) * explosionStartSize);
           context.circle(explosion.x, explosion.y, explosionSize);
