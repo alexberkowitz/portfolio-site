@@ -4,11 +4,11 @@ export const baseUrl = 'https://alexberkowitz.com';
 
 export default async function sitemap() {
   let projects = getProjects().map((project) => ({
-    url: `${baseUrl}/${project.slug}`,
+    url: `${baseUrl}/projects/${project.slug}`,
     lastModified: project.metadata.publishedAt,
   }));
 
-  let projectRoutes = ['', '/'].map((route) => ({
+  let projectRoutes = ['', '/projects'].map((route) => ({
     url: `${baseUrl}${route}`,
     lastModified: new Date().toISOString().split('T')[0],
   }));

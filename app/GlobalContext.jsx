@@ -6,6 +6,7 @@ const GlobalContext = createContext();
 
 export default function GlobalContextContainer(props) {
   const router = useRouter();
+  const [prevRoute, setPrevRoute] = useState('/');
   const hover = useRef({active: false, x: 0, y: 0, w: 0, h: 0});
   const transition = useRef({active: false, x: 0, y: 0});
   const transitionDuration = .5; // In seconds
@@ -13,6 +14,7 @@ export default function GlobalContextContainer(props) {
 
   // Navigate between pages with a transition
   const navigate = (e, destination, incomplete) => {
+    setPrevRoute(window.location.pathname);
     document.activeElement.blur();
     transition.current = {
       active: true,
@@ -57,6 +59,7 @@ export default function GlobalContextContainer(props) {
       cursorState,
       setCursorState,
       hover,
+      prevRoute,
       setHover,
       navigate,
       transition,

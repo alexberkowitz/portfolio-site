@@ -43,7 +43,7 @@ function getMDXData(dir) {
 }
 
 export function getProjects(category) {
-  const projects = getMDXData(`${process.cwd()}/app/projects`);
+  const projects = getMDXData(`${process.cwd()}/app/projects/projects`);
   console.log(projects);
   if( !!category ){
     return projects.filter((project) => {
