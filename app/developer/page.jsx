@@ -1,6 +1,5 @@
-'use client'
-
 import BackButton from '@/components/BackButton/BackButton';
+import { Projects } from '@/components/Projects/Projects';
 
 import styles from './page.module.scss';
 
@@ -9,6 +8,7 @@ export default function Developer() {
     <main className={styles.developerPage}>
       <BackButton />
       <h1>Developer</h1>
+      <Projects type="developer"/>
     </main>
   );
 }

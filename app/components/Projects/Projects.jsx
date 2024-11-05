@@ -1,8 +1,8 @@
-import Link from 'next/link'
+import Link from '@/components/Link/Link';
 import { formatDate, getProjects } from '@/utils/projects';
 
-export function Projects() {
-  let allProjects = getProjects();
+export function Projects(props) {
+  let allProjects = getProjects(props.type);
 
   return (
     <div>
@@ -18,9 +18,9 @@ export function Projects() {
         .map((project) => (
           <Link
             key={project.slug}
-            className="flex flex-col space-y-1 mb-4"
-            href={`/project/${project.slug}`}
-          >
+            href={`/${project.slug}`}
+            hoverTarget={true}
+            >
             <div className="w-full flex flex-col md:flex-row space-x-0 md:space-x-2">
               <p className="text-neutral-600 dark:text-neutral-400 w-[100px] tabular-nums">
                 {formatDate(project.metadata.publishedAt, false)}

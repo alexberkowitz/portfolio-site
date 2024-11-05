@@ -42,9 +42,18 @@ function getMDXData(dir) {
   })
 }
 
-export function getProjects(route) {
-  const routeString = String(route);
-  return getMDXData(path.join(process.cwd(), 'app', 'designer', 'projects'));
+export function getProjects(category) {
+  const projects = getMDXData(`${process.cwd()}/app/projects`);
+  console.log(projects);
+  if( !!category ){
+    return projects.filter((project) => {
+      console.log(category);
+      console.log(project.metadata.category.includes(category));
+      return project.metadata.category.includes(category);
+   } );
+  } else {
+    return projects;
+  }
 }
 
 export function formatDate(date = String(new Date()), includeRelative = false) {

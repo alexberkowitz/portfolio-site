@@ -60,7 +60,7 @@ export default function Designer() {
     <main className={styles.designerPage}>
       <BackButton />
       <h1>Designer</h1>
-      <Projects />
+      <Projects type="designer"/>
       {/* <ImageGallery items={items}/> */}
     </main>
   );
