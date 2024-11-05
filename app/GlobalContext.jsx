@@ -8,7 +8,7 @@ export default function GlobalContextContainer(props) {
   const router = useRouter();
   const hover = useRef({active: false, x: 0, y: 0, w: 0, h: 0});
   const transition = useRef({active: false, x: 0, y: 0});
-  const transitionDuration = .3; // In seconds
+  const transitionDuration = .5; // In seconds
   const [cursorState, setCursorState] = useState('default');
 
   // Navigate between pages with a transition

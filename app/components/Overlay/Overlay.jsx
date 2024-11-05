@@ -108,12 +108,15 @@ const Overlay = () => {
 
   const drawTransition = (context, p) => {
     const transition = globalContext.transition.current;
+
     // The default center point for the transition is the cursor position
     transition.x = transition.x === undefined ? p.mouseX : transition.x;
     transition.y = transition.y === undefined ? p.mouseY : transition.y;
 
     const blurAmount = 50;
-    const explosionEndSize = (Math.sqrt(Math.pow(context.width, 2), Math.pow(context.height, 2)) + blurAmount) * Constants.pixelDensity * 2;
+    const triangleA = Math.max(transition.x, context.width - transition.x);
+    const triangleB = Math.max(transition.y, context.width - transition.y);
+    const transitionEndSize = (Math.sqrt(triangleA ** 2 + triangleB ** 2) + (blurAmount * 2)) * 2;
     
     // Animate the transition in or out
     const transitionDuration = globalContext.transitionDuration * 30; // Converting ms to frames
@@ -122,12 +125,12 @@ const Overlay = () => {
     if( transitionAmount.current > 0 ){
       context.background(255);
       context.fill(0);
-      const explosionSize = context.lerp(
+      const transitionSize = context.lerp(
         0,
-        explosionEndSize,
-        ease(transitionAmount.current, 'inOutCubic')
+        transitionEndSize,
+        ease(transitionAmount.current, 'easeOut', 5)
       );
-      context.circle(transition.x, transition.y, explosionSize);
+      context.circle(transition.x, transition.y, transitionSize);
   
       // Apply blur
       context.filter(context.BLUR, blurAmount);
@@ -169,7 +172,7 @@ const Overlay = () => {
 
 
     // Hover elements
-    context.stroke(hover.active ? Constants.accentColor : Constants.bodyColor);
+    context.stroke(hoverAmount.current === 0 ? Constants.bodyColor : Constants.accentColor);
     context.fill(Constants.accentColor[0], Constants.accentColor[1], Constants.accentColor[2], hoverAmount.current === 0 ? 255 : 0);
     const targetBoxMinSize = pixelDim(4);
     const targetBox = {
