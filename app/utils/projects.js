@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 
+// Parse project property tables
 function parseFrontmatter(fileContent) {
   let frontmatterRegex = /---\s*([\s\S]*?)\s*---/
   let match = frontmatterRegex.exec(fileContent);
@@ -19,15 +20,18 @@ function parseFrontmatter(fileContent) {
   return { metadata, content }
 }
 
+// Get a list of markdown files
 function getMDXFiles(dir) {
   return fs.readdirSync(dir).filter((file) => path.extname(file) === '.mdx')
 }
 
+// Read the contents of a markdown file
 function readMDXFile(filePath) {
   let rawContent = fs.readFileSync(filePath, 'utf-8')
   return parseFrontmatter(rawContent)
 }
 
+// Get Markdown data from the contents of a markdown file
 function getMDXData(dir) {
   let mdxFiles = getMDXFiles(dir)
   return mdxFiles.map((file) => {
@@ -42,52 +46,15 @@ function getMDXData(dir) {
   })
 }
 
-export function getProjects(category) {
+// Get and filter the projects list
+export function getProjects(role) {
   const projects = getMDXData(`${process.cwd()}/app/projects/projects`);
-  console.log(projects);
-  if( !!category ){
+
+  if( !!role ){
     return projects.filter((project) => {
-      console.log(category);
-      console.log(project.metadata.category.includes(category));
-      return project.metadata.category.includes(category);
+      return project.metadata.role.includes(role);
    } );
   } else {
     return projects;
   }
-}
-
-export function formatDate(date = String(new Date()), includeRelative = false) {
-  let currentDate = new Date();
-  if (!date.includes('T')) {
-    date = `${date}T00:00:00`
-  }
-  let targetDate = new Date(date);
-
-  let yearsAgo = currentDate.getFullYear() - targetDate.getFullYear()
-  let monthsAgo = currentDate.getMonth() - targetDate.getMonth()
-  let daysAgo = currentDate.getDate() - targetDate.getDate()
-
-  let formattedDate = ''
-
-  if (yearsAgo > 0) {
-    formattedDate = `${yearsAgo}y ago`
-  } else if (monthsAgo > 0) {
-    formattedDate = `${monthsAgo}mo ago`
-  } else if (daysAgo > 0) {
-    formattedDate = `${daysAgo}d ago`
-  } else {
-    formattedDate = 'Today'
-  }
-
-  let fullDate = targetDate.toLocaleString('en-us', {
-    month: 'long',
-    day: 'numeric',
-    year: 'numeric',
-  })
-
-  if (!includeRelative) {
-    return fullDate
-  }
-
-  return `${fullDate} (${formattedDate})`
 }

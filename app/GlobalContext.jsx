@@ -9,7 +9,6 @@ export default function GlobalContextContainer(props) {
   const [prevRoute, setPrevRoute] = useState('/');
   const hover = useRef({active: false, x: 0, y: 0, w: 0, h: 0});
   const transition = useRef({active: false, x: 0, y: 0});
-  const transitionDuration = .5; // In seconds
   const [cursorState, setCursorState] = useState('default');
 
   // Navigate between pages with a transition
@@ -37,9 +36,9 @@ export default function GlobalContextContainer(props) {
             x: undefined,
             y: undefined
           };
-        }, transitionDuration * 1000 + 500);
+        }, Constants.transitionDuration * 1000 + 500);
       }
-    }, transitionDuration * 1000);
+    }, Constants.transitionDuration * 1000);
   }
 
   // Set the hover state
@@ -62,8 +61,7 @@ export default function GlobalContextContainer(props) {
       prevRoute,
       setHover,
       navigate,
-      transition,
-      transitionDuration
+      transition
     }}>
       {props.children}
     </GlobalContext.Provider>

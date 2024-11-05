@@ -1,8 +1,10 @@
 import BackButton from '@/components/BackButton/BackButton';
 import { notFound } from 'next/navigation';
 import { CustomMDX } from '@/components/MDX/MDX';
-import { formatDate, getProjects } from '@/utils/projects';
+import { getProjects } from '@/utils/projects';
 import { baseUrl } from '@/sitemap';
+
+import styles from './page.module.scss';
 
 export async function generateStaticParams() {
   let projects = getProjects('designer')
@@ -60,40 +62,25 @@ export default function Project({ params }) {
   }
 
   return (
-    <main>
-      <script
-        type="application/ld+json"
-        suppressHydrationWarning
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            '@context': 'https://schema.org',
-            '@type': 'BlogPosting',
-            headline: project.metadata.title,
-            datePublished: project.metadata.publishedAt,
-            dateModified: project.metadata.publishedAt,
-            description: project.metadata.summary,
-            image: project.metadata.image
-              ? `${baseUrl}${project.metadata.image}`
-              : `/og?title=${encodeURIComponent(project.metadata.title)}`,
-            url: `${baseUrl}/${project.slug}`,
-            author: {
-              '@type': 'Person',
-              name: 'My Portfolio',
-            },
-          }),
-        }}
-      />
-      <h1 className="title font-semibold text-2xl tracking-tighter">
-        {project.metadata.title}
-      </h1>
-      <div className="flex justify-between items-center mt-2 mb-8 text-sm">
-        <p className="text-sm text-neutral-600 dark:text-neutral-400">
-          {formatDate(project.metadata.publishedAt)}
-        </p>
+    <main className={styles.projectPage}>
+
+      <div className={styles.info}>
+        <h1 className={styles.title}>
+          <span>{project.metadata.title}</span>
+        </h1>
+
+        <dl className={styles.details}>
+          <dt>Role</dt>
+          <dd>{project.metadata.role}</dd>
+          <dt>Date</dt>
+          <dd>{project.metadata.date}</dd>
+        </dl>
       </div>
-      <article className="prose">
+
+      <div className={styles.content}>
         <CustomMDX source={project.content} />
-      </article>
+      </div>
+
       <BackButton />
     </main>
   )

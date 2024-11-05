@@ -8,7 +8,7 @@
   height: 3rem;
   font-size: 0;
   background-image: linear-gradient(currentColor, currentColor);
-  background-size: calc(100% - var(--pagePadding)) var(--lineWidth);
+  background-size: calc(100% - var(--pagePadding)) var(--borderWidth);
   background-position: center;
   background-repeat: no-repeat;
   border-radius: var(--interactiveCornerRadius);
@@ -23,7 +23,7 @@
     display: block;
     width: 1rem;
     height: 1rem;
-    border: solid var(--lineWidth) currentColor;
+    border: solid var(--borderWidth) currentColor;
     border-right-width: 0;
     border-bottom-width: 0;
     transform: translateY(-50%) rotate(-45deg);

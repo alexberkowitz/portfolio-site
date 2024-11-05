@@ -119,7 +119,7 @@ const Overlay = () => {
     const transitionEndSize = (Math.sqrt(triangleA ** 2 + triangleB ** 2) + (blurAmount * 2)) * 2;
     
     // Animate the transition in or out
-    const transitionDuration = globalContext.transitionDuration * 30; // Converting ms to frames
+    const transitionDuration = Constants.transitionDuration * 30; // Converting ms to frames
     transitionAmount.current = updateTransition(transitionAmount.current, transitionDuration, transition.active);
     
     if( transitionAmount.current > 0 ){
