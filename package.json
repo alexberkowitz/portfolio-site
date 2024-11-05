@@ -9,11 +9,15 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "fs": "^0.0.1-security",
+    "gray-matter": "^4.0.3",
     "next": "14.2.15",
+    "next-mdx-remote": "^5.0.0",
     "p5": "^1.11.0",
     "react": "^18",
     "react-dom": "^18",
-    "sass": "^1.80.2"
+    "sass": "^1.80.2",
+    "sugar-high": "^0.7.5"
   },
   "devDependencies": {
     "@types/node": "^20",
