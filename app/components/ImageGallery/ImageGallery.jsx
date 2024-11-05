@@ -96,7 +96,7 @@ const ImageGallery = (props) => {
       <ul ref={listRef}>
         {items.map((item, index) => {
           return(
-            <li key={index}>
+            <li key={index} style={{'--rotation': `${item.rotation}deg`}}>
               <img
                 src={item.src}
                 />

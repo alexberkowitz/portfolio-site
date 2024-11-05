@@ -155,7 +155,7 @@ const Overlay = () => {
     context.noSmooth();
     context.strokeWeight(strokeWeight);
     context.strokeCap(context.PROJECT);
-    context.stroke(hover.active ? Constants.accentColor : Constants.bodyColor);
+    context.stroke(Constants.bodyColor);
     context.noFill();
 
     const mousePos = { // Round coordinates so pixels are always clear
@@ -168,25 +168,9 @@ const Overlay = () => {
     hoverAmount.current = updateTransition(hoverAmount.current, transitionDuration, hover.active);
 
 
-    // Crosshair
-    const crosshairSize = pixelDim(20);
-    const crosshairInnerSize = pixelDim(12);
-    context.line(mousePos.x, mousePos.y - (crosshairSize / 2), // Top line
-                 mousePos.x, mousePos.y - (crosshairInnerSize / 2),);
-
-    context.line(mousePos.x, mousePos.y + (crosshairSize / 2), // Bottom line
-                 mousePos.x, mousePos.y + (crosshairInnerSize / 2),);
-
-    context.line(mousePos.x - (crosshairSize / 2), // Left line
-                 mousePos.y, mousePos.x - (crosshairInnerSize / 2),
-                 mousePos.y,);
-
-    context.line(mousePos.x + (crosshairSize / 2), // Right line
-                 mousePos.y, mousePos.x + (crosshairInnerSize / 2),
-                 mousePos.y,);
-
-
     // Hover elements
+    context.stroke(hover.active ? Constants.accentColor : Constants.bodyColor);
+    context.fill(Constants.accentColor[0], Constants.accentColor[1], Constants.accentColor[2], Constants.accentColor[3] * (1 - hoverAmount.current));
     const targetBoxMinSize = pixelDim(4);
     const targetBox = {
       x: context.lerp(
@@ -223,9 +207,29 @@ const Overlay = () => {
     context.rectMode(context.CENTER);
     context.rect(targetBox.x, targetBox.y, targetBox.w, targetBox.h, targetBox.corner, targetBox.corner, targetBox.corner, targetBox.corner);
 
+
+    // Crosshair
+    context.stroke(Constants.bodyColor);
+    const crosshairSize = pixelDim(20);
+    const crosshairInnerSize = pixelDim(12);
+    context.line(mousePos.x, mousePos.y - (crosshairSize / 2), // Top line
+                 mousePos.x, mousePos.y - (crosshairInnerSize / 2),);
+
+    context.line(mousePos.x, mousePos.y + (crosshairSize / 2), // Bottom line
+                 mousePos.x, mousePos.y + (crosshairInnerSize / 2),);
+
+    context.line(mousePos.x - (crosshairSize / 2), // Left line
+                 mousePos.y, mousePos.x - (crosshairInnerSize / 2),
+                 mousePos.y,);
+
+    context.line(mousePos.x + (crosshairSize / 2), // Right line
+                 mousePos.y, mousePos.x + (crosshairInnerSize / 2),
+                 mousePos.y,);
+    
+
     // Center Dot
     context.noStroke();
-    context.fill(0);
+    context.fill(Constants.bodyColor);
     context.rect(mousePos.x, mousePos.y, 1,1);
   }
   

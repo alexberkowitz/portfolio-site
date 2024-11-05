@@ -7,7 +7,7 @@ export default function Home() {
   return (
     <main className={styles.homePage}>
       <div className={styles.title}>
-        <h1>Alex Berkowitz</h1>
+        <h1>Alex<br/>Berkowitz</h1>
       </div>
       <div className={styles.designer}>
         <Link
