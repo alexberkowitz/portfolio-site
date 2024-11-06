@@ -1,4 +1,6 @@
 .icon {
   width: 1rem;
   height: 1rem;
+  --primaryColor: var(--bodyColor);
+  --secondaryColor: var(--fgColor);
 }

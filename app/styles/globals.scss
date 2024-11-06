@@ -1,5 +1,10 @@
 @import 'css-reset';
 @import 'typography';
+@import 'variables';
+
+/*-------------------------------------------------------*/
+/* LAYOUT
+/*-------------------------------------------------------*/
 
 * {
   cursor: none !important;
@@ -58,6 +63,12 @@ main {
   overflow-y: auto;
   padding: var(--gap) var(--gap) calc(var(--gap) + 3rem) var(--gap);
 }
+
+
+
+/*-------------------------------------------------------*/
+/* ELEMENTS
+/*-------------------------------------------------------*/
 
 canvas {
   image-rendering: pixelated;

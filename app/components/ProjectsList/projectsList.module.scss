@@ -73,7 +73,7 @@
         display: block;
         padding: calc(var(--gap) / 4) calc(var(--gap) / 2);
         background-color: var(--accentColor);
-        border-radius: .25rem;
+        border-radius: calc(var(--cornerRadius) / 2);
         text-align: center;
         text-transform: uppercase;
       }

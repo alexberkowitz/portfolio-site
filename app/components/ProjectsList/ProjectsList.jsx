@@ -19,7 +19,7 @@ export function ProjectsList(props) {
             <Link
               key={project.slug}
               href={`/projects/${project.slug}`}
-              hoverTarget={false}
+              target={false}
               >
               <img src={project.metadata.cover} className={styles.cover} />
               <div className={styles.info}>

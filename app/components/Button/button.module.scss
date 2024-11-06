@@ -1,0 +1,17 @@
+.button {
+  padding: 1rem;
+  border-radius: calc(var(--cornerRadius) / 2);
+
+  &:hover,
+  &:focus-visible {
+
+    svg {
+      --primaryColor: var(--fgColor);
+      --secondaryColor: var(--fgColor);
+    }
+  }
+
+  &.icon {
+    padding: 0.5rem;
+  }
+}

@@ -172,32 +172,30 @@ const Overlay = () => {
 
 
     // Hover elements
-    const hoverColor = !!hover.color ? hover.color : Constants.accentColor;
-    context.stroke(hoverAmount.current === 0 ? Constants.bodyColor : hoverColor);
-    context.fill(Constants.accentColor[0], Constants.accentColor[1], Constants.accentColor[2], hoverAmount.current === 0 ? 255 : 0);
     const targetBoxMinSize = pixelDim(4);
+    const noTargetHoverSize = pixelDim(16);
     const targetBox = {
-      x: context.lerp(
+      x: hover.target ? context.lerp(
           mousePos.x,
           pixelCoord(hover.x, p.width) + roundToPixel(hover.w / 2),
           ease(hoverAmount.current, 'inOutCubic')
-        ),
-      y: context.lerp(
+        ) : mousePos.x,
+      y: hover.target ? context.lerp(
           mousePos.y,
           pixelCoord(hover.y - Constants.pixelDensity, p.height) + roundToPixel(hover.h / 2),
           ease(hoverAmount.current, 'inOutCubic')
-        ),
+        ) : mousePos.y,
       w: roundToPixel(
           context.lerp(
             targetBoxMinSize,
-            hover.w,
+            hover.target ? hover.w : noTargetHoverSize,
             ease(hoverAmount.current, 'inOutCubic')
           )
         ),
       h: roundToPixel(
           context.lerp(
             targetBoxMinSize,
-            hover.h,
+            hover.target ? hover.h : noTargetHoverSize,
             ease(hoverAmount.current, 'inOutCubic')
           )
         ),
@@ -207,15 +205,16 @@ const Overlay = () => {
         ease(hoverAmount.current, 'inOutCubic')
       ),
     };
-
     context.rectMode(context.CENTER);
+    context.stroke(Constants.bodyColor);
+    context.fill(Constants.accentColor[0], Constants.accentColor[1], Constants.accentColor[2], hoverAmount.current === 0 ? 255 : 0);
     context.rect(targetBox.x, targetBox.y, targetBox.w, targetBox.h, targetBox.corner, targetBox.corner, targetBox.corner, targetBox.corner);
 
 
     // Crosshair
-    context.stroke(Constants.bodyColor);
     const crosshairSize = pixelDim(20);
     const crosshairInnerSize = pixelDim(12);
+    context.stroke(Constants.bodyColor);
     context.line(mousePos.x, mousePos.y - (crosshairSize / 2), // Top line
                  mousePos.x, mousePos.y - (crosshairInnerSize / 2),);
 
@@ -232,9 +231,11 @@ const Overlay = () => {
     
 
     // Center Dot
-    context.noStroke();
-    context.fill(Constants.bodyColor);
-    context.rect(mousePos.x, mousePos.y, Constants.pixelDensity, Constants.pixelDensity);
+    if( hoverAmount.current === 0 ){
+      context.noStroke();
+      context.fill(Constants.bodyColor);
+      context.rect(mousePos.x, mousePos.y, Constants.pixelDensity, Constants.pixelDensity);
+    }
   }
   
 

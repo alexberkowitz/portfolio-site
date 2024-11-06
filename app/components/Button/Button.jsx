@@ -10,9 +10,9 @@ const Button = (props) => {
   return (
     <button
       onClick={props.onClick}
-      onMouseEnter={(e) => globalContext.setHover(e, true, props.hoverColor)}
-      onMouseLeave={(e) => globalContext.setHover(e, false, props.hoverColor)}
-      className={`${styles.button} ${props.className}`}
+      onMouseEnter={(e) => globalContext.setHover(e, true)}
+      onMouseLeave={(e) => globalContext.setHover(e, false)}
+      className={`${styles.button} ${props.icon ? styles.icon : ''} ${props.className}`}
       >
       {props.children}
     </button>

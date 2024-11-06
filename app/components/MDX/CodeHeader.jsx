@@ -17,7 +17,7 @@ const CodeHeader = (props) => {
       <Button
         className={styles.copyButton}
         onClick={(e) => copyText(e)}
-        hoverColor={Constants.bodyColor}
+        icon={true}
         aria-label="Copy"
         >
         <Icon type="copy"/>

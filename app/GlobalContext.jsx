@@ -43,7 +43,7 @@ export default function GlobalContextContainer(props) {
   }
 
   // Set the hover state
-  const setHover = (e, active, color) => {
+  const setHover = (e, active, target) => {
     const coords = e.target.getBoundingClientRect();
     hover.current = {
       active: active,
@@ -51,7 +51,7 @@ export default function GlobalContextContainer(props) {
       y: coords.y,
       w: coords.width,
       h: coords.height,
-      color: color
+      target: target
     };
   }
 

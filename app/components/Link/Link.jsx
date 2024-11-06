@@ -10,7 +10,7 @@ const Link = (props) => {
   return (
     <a
       onClick={(e) => globalContext.navigate(e, props.href)}
-      onMouseEnter={(e) => globalContext.setHover(e, true, props.hoverTarget)}
+      onMouseEnter={(e) => globalContext.setHover(e, true, props.target)}
       onMouseLeave={(e) => globalContext.setHover(e, false)}
       className={`${styles.link} ${props.className}`}
       >

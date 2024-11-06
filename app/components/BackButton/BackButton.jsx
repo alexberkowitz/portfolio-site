@@ -12,6 +12,7 @@ const BackButton = () => {
     <Link
       className={styles.backButton}
       href={globalContext.prevRoute}
+      target={true}
       >
       Go Back
     </Link>
