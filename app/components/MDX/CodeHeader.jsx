@@ -2,7 +2,6 @@
 
 import Icon from '@/components/Icon/Icon';
 import Button from '@/components/Button/Button';
-import * as Constants from '@/Constants';
 
 import styles from './mdx.module.scss';
 

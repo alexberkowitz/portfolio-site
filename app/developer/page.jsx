@@ -5,7 +5,7 @@ export default function Developer() {
     <main>
       <h1>Developer</h1>
       <p>
-        Currently, I'm working as a <span style={{background: 'white'}}>Senior Web UI Application Developer</span> at <b>UScellular</b>.
+        Currently, I&lsquo;m working as a <span style={{background: 'white'}}>Senior Web UI Application Developer</span> at <b>UScellular</b>.
       </p>
       <ProjectsList type="developer"/>
     </main>

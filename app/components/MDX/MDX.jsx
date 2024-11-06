@@ -109,23 +109,6 @@ function Blockquote(props) {
   )
 }
 
-function List(type) {
-  const listItems = ({ children }) => {
-
-    return children.map((item) => {
-      <li>{item}</li>
-    })
-  }
-
-  listItems.displayName = type;
-
-  return (
-    <ul>
-      {listItems}
-    </ul>
-  )
-}
-
 
 
 /*-------------------------------------------------------*/
