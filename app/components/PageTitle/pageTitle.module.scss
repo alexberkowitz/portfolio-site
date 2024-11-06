@@ -4,7 +4,7 @@
   left: calc(var(--gap) * -1);
   max-width: calc(100% - (var(--gap) * 2));
   margin: calc(var(--gap) * -1) 0 0 calc(var(--gap) * -1);
-  padding: 0 calc(var(--gap) / 2) calc(var(--gap) / 2) 0;
+  padding: 0 var(--gap) calc(var(--gap) / 2) 0;
   display: block;
   align-self: flex-start;
   background: var(--bgColor);
