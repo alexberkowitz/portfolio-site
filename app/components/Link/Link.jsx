@@ -6,10 +6,24 @@ import styles from './link.module.scss';
 
 const Link = (props) => {
   const globalContext = useGlobalContext();
+  const isExternal = !props.href.startsWith('/');
 
-  return (
+  return isExternal ? (
     <a
-      onClick={(e) => globalContext.navigate(e, props.href)}
+      {...props}
+      href={props.href}
+      onMouseEnter={(e) => globalContext.setHover(e, true, props.target)}
+      onMouseLeave={(e) => globalContext.setHover(e, false)}
+      className={`${styles.link} ${props.className}`}
+      target="_blank"
+      rel="noopener noreferrer"
+      >
+      {props.children}
+    </a>
+  ) : (
+    <a
+      {...props}
+      onClick={(e) => {e.preventDefault(); globalContext.navigate(e, props.href);}}
       onMouseEnter={(e) => globalContext.setHover(e, true, props.target)}
       onMouseLeave={(e) => globalContext.setHover(e, false)}
       className={`${styles.link} ${props.className}`}

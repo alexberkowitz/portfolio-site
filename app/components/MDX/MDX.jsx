@@ -13,26 +13,17 @@ import styles from './mdx.module.scss';
 /*-------------------------------------------------------*/
 
 // H1 - H6
-function createHeading(level) {
-  const Heading = ({ children }) => {
-    let slug = slugify(children)
+function Heading(level) {
+  const HeadingElem = ({ children }) => {
+    let slug = slugify(children);
     return React.createElement(
       `h${level}`,
       { id: slug },
-      [
-        React.createElement('a', {
-          href: `#${slug}`,
-          key: `link-${slug}`,
-          className: 'anchor',
-        }),
-      ],
       children
     )
   }
 
-  Heading.displayName = `Heading${level}`
-
-  return Heading
+  return HeadingElem;
 }
 
 function slugify(str) {
@@ -71,15 +62,10 @@ function Table({ data }) {
 
 // Anchor
 function CustomLink(props) {
-  const isExternal = !props.href.startsWith('/');
-
   return (
     <Link
       href={props.href}
       className={styles.link}
-      external={isExternal}
-      target={isExternal ? '_blank' : ''}
-      rel={isExternal ? 'noopener noreferrer' : ''}
       {...props}
       >
       {props.children}
@@ -115,11 +101,28 @@ function Code({ children, ...props }) {
 }
 
 // Blockquote
-function blockquote(props) {
+function Blockquote(props) {
   return (
     <blockquote className={styles.blockquote}>
       {props.children}
     </blockquote>
+  )
+}
+
+function List(type) {
+  const listItems = ({ children }) => {
+
+    return children.map((item) => {
+      <li>{item}</li>
+    })
+  }
+
+  listItems.displayName = type;
+
+  return (
+    <ul>
+      {listItems}
+    </ul>
   )
 }
 
@@ -140,18 +143,18 @@ function Wide(props) {
 
 
 const components = {
-  h1: createHeading(2),
-  h2: createHeading(3),
-  h3: createHeading(4),
-  h4: createHeading(5),
-  h5: createHeading(6),
-  h6: createHeading(6),
+  h1: Heading(2),
+  h2: Heading(3),
+  h3: Heading(4),
+  h4: Heading(5),
+  h5: Heading(6),
+  h6: Heading(6),
   img: CustomImage,
   a: CustomLink,
   pre: Pre,
   code: Code,
   Table,
-  blockquote: blockquote,
+  blockquote: Blockquote,
   Wide
 }
 
