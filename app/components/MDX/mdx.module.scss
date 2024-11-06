@@ -1,8 +1,8 @@
 .mdx {
   display: grid;
   grid-template-columns: 1fr minmax(50vw, 600px) 1fr;
-  gap: var(--pagePadding);
-  padding: var(--pagePadding) var(--pagePadding) calc(var(--pagePadding) + 3rem) var(--pagePadding);
+  gap: var(--gap);
+  padding: 0 var(--gap);
   z-index: 1;
 
   > * {

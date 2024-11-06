@@ -1,6 +1,8 @@
 .projectPage {
   position: relative;
-  padding: 0;
+  padding-top: 0;
+  padding-left: 0;
+  padding-right: 0;
 }
 
 .info {
@@ -10,7 +12,7 @@
   flex-direction: row;
   align-items: flex-start;
   justify-content: space-between;
-  gap: var(--pagePadding);
+  gap: var(--gap);
   animation: trigger steps(1) both;
   animation-timeline: scroll();
   animation-range: 0px 5rem;
@@ -32,7 +34,7 @@
 .title {
   position: relative;
   width: 100%;
-  margin: var(--pagePadding) 0 0 var(--pagePadding);
+  margin: var(--gap) 0 0 var(--gap);
   
   span {
     display: inline-block;
@@ -56,13 +58,13 @@
 
 .details {
   transform: translateX(100%);
-  padding: var(--pagePadding);
+  padding: var(--gap);
   display: grid;
   grid-template-columns: auto auto;
   gap: 1rem;
   background-color: var(--bgColor);
   border: solid var(--borderWidth) var(--fgColor);
-  border-radius: 0 0 0 var(--pagePadding);
+  border-radius: 0 0 0 var(--gap);
   font-size: 0.8rem;
   animation: move-in 1s calc(var(--transitionDuration) * 2) ease-in forwards;
 

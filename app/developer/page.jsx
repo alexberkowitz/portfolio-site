@@ -1,14 +1,15 @@
 import BackButton from '@/components/BackButton/BackButton';
-import { Projects } from '@/components/Projects/Projects';
-
-import styles from './page.module.scss';
+import { ProjectsList } from '@/components/ProjectsList/ProjectsList';
 
 export default function Developer() {
   return (
-    <main className={styles.developerPage}>
+    <main>
       <BackButton />
       <h1>Developer</h1>
-      <Projects type="developer"/>
+      <p>
+        Currently, I'm working as a <span style={{background: 'white'}}>Senior Web UI Application Developer</span> at <b>UScellular</b>.
+      </p>
+      <ProjectsList type="developer"/>
     </main>
   );
 }

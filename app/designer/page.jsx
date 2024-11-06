@@ -1,67 +1,17 @@
 import BackButton from '@/components/BackButton/BackButton';
-// import ImageGallery from '@/components/ImageGallery/ImageGallery';
-import { Projects } from '@/components/Projects/Projects';
-
-import styles from './page.module.scss';
+import PageTitle from '@/components/PageTitle/PageTitle';
+import { ProjectsList } from '@/components/ProjectsList/ProjectsList';
 
 export default function Designer() {
-  // const items = [
-  //   {
-  //     src:  "https://loremflickr.com/200/300",
-  //     href: "/"
-  //   },
-  //   {
-  //     src:  "https://loremflickr.com/300/300",
-  //     href: "/"
-  //   },
-  //   {
-  //     src:  "https://loremflickr.com/300/200",
-  //     href: "/"
-  //   },
-  //   {
-  //     src:  "https://loremflickr.com/300/300",
-  //     href: "/"
-  //   },
-  //   {
-  //     src:  "https://loremflickr.com/200/200",
-  //     href: "/"
-  //   },
-  //   {
-  //     src:  "https://loremflickr.com/301/200",
-  //     href: "/"
-  //   },
-  //   {
-  //     src:  "https://loremflickr.com/302/200",
-  //     href: "/"
-  //   },
-  //   {
-  //     src:  "https://loremflickr.com/303/200",
-  //     href: "/"
-  //   },
-  //   {
-  //     src:  "https://loremflickr.com/200/201",
-  //     href: "/"
-  //   },
-  //   {
-  //     src:  "https://loremflickr.com/200/202",
-  //     href: "/"
-  //   },
-  //   {
-  //     src:  "https://loremflickr.com/200/203",
-  //     href: "/"
-  //   },
-  //   {
-  //     src:  "https://loremflickr.com/200/204",
-  //     href: "/"
-  //   },
-  // ];
 
   return (
-    <main className={styles.designerPage}>
+    <main>
       <BackButton />
-      <h1>Designer</h1>
-      <Projects type="designer"/>
-      {/* <ImageGallery items={items}/> */}
+      <PageTitle>Designer</PageTitle>
+      <p>
+        Fusce semper semper felis eget mattis. In sed lectus eu purus elementum vulputate eget sed mauris. Aenean dapibus luctus aliquam. Nunc rutrum lobortis dui sed tempus. Praesent porta quam vitae massa elementum, sit amet malesuada mi rutrum. Donec at posuere nisl. Curabitur diam augue, ornare sit amet erat vitae, suscipit faucibus tortor. 
+      </p>
+      <ProjectsList type="designer"/>
     </main>
   );
 }

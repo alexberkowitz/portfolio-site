@@ -5,6 +5,7 @@
   grid-template-columns: 1fr 1fr;
   grid-template-areas: "name maker"
                        "designer developer";
+  padding: var(--gap);
   
   a {
     padding: 1rem;

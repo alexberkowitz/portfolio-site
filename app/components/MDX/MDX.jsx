@@ -76,7 +76,6 @@ function CustomLink(props) {
   return (
     <Link
       href={props.href}
-      hoverTarget={true}
       className={styles.link}
       external={isExternal}
       target={isExternal ? '_blank' : ''}

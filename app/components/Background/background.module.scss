@@ -1,17 +1,17 @@
 .background {
   position: absolute;
-  top: var(--pagePadding);
-  bottom: var(--pagePadding);
-  left: var(--pagePadding);
-  right: var(--pagePadding);
-  border-radius: var(--pagePadding);
+  top: var(--gap);
+  bottom: var(--gap);
+  left: var(--gap);
+  right: var(--gap);
+  border-radius: var(--gap);
   overflow: hidden;
   z-index: -1;
 
   canvas {
     position: absolute;
-    top: calc(var(--pagePadding) * -1);
-    left: calc(var(--pagePadding) * -1);
+    top: calc(var(--gap) * -1);
+    left: calc(var(--gap) * -1);
     width: 100dvw !important;
     height: 100dvh !important;
     max-width: unset;

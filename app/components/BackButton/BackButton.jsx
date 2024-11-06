@@ -12,7 +12,6 @@ const BackButton = () => {
     <Link
       className={styles.backButton}
       href={globalContext.prevRoute}
-      hoverTarget={true}
       >
       Go Back
     </Link>

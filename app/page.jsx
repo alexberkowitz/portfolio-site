@@ -12,7 +12,6 @@ export default function Home() {
       <div className={styles.designer}>
         <Link
           href='/designer'
-          hoverTarget={true}
           >
           Designer
         </Link>
@@ -20,7 +19,6 @@ export default function Home() {
       <div className={styles.developer}>
         <Link
           href='/developer'
-          hoverTarget={true}
           >
           Developer
         </Link>
@@ -28,7 +26,6 @@ export default function Home() {
       <div className={styles.maker}>
         <Link
           href='/maker'
-          hoverTarget={true}
           >
           Maker
         </Link>
