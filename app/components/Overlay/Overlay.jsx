@@ -233,7 +233,7 @@ const Overlay = () => {
     // Center Dot
     context.noStroke();
     context.fill(Constants.bodyColor);
-    context.rect(mousePos.x, mousePos.y, 1,1);
+    context.rect(mousePos.x, mousePos.y, Constants.pixelDensity, Constants.pixelDensity);
   }
   
 
