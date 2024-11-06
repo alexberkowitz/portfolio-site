@@ -26,25 +26,31 @@
       transition: all .3s ease-in-out;
       --padding: 2rem;
 
-      &:hover,
-      &:focus-visible {
-        transform: scale(1.05);
+      @media(hover: hover) {
+        &:hover,
+        &:focus-visible {
+          transform: scale(1.05);
 
-        &:after {
-          content: '';
-          position: absolute;
-          top: 0;
-          bottom: 0;
-          left: 0;
-          right: 0;
-          background-color: var(--fgColor);
-          mix-blend-mode: multiply;
-          z-index: 2;
+          &:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: var(--fgColor);
+            mix-blend-mode: multiply;
+            z-index: 2;
+          }
+
+          .info {
+            transform: translateY(0%);
+            transition-timing-function: ease-out;
+          }
         }
-
+        
         .info {
-          transform: translateY(0%);
-          transition-timing-function: ease-out;
+          transform: translateY(calc(100% + .5rem));
         }
       }
     }
@@ -61,7 +67,6 @@
       bottom: .5rem;
       left: .5rem;
       right: .5rem;
-      transform: translateY(calc(100% + .5rem));
       display: flex;
       align-items: flex-end;
       justify-content: space-between;

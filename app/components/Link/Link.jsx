@@ -12,7 +12,7 @@ const Link = (props) => {
     <a
       {...props}
       href={props.href}
-      onMouseEnter={(e) => globalContext.setHover(e, true, props.target)}
+      onMouseEnter={(e) => globalContext.setHover(e, true, !props.noTarget)}
       onMouseLeave={(e) => globalContext.setHover(e, false)}
       className={`${styles.link} ${props.className}`}
       target="_blank"
@@ -24,7 +24,7 @@ const Link = (props) => {
     <a
       {...props}
       onClick={(e) => {e.preventDefault(); globalContext.navigate(e, props.href);}}
-      onMouseEnter={(e) => globalContext.setHover(e, true, props.target)}
+      onMouseEnter={(e) => globalContext.setHover(e, true, !props.noTarget)}
       onMouseLeave={(e) => globalContext.setHover(e, false)}
       className={`${styles.link} ${props.className}`}
       >

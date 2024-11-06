@@ -1,4 +1,3 @@
-import BackButton from '@/components/BackButton/BackButton';
 import { notFound } from 'next/navigation';
 import { CustomMDX } from '@/components/MDX/MDX';
 import { getProjects } from '@/utils/projects';
@@ -78,8 +77,7 @@ export default function Project({ params }) {
       </div>
 
       <CustomMDX source={project.content} />
-
-      <BackButton />
+      
     </main>
   )
 }

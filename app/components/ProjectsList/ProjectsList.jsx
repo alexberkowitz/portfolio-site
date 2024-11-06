@@ -15,11 +15,10 @@ export function ProjectsList(props) {
       {allProjects
         .sort((a, b) => { return a.metadata.title < b.metadata.title ? -1 : 1 }) // Alphabetical sorting
         .map((project) => (
-          <li>
+          <li key={project.slug}>
             <Link
-              key={project.slug}
               href={`/projects/${project.slug}`}
-              target={false}
+              noTarget={true}
               >
               <img src={project.metadata.cover} className={styles.cover} />
               <div className={styles.info}>

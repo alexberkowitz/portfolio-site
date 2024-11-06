@@ -3,6 +3,7 @@ import { MuseoModerno, Oxanium } from "next/font/google";
 import GlobalContextContainer from './GlobalContext';
 import * as Constants from '@/Constants';
 import dynamic from 'next/dynamic';
+import BackButton from '@/components/BackButton/BackButton';
  
 // These need to be imported dynamically because p5.js relies on the window object
 const DynamicBackground = dynamic(() => import('@/components/Background/Background'), {
@@ -52,6 +53,7 @@ export default function RootLayout({ children }) {
           }}>
           <DynamicBackground />
           {children}
+          <BackButton />
           <DynamicOverlay />
         </body>
       </GlobalContextContainer>
