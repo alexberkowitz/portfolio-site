@@ -1,0 +1,106 @@
+.mdx {
+  display: grid;
+  grid-template-columns: 1fr minmax(50vw, 600px) 1fr;
+  gap: var(--pagePadding);
+  padding: var(--pagePadding) var(--pagePadding) calc(var(--pagePadding) + 3rem) var(--pagePadding);
+  z-index: 1;
+
+  > * {
+    grid-column: 2;
+  }
+}
+
+/*-------------------------------------------------------*/
+/* MODIFIER CLASSES
+/*-------------------------------------------------------*/
+
+.wide {
+  grid-column: 1 / -1;
+}
+
+
+
+/*-------------------------------------------------------*/
+/* ELEMENTS
+/*-------------------------------------------------------*/
+
+.blockquote {
+  position: relative;
+  padding: 1rem 1rem 1rem calc(1rem + var(--cornerRadius) + var(--borderWidth));
+  background-color: var(--accentColor);
+  border-radius: var(--cornerRadius);
+
+  &:before {
+    content: '';
+    position: absolute;
+    top: var(--cornerRadius);
+    left: var(--cornerRadius);
+    bottom: var(--cornerRadius);
+    width: var(--borderWidth);
+    background-color: var(--fgColor);
+  }
+}
+
+.link {
+  margin: -.5rem;
+  padding: .5rem;
+  text-decoration: underline;
+}
+
+.image {
+  border-radius: var(--cornerRadius);
+}
+
+.pre {
+  position: relative;
+  padding: 1rem;
+  background-color: var(--accentColor);
+  border-radius: var(--cornerRadius);
+}
+
+.code {
+  background-color: var(--accentColor);
+  border-radius: .25rem;
+  margin: -.125rem;
+  padding: .125rem;
+
+  --sh-class: #2d5e9d;
+  --sh-identifier: #354150;
+  --sh-sign: #8996a3;
+  --sh-property: #0550ae;
+  --sh-entity: #249a97;
+  --sh-jsxliterals: #6266d1;
+  --sh-string: #00a99a;
+  --sh-keyword: var(--fgColor);
+  --sh-comment: #a19595;
+}
+
+.codeHeader {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding-bottom: .5rem;
+  margin-bottom: 1rem;
+  border-bottom: solid var(--borderWidth) var(--fgColor);
+
+  p {
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  .copyButton {
+    position: relative;
+    top: unset;
+    right: unset;
+  }
+}
+
+.copyButton {
+  display: block;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  margin: -.5rem;
+  padding: .5rem;
+}

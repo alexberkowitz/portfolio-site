@@ -172,7 +172,8 @@ const Overlay = () => {
 
 
     // Hover elements
-    context.stroke(hoverAmount.current === 0 ? Constants.bodyColor : Constants.accentColor);
+    const hoverColor = !!hover.color ? hover.color : Constants.accentColor;
+    context.stroke(hoverAmount.current === 0 ? Constants.bodyColor : hoverColor);
     context.fill(Constants.accentColor[0], Constants.accentColor[1], Constants.accentColor[2], hoverAmount.current === 0 ? 255 : 0);
     const targetBoxMinSize = pixelDim(4);
     const targetBox = {

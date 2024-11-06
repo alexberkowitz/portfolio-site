@@ -25,6 +25,7 @@ body {
   --bodyColor: blue;
   --accentColor: yellow;
   --borderWidth: 2px;
+  --cornerRadius: .5rem;
   --interactiveCornerRadius: 40px;
 
   &:after {
@@ -57,4 +58,9 @@ main {
 
 canvas {
   image-rendering: pixelated;
+}
+
+svg {
+  width: 1rem;
+  height: 1rem;
 }

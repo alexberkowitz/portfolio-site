@@ -72,14 +72,12 @@ export default function Project({ params }) {
         <dl className={styles.details}>
           <dt>Role</dt>
           <dd>{project.metadata.role}</dd>
-          <dt>Date</dt>
-          <dd>{project.metadata.date}</dd>
+          <dt>Completed</dt>
+          <dd style={{whiteSpace: 'nowrap'}}>{project.metadata.date}</dd>
         </dl>
       </div>
 
-      <div className={styles.content}>
-        <CustomMDX source={project.content} />
-      </div>
+      <CustomMDX source={project.content} />
 
       <BackButton />
     </main>
