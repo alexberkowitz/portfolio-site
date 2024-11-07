@@ -1,12 +1,13 @@
 "use client";
 import { createContext, useContext, useState, useRef } from 'react';
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import * as Constants from '@/Constants';
 
 const GlobalContext = createContext();
 
 export default function GlobalContextContainer(props) {
   const router = useRouter();
+  const pathname = usePathname();
   const [prevRoute, setPrevRoute] = useState('/');
   const hover = useRef({active: false, x: 0, y: 0, w: 0, h: 0});
   const transition = useRef({active: false, x: 0, y: 0});
@@ -14,7 +15,8 @@ export default function GlobalContextContainer(props) {
 
   // Navigate between pages with a transition
   const navigate = (e, destination, incomplete) => {
-    setPrevRoute(window.location.pathname);
+    setPrevRoute(pathname.startsWith('/projects') ? '/' : pathname);
+
     document.activeElement.blur();
     transition.current = {
       active: true,

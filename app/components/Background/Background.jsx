@@ -145,7 +145,12 @@ const Background = () => {
             }
             const value = 255 * (point.age / cursorPointMaxAge);
             context.stroke(value, value, value);
-            context.line(prevPoint.x, prevPoint.y, point.x, point.y);
+            context.line(
+              prevPoint.x,
+              prevPoint.y,
+              point.x, 
+              point.y
+            );
           }
           prevPoint = point;
 
@@ -190,7 +195,11 @@ const Background = () => {
           )
 
           context.strokeWeight((1 - (explosion.age / explosionDuration)) * explosionStartSize);
-          context.circle(explosion.x, explosion.y, explosionSize);
+          context.circle(
+            explosion.x,
+            explosion.y,
+            explosionSize
+          );
           
         } else {
           delete explosions.current[i];

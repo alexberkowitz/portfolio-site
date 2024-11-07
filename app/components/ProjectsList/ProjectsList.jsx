@@ -18,7 +18,7 @@ export function ProjectsList(props) {
           <li key={project.slug}>
             <Link
               href={`/projects/${project.slug}`}
-              noTarget={true}
+              target="false"
               >
               <img src={project.metadata.cover} className={styles.cover} />
               <div className={styles.info}>

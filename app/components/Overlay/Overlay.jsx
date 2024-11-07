@@ -130,7 +130,11 @@ const Overlay = () => {
         transitionEndSize,
         ease(transitionAmount.current, 'easeOut', 5)
       );
-      context.circle(transition.x, transition.y, transitionSize);
+      context.circle(
+        transition.x,
+        transition.y,
+        transitionSize
+      );
   
       // Apply blur
       context.filter(context.BLUR, blurAmount);
@@ -199,42 +203,83 @@ const Overlay = () => {
             ease(hoverAmount.current, 'inOutCubic')
           )
         ),
-      corner: context.lerp(
+      corner: Math.round(context.lerp(
         0,
         Constants.interactiveCornerRadius,
         ease(hoverAmount.current, 'inOutCubic')
-      ),
+      )),
     };
+
     context.rectMode(context.CENTER);
     context.stroke(Constants.bodyColor);
-    context.fill(Constants.accentColor[0], Constants.accentColor[1], Constants.accentColor[2], hoverAmount.current === 0 ? 255 : 0);
-    context.rect(targetBox.x, targetBox.y, targetBox.w, targetBox.h, targetBox.corner, targetBox.corner, targetBox.corner, targetBox.corner);
+
+    if( hoverAmount.current === 0 ){
+      context.fill(Constants.accentColor[0], Constants.accentColor[1], Constants.accentColor[2], Constants.accentColor[3]);
+      context.rect(targetBox.x,targetBox.y,
+        targetBoxMinSize,
+        targetBoxMinSize,
+        targetBox.corner,
+        targetBox.corner,
+        targetBox.corner,
+        targetBox.corner
+      );
+    } else {
+      context.rect(
+        targetBox.x,
+        targetBox.y,
+        targetBox.w,
+        targetBox.h,
+        targetBox.corner,
+        targetBox.corner,
+        targetBox.corner,
+        targetBox.corner
+      );
+    }
 
 
     // Crosshair
     const crosshairSize = pixelDim(20);
     const crosshairInnerSize = pixelDim(12);
     context.stroke(Constants.bodyColor);
-    context.line(mousePos.x, mousePos.y - (crosshairSize / 2), // Top line
-                 mousePos.x, mousePos.y - (crosshairInnerSize / 2),);
+    context.line(
+      mousePos.x,
+      mousePos.y - (crosshairSize / 2),// Top line
+      mousePos.x,
+      mousePos.y - (crosshairInnerSize / 2)
+    );
 
-    context.line(mousePos.x, mousePos.y + (crosshairSize / 2), // Bottom line
-                 mousePos.x, mousePos.y + (crosshairInnerSize / 2),);
+    context.line(
+      mousePos.x,
+      mousePos.y + (crosshairSize / 2),// Bottom line
+      mousePos.x,
+      mousePos.y + (crosshairInnerSize / 2)
+    );
 
-    context.line(mousePos.x - (crosshairSize / 2), // Left line
-                 mousePos.y, mousePos.x - (crosshairInnerSize / 2),
-                 mousePos.y,);
+    context.line(
+      mousePos.x - (crosshairSize / 2), // Left line
+      mousePos.y,
+      mousePos.x - (crosshairInnerSize / 2),
+      mousePos.y
+    );
 
-    context.line(mousePos.x + (crosshairSize / 2), // Right line
-                 mousePos.y, mousePos.x + (crosshairInnerSize / 2),
-                 mousePos.y,);
+    context.line(
+      mousePos.x + (crosshairSize / 2), // Right line
+      mousePos.y,
+      mousePos.x + (crosshairInnerSize / 2),
+      mousePos.y
+    );
     
 
     // Center Dot
     if( hoverAmount.current === 0 ){
       context.noStroke();
       context.fill(Constants.bodyColor);
-      context.rect(mousePos.x, mousePos.y, Constants.pixelDensity, Constants.pixelDensity);
+      context.rect(
+        mousePos.x,
+        mousePos.y,
+        Constants.pixelDensity,
+        Constants.pixelDensity
+      );
     }
   }
   

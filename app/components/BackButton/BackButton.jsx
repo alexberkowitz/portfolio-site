@@ -9,6 +9,7 @@ import styles from "./backButton.module.scss";
 const BackButton = () => {
   const globalContext = useGlobalContext();
   const ignoredPages = ["/", "/links"]; // Pages on this list won't show the back button
+  
   const showBackButton = ignoredPages.indexOf(usePathname()) === -1;
   
   return showBackButton ? (
