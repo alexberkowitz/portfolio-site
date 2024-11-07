@@ -1,12 +1,11 @@
 .pageTitle {
-  position: sticky;
-  top: calc(var(--gap) * -1);
-  left: calc(var(--gap) * -1);
+  position: fixed;
+  top: var(--gap);
+  left: var(--gap);
   max-width: calc(100% - (var(--gap) * 2));
-  margin: calc(var(--gap) * -1) 0 0 calc(var(--gap) * -1);
+  margin: 0;
   padding: 0 var(--gap) calc(var(--gap) / 2) 0;
   display: block;
-  align-self: flex-start;
   background: var(--bgColor);
   border: solid var(--borderWidth) var(--fgColor);
   border-top-width: 0;
@@ -59,5 +58,12 @@
   .bottomCorner {
     top: 100%;
     left: 0;
+  }
+
+  + .spacer {
+    margin-top: calc(var(--gap) * -.5);
+    font-size: 2.5rem;
+    opacity: 0;
+    pointer-events: none;
   }
 }

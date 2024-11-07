@@ -33,6 +33,7 @@ const Overlay = () => {
   const showCursor = useRef(true);
   const hoverActive = useRef(globalContext.hover.active);
   const hoverAmount = useRef(0);
+  const scrollOffset = useRef(0); // Additional offset to compensate for scrolling
   const currentTarget = useRef({x: 0, y: 0, w: targetMinSize, h: targetMinSize});
   const prevTarget = useRef({x: 0, y: 0, w: targetMinSize, h: targetMinSize});
   const targetBox = useRef({x: 0, y: 0, w: 0, h: 0, corner: 0});
@@ -46,13 +47,7 @@ const Overlay = () => {
     if( !initialized ){
       setInitialized(true);
 
-      // Don't show the cursor if the user is using a touch screen
-      if( !window.matchMedia('(pointer: fine)').matches ){
-        setHasCursor(false);
-      }
-
-      // Users with a mouse will see a cursor trail.
-      // Users with a touchscreen will see a touch effect.
+      // Users without a mouse won't see the cursor
       if( !window.matchMedia('(pointer: fine)').matches ){
         showCursor.current = false;
       } else {
@@ -65,6 +60,18 @@ const Overlay = () => {
           showCursor.current = true;
         });
       }
+
+      // We need to calculate how much a user scrolls so we can compensate.
+      // Since the hover target doesn't change when scrolling, we don't get
+      // updated coordinates in real-time.
+      let initialScroll = window.scrollY;
+      window.addEventListener('scroll', () => {
+        scrollOffset.current = initialScroll - window.scrollY;
+      });
+      window.addEventListener('scrollend', () => {
+        initialScroll = window.scrollY;
+        scrollOffset.current = 0;
+      });
 
       drawP5(); // Start the drawing
     }
@@ -109,9 +116,6 @@ const Overlay = () => {
         if( showCursor.current ){
           cursorBuffer.noSmooth();
           cursorBuffer.clear();
-          cursorBuffer.strokeCap(cursorBuffer.PROJECT);
-          cursorBuffer.strokeWeight(Constants.pixelDensity);
-          cursorBuffer.stroke(Constants.bodyColor);
           drawTargetBox(cursorBuffer);
           drawCrosshair(cursorBuffer);
           p.image(cursorBuffer, 0, 0, p.width, p.height);
@@ -175,6 +179,10 @@ const Overlay = () => {
 
   // Draw the crosshair
   const drawCrosshair = (context) => {
+    context.strokeCap(context.PROJECT);
+    context.strokeWeight(Constants.pixelDensity);
+    context.stroke(Constants.bodyColor);
+    
     const posX = pixelCoord(cursorPos.current.x, context.width);
     const posY = pixelCoord(cursorPos.current.y, context.height);
 
@@ -289,12 +297,15 @@ const Overlay = () => {
       )
     };
 
-    !hoverActive.current && hoverAmount.current === 1 ? context.fill(Constants.accentColor) : context.noFill();
     context.rectMode(context.CENTER);
+    context.strokeCap(context.PROJECT);
+    context.strokeWeight(Constants.pixelDensity);
+    context.stroke(Constants.bodyColor);
+    !hoverActive.current && hoverAmount.current === 1 ? context.fill(Constants.accentColor) : context.noFill();
 
     context.rect(
       pixelCoord(targetBox.current.x, context.width),
-      pixelCoord(targetBox.current.y, context.height),
+      pixelCoord(targetBox.current.y, context.height) + (hoverActive.current ? scrollOffset.current : 0),
       pixelDim(roundToPixel(targetBox.current.w / Constants.pixelDensity)),
       pixelDim(roundToPixel(targetBox.current.h / Constants.pixelDensity)),
       targetBox.current.corner

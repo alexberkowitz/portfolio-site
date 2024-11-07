@@ -71,6 +71,7 @@
       align-items: flex-end;
       justify-content: space-between;
       color: var(--bodyColor);
+      pointer-events: none;
       z-index: 3;
       transition: all .3s ease-in;
 

@@ -61,12 +61,14 @@ export default function Project({ params }) {
   }
 
   return (
-    <main className={styles.projectPage}>
+    <>
 
       <div className={styles.info}>
-        <h1 className={styles.title}>
-          <span>{project.metadata.title}</span>
-        </h1>
+        <div className={styles.title}>
+          <span>
+            <h1>{project.metadata.title}</h1>
+          </span>
+        </div>
 
         <dl className={styles.details}>
           <dt>Role</dt>
@@ -76,8 +78,10 @@ export default function Project({ params }) {
         </dl>
       </div>
 
+      <main className={styles.projectPage}>
       <CustomMDX source={project.content} />
+      </main>
       
-    </main>
+    </>
   )
 }

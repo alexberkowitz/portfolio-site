@@ -31,10 +31,7 @@ export default function GlobalContextContainer(props) {
 
     setTimeout(() => { // Redirect after 0.5s
       router.push(destination);
-      hover.current = {
-        ...hover.current,
-        active: false
-      };
+      setHoverState({target:document.body}, false);
 
       // It's possible to only transition halfway, allowing another function to control the rest of the transition
       if( incomplete !== true ) {

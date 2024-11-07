@@ -1,6 +1,7 @@
 h1 {
   max-width: 70ch;
-  margin-top: -.11em; // Accommodate the extra spacing around characters
+  margin-top: -.12em; // Accommodate the extra spacing around characters
+  margin-bottom: -.12em; // Accommodate the extra spacing around characters
   font-family: var(--font-museo-moderno);
   font-weight: 200;
   font-size: 4rem;
@@ -16,6 +17,7 @@ h1 {
 p {
   max-width: 70ch;
   line-height: 1.5;
+  text-wrap: pretty;
 }
 
 a {
