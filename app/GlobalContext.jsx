@@ -1,5 +1,5 @@
 "use client";
-import { createContext, useContext, useState, useRef, useEffect } from 'react';
+import { createContext, useContext, useState, useRef } from 'react';
 import { useRouter, usePathname } from "next/navigation";
 import * as Constants from '@/Constants';
 

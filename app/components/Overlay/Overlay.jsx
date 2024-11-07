@@ -301,7 +301,11 @@ const Overlay = () => {
     context.strokeCap(context.PROJECT);
     context.strokeWeight(Constants.pixelDensity);
     context.stroke(Constants.bodyColor);
-    !hoverActive.current && hoverAmount.current === 1 ? context.fill(Constants.accentColor) : context.noFill();
+    if( !hoverActive.current && hoverAmount.current === 1 ){
+      context.fill(Constants.accentColor);
+    } else {
+      context.noFill();
+    }
 
     context.rect(
       pixelCoord(targetBox.current.x, context.width),
