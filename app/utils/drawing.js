@@ -22,9 +22,9 @@ export const pixelDim = (value) => {
 // Linearly animates between 0 and 1 based on the active param
 export const updateTransition = (amount, duration, active) => {
   if( active ) {
-    return Math.min(amount + (1 / duration), 1);
+    return Math.min(amount + (1 / duration / Constants.frameRate), 1);
   } else {
-    return Math.max(amount - (1 / duration), 0);
+    return Math.max(amount - (1 / duration / Constants.frameRate), 0);
   }
 }
 

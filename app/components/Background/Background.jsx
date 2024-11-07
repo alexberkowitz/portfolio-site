@@ -44,10 +44,10 @@ const Background = () => {
 
 
   
+  /*-------------------------------------------------------*/
+  /* SETUP
+  /*-------------------------------------------------------*/
   const drawP5 = () => {
-    /*-------------------------------------------------------*/
-    /* SETUP
-    /*-------------------------------------------------------*/
 
     new p5(p => {
       p.setup = () => {
@@ -81,7 +81,7 @@ const Background = () => {
       }
 
       p.draw = () => {
-        p.frameRate(30);
+        p.frameRate(Constants.frameRate);
 
         // Draw the background
         p.background(Constants.bgColor[0], Constants.bgColor[1], Constants.bgColor[2]);

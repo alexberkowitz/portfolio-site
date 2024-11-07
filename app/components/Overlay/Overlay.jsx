@@ -20,11 +20,22 @@ const Overlay = () => {
   const renderRef = useRef();
   const [initialized, setInitialized] = useState(false);
 
+  // Transition
   const transitionAmount = useRef(globalContext.transition.current.active ? 1 : 0);
   
-  const [hasCursor, setHasCursor] = useState(true);
+  // Cursor
+  const targetMinSize = 3 * Constants.pixelDensity;
+  const hoverCorner = Constants.interactiveCornerRadius;
+  const targetPadding = 10; // In pixel-density units
+  const transitionDuration = .3; // In seconds
+
+  const cursorPos = useRef({x: 0, y: 0}); // Local copy of the global cursorPos variable
   const showCursor = useRef(true);
-  const hoverAmount = useRef(globalContext.hover.active ? 1 : 0);
+  const hoverActive = useRef(globalContext.hover.active);
+  const hoverAmount = useRef(0);
+  const currentTarget = useRef({x: 0, y: 0, w: targetMinSize, h: targetMinSize});
+  const prevTarget = useRef({x: 0, y: 0, w: targetMinSize, h: targetMinSize});
+  const targetBox = useRef({x: 0, y: 0, w: 0, h: 0, corner: 0});
 
   // Graphics buffers
   let transitionBuffer;
@@ -59,10 +70,10 @@ const Overlay = () => {
     }
   }, [initialized]);
 
+  /*-------------------------------------------------------*/
+  /* SETUP
+  /*-------------------------------------------------------*/
   const drawP5 = () => {
-    /*-------------------------------------------------------*/
-    /* SETUP
-    /*-------------------------------------------------------*/
     new p5(p => {
       p.setup = () => {
         p.createCanvas(Math.floor(window.innerWidth), Math.floor(window.innerHeight)).parent(renderRef.current);
@@ -83,17 +94,26 @@ const Overlay = () => {
       }
 
       p.draw = () => {
-        p.frameRate(30);
+        p.frameRate(Constants.frameRate);
         p.noSmooth();
         p.clear();
+
+        // Save the cursor pos to globalContext to enable other effects
+        cursorPos.current = {x: p.mouseX, y: p.mouseY};
         
         // Draw the transition
         drawTransition(transitionBuffer, p);
         p.image(transitionBuffer, 0, 0);
 
         // Draw the cursor
-        if( hasCursor && showCursor.current ){
-          drawCursor(cursorBuffer, p);
+        if( showCursor.current ){
+          cursorBuffer.noSmooth();
+          cursorBuffer.clear();
+          cursorBuffer.strokeCap(cursorBuffer.PROJECT);
+          cursorBuffer.strokeWeight(Constants.pixelDensity);
+          cursorBuffer.stroke(Constants.bodyColor);
+          drawTargetBox(cursorBuffer);
+          drawCrosshair(cursorBuffer);
           p.image(cursorBuffer, 0, 0, p.width, p.height);
         }
       }
@@ -152,139 +172,142 @@ const Overlay = () => {
   /*-------------------------------------------------------*/
   /* CURSOR
   /*-------------------------------------------------------*/
-  
-  const drawCursor = (context, p) => {
-    const pixelDensity = Constants.pixelDensity;
-    const strokeWeight = pixelDensity;
-    const hover = globalContext.hover.current;
-    
-    context.clear();
-    context.noSmooth();
-    context.strokeWeight(strokeWeight);
-    context.strokeCap(context.PROJECT);
-    context.stroke(Constants.bodyColor);
-    context.noFill();
 
-    const mousePos = { // Round coordinates so pixels are always clear
-      x: pixelCoord(p.mouseX, p.width),
-      y: pixelCoord(p.mouseY, p.height)
-    }
-
-    // Animate the transition in or out
-    const transitionDuration = 10; // In frames
-    hoverAmount.current = updateTransition(hoverAmount.current, transitionDuration, hover.active);
-
-
-    // Hover elements
-    const targetBoxMinSize = pixelDim(4);
-    const noTargetHoverSize = pixelDim(16);
-    const targetBox = {
-      x: hover.target ? context.lerp(
-          mousePos.x,
-          pixelCoord(hover.x, p.width) + roundToPixel(hover.w / 2),
-          ease(hoverAmount.current, 'inOutCubic')
-        ) : mousePos.x,
-      y: hover.target ? context.lerp(
-          mousePos.y,
-          pixelCoord(hover.y - Constants.pixelDensity, p.height) + roundToPixel(hover.h / 2),
-          ease(hoverAmount.current, 'inOutCubic')
-        ) : mousePos.y,
-      w: roundToPixel(
-          context.lerp(
-            targetBoxMinSize,
-            hover.target ? hover.w : noTargetHoverSize,
-            ease(hoverAmount.current, 'inOutCubic')
-          )
-        ),
-      h: roundToPixel(
-          context.lerp(
-            targetBoxMinSize,
-            hover.target ? hover.h : noTargetHoverSize,
-            ease(hoverAmount.current, 'inOutCubic')
-          )
-        ),
-      corner: Math.round(context.lerp(
-        0,
-        Constants.interactiveCornerRadius,
-        ease(hoverAmount.current, 'inOutCubic')
-      )),
-    };
-
-    context.rectMode(context.CENTER);
-    context.stroke(Constants.bodyColor);
-
-    if( hoverAmount.current === 0 ){
-      context.fill(Constants.accentColor[0], Constants.accentColor[1], Constants.accentColor[2], Constants.accentColor[3]);
-      context.rect(targetBox.x,targetBox.y,
-        targetBoxMinSize,
-        targetBoxMinSize,
-        targetBox.corner,
-        targetBox.corner,
-        targetBox.corner,
-        targetBox.corner
-      );
-    } else {
-      context.rect(
-        targetBox.x,
-        targetBox.y,
-        targetBox.w,
-        targetBox.h,
-        targetBox.corner,
-        targetBox.corner,
-        targetBox.corner,
-        targetBox.corner
-      );
-    }
-
+  // Draw the crosshair
+  const drawCrosshair = (context) => {
+    const posX = pixelCoord(cursorPos.current.x, context.width);
+    const posY = pixelCoord(cursorPos.current.y, context.height);
 
     // Crosshair
-    const crosshairSize = pixelDim(20);
+    const crosshairSize = pixelDim(24);
     const crosshairInnerSize = pixelDim(12);
-    context.stroke(Constants.bodyColor);
-    context.line(
-      mousePos.x,
-      mousePos.y - (crosshairSize / 2),// Top line
-      mousePos.x,
-      mousePos.y - (crosshairInnerSize / 2)
+    context.line( // Top line
+      posX,
+      posY - (crosshairSize / 2),
+      posX,
+      posY - (crosshairInnerSize / 2)
     );
 
-    context.line(
-      mousePos.x,
-      mousePos.y + (crosshairSize / 2),// Bottom line
-      mousePos.x,
-      mousePos.y + (crosshairInnerSize / 2)
+    context.line( // Bottom line
+      posX,
+      posY + (crosshairSize / 2),
+      posX,
+      posY + (crosshairInnerSize / 2)
     );
 
-    context.line(
-      mousePos.x - (crosshairSize / 2), // Left line
-      mousePos.y,
-      mousePos.x - (crosshairInnerSize / 2),
-      mousePos.y
+    context.line(  // Left line
+      posX - (crosshairSize / 2),
+      posY,
+      posX - (crosshairInnerSize / 2),
+      posY
     );
 
-    context.line(
-      mousePos.x + (crosshairSize / 2), // Right line
-      mousePos.y,
-      mousePos.x + (crosshairInnerSize / 2),
-      mousePos.y
+    context.line(  // Right line
+      posX + (crosshairSize / 2),
+      posY,
+      posX + (crosshairInnerSize / 2),
+      posY
     );
-    
+
 
     // Center Dot
-    if( hoverAmount.current === 0 ){
-      context.noStroke();
-      context.fill(Constants.bodyColor);
-      context.rect(
-        mousePos.x,
-        mousePos.y,
-        Constants.pixelDensity,
-        Constants.pixelDensity
-      );
-    }
+    context.push();
+    context.noStroke();
+    context.fill(Constants.bodyColor);
+    context.rect(
+      posX,
+      posY,
+      Constants.pixelDensity,
+      Constants.pixelDensity
+    );
+    context.pop();
   }
+
+
+  // Update target coordinates when the hover target changes
+  useEffect(() => {
+    hoverActive.current = globalContext.hover.active;
+    hoverAmount.current = 0; // Reset the animiation timer
+
+    // Compare the globalContext hover values with the current ones
+    const globalContextHoverVal = {
+      x: Math.round(globalContext.hover.x),
+      y: Math.round(globalContext.hover.y),
+      w: Math.round(globalContext.hover.w) + (2 * targetPadding),
+      h: Math.round(globalContext.hover.h) + (2 * targetPadding),
+      active: Math.round(globalContext.hover.active),
+      corner: hoverCorner
+    };
+
+    prevTarget.current = targetBox.current;
+    currentTarget.current = hoverActive.current ? globalContextHoverVal : cursorPos.current;
+  }, [globalContext.hover]);
+
+
+  // Draw the target box
+  const drawTargetBox = (context) => {
+
+    // If there's no hover target, place the box around the cursor.
+    if( !hoverActive.current ){
+      currentTarget.current = {
+        x: cursorPos.current.x,
+        y: cursorPos.current.y,
+        w: targetMinSize,
+        h: targetMinSize,
+        corner: 0
+      }
+    }
+
+    // Increment the hoverAmount
+    hoverAmount.current = updateTransition(hoverAmount.current, transitionDuration, true);
+
+    targetBox.current = {
+      x: context.lerp(
+        prevTarget.current.x,
+        currentTarget.current.x,
+        ease(hoverAmount.current, 'sine')
+      ),
+      y: context.lerp(
+        prevTarget.current.y,
+        currentTarget.current.y,
+        ease(hoverAmount.current, 'sine')
+      ),
+      w: context.lerp(
+        prevTarget.current.w,
+        currentTarget.current.w,
+        ease(hoverAmount.current, 'sine')
+      ),
+      h: context.lerp(
+        prevTarget.current.h,
+        currentTarget.current.h,
+        ease(hoverAmount.current, 'sine')
+      ),
+      corner: context.lerp(
+        prevTarget.current.corner,
+        currentTarget.current.corner,
+        ease(hoverAmount.current, 'sine')
+      )
+    };
+
+    !hoverActive.current && hoverAmount.current === 1 ? context.fill(Constants.accentColor) : context.noFill();
+    context.rectMode(context.CENTER);
+
+    context.rect(
+      pixelCoord(targetBox.current.x, context.width),
+      pixelCoord(targetBox.current.y, context.height),
+      pixelDim(roundToPixel(targetBox.current.w / Constants.pixelDensity)),
+      pixelDim(roundToPixel(targetBox.current.h / Constants.pixelDensity)),
+      targetBox.current.corner
+    );
+  }
+
   
 
 
+  /*-------------------------------------------------------*/
+  /* RENDER
+  /*-------------------------------------------------------*/
+  
   return (
     <div className={styles.overlay} ref={renderRef}></div>
   );

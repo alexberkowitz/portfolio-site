@@ -9,6 +9,7 @@ export const accentColor = [255, 255, 255, 255];
 /*-------------------------------------------------------*/
 /* DRAWING SETTINGS
 /*-------------------------------------------------------*/
+export const frameRate = 30;
 export const transitionDuration = 0.3;
 export const pixelDensity = 2;
-export const interactiveCornerRadius = 40; // Setting this as a global variable ensures consistency between interactive regions and drawn regions
+export const interactiveCornerRadius = 10; // Setting this as a global variable ensures consistency between interactive regions and drawn regions
