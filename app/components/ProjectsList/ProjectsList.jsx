@@ -15,7 +15,10 @@ export function ProjectsList(props) {
       {allProjects
         .sort((a, b) => { return a.metadata.title < b.metadata.title ? -1 : 1 }) // Alphabetical sorting
         .map((project) => (
-          <li key={project.slug}>
+          <li key={project.slug} style={{
+            '--colSpan': project.metadata.width,
+            '--rowSpan': project.metadata.height,
+          }}>
             <Link
               href={`/projects/${project.slug}`}
               >

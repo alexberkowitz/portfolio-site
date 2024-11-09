@@ -1,16 +1,33 @@
 .projectsList {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr));
+  grid-auto-rows: 1fr;
   gap: var(--gap);
+  grid-auto-flow: row dense;
   margin: 0;
   padding: 0;
   list-style-type: none;
+
+  &:before {
+    content: '';
+    grid-row: 1 / 1;
+    grid-column: 1 / 1;
+    aspect-ratio: 1 / 1;
+  }
   
   li {
+    grid-column: span var(--colSpan);
+    grid-row: span var(--rowSpan);
     position: relative;
     display: block;
-    max-width: 600px;
     z-index: 1;
+    --colSpan: 1;
+    --rowSpan: 1;
+
+    &:first-child {
+      grid-column: 1 / span var(--colSpan);
+      grid-row: 1 / span var(--rowSpan);
+    }
     
     &:has(a:hover, a:focus-visible) {
       z-index: 2;
@@ -20,8 +37,11 @@
     a {
       display: block;
       position: relative;
+      width: 100%;
+      height: 100%;
       transform-origin: 50% 50%;
       border-radius: var(--cornerRadius);
+      background-color: var(--accentColor);
       overflow: hidden;
       transition: all .3s ease-in-out;
       --padding: 2rem;
@@ -29,7 +49,6 @@
       @media(hover: hover) {
         &:hover,
         &:focus-visible {
-          // transform: scale(1.05);
 
           &:after {
             content: '';
@@ -56,6 +75,7 @@
     }
     
     .cover {
+      position: absolute;
       width: 100%;
       height: 100%;
       object-fit: cover;
