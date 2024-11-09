@@ -47,14 +47,15 @@ export default function GlobalContextContainer(props) {
   }
 
   // Set the hover state
-  const setHoverState = (e, active) => {
+  const setHoverState = (e, active, isFixed) => {
     const coords = e.target.getBoundingClientRect();
     setHover({
       active: active,
       x: coords.x + (coords.width / 2),
       y: coords.y + (coords.height / 2),
       w: coords.width,
-      h: coords.height
+      h: coords.height,
+      isFixed: isFixed === true
     });
   }
 

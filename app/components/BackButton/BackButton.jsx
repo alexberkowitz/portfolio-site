@@ -16,6 +16,7 @@ const BackButton = () => {
     <Link
       className={styles.backButton}
       href={globalContext.prevRoute}
+      isFixed={true}
       >
       Go Back
     </Link>

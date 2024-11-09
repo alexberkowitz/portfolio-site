@@ -244,7 +244,8 @@ const Overlay = () => {
       w: Math.round(globalContext.hover.w) + (2 * targetPadding),
       h: Math.round(globalContext.hover.h) + (2 * targetPadding),
       active: Math.round(globalContext.hover.active),
-      corner: hoverCorner
+      corner: hoverCorner,
+      isFixed: globalContext.hover.isFixed
     };
 
     prevTarget.current = targetBox.current;
@@ -262,7 +263,8 @@ const Overlay = () => {
         y: cursorPos.current.y,
         w: targetMinSize,
         h: targetMinSize,
-        corner: 0
+        corner: 0,
+        isFixed: false
       }
     }
 
@@ -294,7 +296,8 @@ const Overlay = () => {
         prevTarget.current.corner,
         currentTarget.current.corner,
         ease(hoverAmount.current, 'sine')
-      )
+      ),
+      isFixed: currentTarget.current.isFixed
     };
 
     context.rectMode(context.CENTER);
@@ -309,7 +312,7 @@ const Overlay = () => {
 
     context.rect(
       pixelCoord(targetBox.current.x, context.width),
-      pixelCoord(targetBox.current.y, context.height) + (hoverActive.current ? scrollOffset.current : 0),
+      pixelCoord(targetBox.current.y, context.height) + (hoverActive.current && !targetBox.current.isFixed ? scrollOffset.current : 0),
       pixelDim(roundToPixel(targetBox.current.w / Constants.pixelDensity)),
       pixelDim(roundToPixel(targetBox.current.h / Constants.pixelDensity)),
       targetBox.current.corner
