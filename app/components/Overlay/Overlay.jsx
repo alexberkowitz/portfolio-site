@@ -83,7 +83,10 @@ const Overlay = () => {
   const drawP5 = () => {
     new p5(p => {
       p.setup = () => {
-        p.createCanvas(Math.floor(window.innerWidth), Math.floor(window.innerHeight)).parent(renderRef.current);
+        p.createCanvas(
+          Math.floor(window.innerWidth),
+          Math.floor(window.innerHeight)
+        ).parent(renderRef.current);
         p.pixelDensity(1 / Constants.pixelDensity);
 
         // Graphics Buffers
@@ -129,7 +132,6 @@ const Overlay = () => {
   /*-------------------------------------------------------*/
   /* TRANSITIONS
   /*-------------------------------------------------------*/
-
   const drawTransition = (context, p) => {
     const transition = globalContext.transition.current;
 
@@ -325,7 +327,6 @@ const Overlay = () => {
   /*-------------------------------------------------------*/
   /* RENDER
   /*-------------------------------------------------------*/
-  
   return (
     <div className={styles.overlay} ref={renderRef}></div>
   );

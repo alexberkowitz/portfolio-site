@@ -51,7 +51,10 @@ const Background = () => {
 
     new p5(p => {
       p.setup = () => {
-        p.createCanvas(Math.round(Math.floor(window.innerWidth) / Constants.pixelDensity) * Constants.pixelDensity, Math.round(Math.floor(window.innerHeight) / Constants.pixelDensity) * Constants.pixelDensity).parent(renderRef.current);
+        p.createCanvas(
+          Math.round(Math.floor(window.innerWidth) / Constants.pixelDensity) * Constants.pixelDensity,
+          Math.round(Math.floor(window.innerHeight) / Constants.pixelDensity) * Constants.pixelDensity
+        ).parent(renderRef.current);
         p.pixelDensity(1 / Constants.pixelDensity);
 
         // Graphics buffers
@@ -222,7 +225,6 @@ const Background = () => {
   /*-------------------------------------------------------*/
   /* DOT GRID
   /*-------------------------------------------------------*/
-
   const drawDotGrid = (context) => {
     const normalizedWidth = Math.floor(context.width / Constants.pixelDensity);
     const gridSpace = 8;
@@ -244,6 +246,9 @@ const Background = () => {
   
 
 
+  /*-------------------------------------------------------*/
+  /* RENDER
+  /*-------------------------------------------------------*/
   return (
     <div className={styles.background} ref={renderRef}></div>
   );

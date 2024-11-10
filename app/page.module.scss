@@ -17,7 +17,7 @@
   }
 
   //Name
-  h1 {
+  .title {
     grid-area: name;
   }
 
@@ -44,5 +44,10 @@
     text-align: right;
     align-items: flex-start;
     justify-content: flex-end;
+  }
+
+  .modelView {
+    grid-column: 1 / -1;
+    grid-row: 1 / -1;
   }
 }

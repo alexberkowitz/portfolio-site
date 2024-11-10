@@ -1,7 +1,13 @@
 'use client'
 
 import Link from '@/components/Link/Link';
+import dynamic from 'next/dynamic';
+
 import styles from './page.module.scss';
+
+const DynamicModel = dynamic(() => import('@/components/ModelView/ModelView'), {
+  ssr: false,
+});
 
 export default function Home() {
   return (
@@ -29,6 +35,9 @@ export default function Home() {
           >
           Maker
         </Link>
+      </div>
+      <div className={styles.modelView}>
+        <DynamicModel model="/meshes/teapot.obj"/>
       </div>
     </main>
   );
