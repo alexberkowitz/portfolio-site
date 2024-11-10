@@ -1,5 +1,6 @@
 'use client'
 
+import dynamic from 'next/dynamic';
 import { useEffect, useState, useRef } from "react";
 import p5 from 'p5';
 import { dither, ease, updateTransition } from '@/utils/drawing';
@@ -57,9 +58,9 @@ const ModelView = (props) => {
         }, 300);
 
         // When the window resizes, update the drawing parameters
-        // window.addEventListener("resize", () => {
-        //   setCanvasBounds(p, [viewportBuffer]);
-        // });
+        window.addEventListener("resize", () => {
+          setCanvasBounds(p, [viewportBuffer]);
+        });
       }
 
       p.draw = () => {
@@ -73,7 +74,7 @@ const ModelView = (props) => {
         if( ready.current ){
           transitionAmount.current = updateTransition(transitionAmount.current, 1, true);
         }
-        p.background(255, 255, 255, 255 * (1 - transitionAmount.current));
+        p.background(128, 128, 128, 255 * ease(1 - transitionAmount.current, 'easeOut', 3));
 
         // Apply dither effect
         const bgColor = [0, 0, 0, 0]; // Transparent

@@ -2,10 +2,11 @@
 
 import Link from '@/components/Link/Link';
 import dynamic from 'next/dynamic';
+import ModelView from '@/components/ModelView/ModelView';
 
 import styles from './page.module.scss';
 
-const DynamicModel = dynamic(() => import('@/components/ModelView/ModelView'), {
+const DynamicModelView = dynamic(() => import('@/components/ModelView/ModelView'), {
   ssr: false,
 });
 
@@ -37,7 +38,7 @@ export default function Home() {
         </Link>
       </div>
       <div className={styles.modelView}>
-        <DynamicModel model="/meshes/teapot.obj"/>
+        <DynamicModelView model="/meshes/teapot.obj"/>
       </div>
     </main>
   );

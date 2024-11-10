@@ -47,7 +47,11 @@
   }
 
   .modelView {
-    grid-column: 1 / -1;
-    grid-row: 1 / -1;
+    position: fixed;
+    top: var(--gap);
+    bottom: var(--gap);
+    left: var(--gap);
+    right: var(--gap);
+    z-index: -1;
   }
 }
