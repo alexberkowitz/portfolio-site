@@ -2,7 +2,6 @@
 
 import Link from '@/components/Link/Link';
 import dynamic from 'next/dynamic';
-import ModelView from '@/components/ModelView/ModelView';
 
 import styles from './page.module.scss';
 
