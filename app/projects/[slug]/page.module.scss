@@ -2,31 +2,29 @@
 
 .projectPage {
   position: relative;
-  padding-top: 0;
-  padding-left: 0;
-  padding-right: 0;
 }
 
 .info {
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  gap: calc(var(--gap) * 2);
-  // padding: var(--gap) var(--gap) 0 var(--gap);
-  padding-top: var(--gap);
+  gap: var(--gap);
+  padding: calc(var(--gap) / 2) var(--gap);
   background-color: var(--bgColor);
   pointer-events: none;
-
+  
   > * {
     pointer-events: all;
   }
-
+  
   @media(min-width: $break-mobile) {
     position: sticky;
-    top: var(--gap);
+    top: calc(var(--gap) * 2);
     flex-direction: row;
     align-items: flex-start;
     justify-content: space-between;
+    gap: calc(var(--gap) * 2);
+    padding: 0;
     background: transparent;
     border: none;
     animation: trigger steps(1) both;
@@ -48,7 +46,6 @@
   display: inline-block;
   width: 100%;
   margin: 0;
-  padding-left: var(--gap);
   text-wrap: unset !important;
   
   span {
@@ -59,8 +56,10 @@
     border-radius: 0 0.25rem 0.25rem 0;
     transform-origin: 0% 0%;
     transition: all .5s ease-in-out;
+  }
 
-    &:before {
+  @media(min-width: $break-mobile) {
+    span:before {
       content: '';
       position: absolute;
       top: 0;
@@ -73,15 +72,14 @@
 }
 
 .details {
+  position: relative;
   display: grid;
   align-self: flex-start;
   grid-template-columns: repeat(4, auto);
   gap: 1rem;
-  padding: calc(var(--gap) / 2) var(--gap);
   background-color: var(--bgColor);
   font-size: 0.8rem;
   transition: padding .5s ease-in-out;
-
   dt {
     font-weight: 600;
     text-transform: uppercase;
@@ -93,9 +91,19 @@
   }
 
   @media(min-width: $break-mobile) {
-    padding: calc(var(--gap) / 2) var(--gap) calc(var(--gap) / 2) calc(var(--gap) / 2);
+    padding: calc(var(--gap) / 2) 0 calc(var(--gap) / 2) calc(var(--gap) / 2);
     grid-template-columns: repeat(2, auto);
     border-radius: 0.25rem 0  0 0.25rem;
+
+    &:after {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 100%;
+      width: calc(var(--gap) * 2);
+      background-color: inherit;
+    }  
   }
 }
 

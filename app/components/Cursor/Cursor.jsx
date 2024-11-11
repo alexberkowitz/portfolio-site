@@ -39,18 +39,6 @@ const Cursor = () => {
         });
       }
 
-      // We need to calculate how much a user scrolls so we can compensate.
-      // Since the hover target doesn't change when scrolling, we don't get
-      // updated coordinates in real-time.
-      let initialScroll = window.scrollY;
-      window.addEventListener('scroll', () => {
-        scrollOffset.current = initialScroll - window.scrollY;
-      });
-      window.addEventListener('scrollend', () => {
-        initialScroll = window.scrollY;
-        scrollOffset.current = 0;
-      });
-
       drawP5(); // Start the drawing
     }
   }, [initialized]);
@@ -66,6 +54,13 @@ const Cursor = () => {
           Math.floor(window.innerHeight)
         ).parent(renderRef.current);
         p.pixelDensity(1 / Constants.pixelDensity);
+
+        // When the window resizes, update the drawing parameters
+        window.addEventListener("resize", () => {
+          const calculatedWidth = Math.round(Math.floor(window.innerWidth) / Constants.pixelDensity) * Constants.pixelDensity;
+          const calculatedHeight = Math.round(Math.floor(window.innerHeight) / Constants.pixelDensity) * Constants.pixelDensity;
+          p.resizeCanvas(calculatedWidth, calculatedHeight);
+        });
       }
 
       p.draw = () => {
