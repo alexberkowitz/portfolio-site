@@ -10,6 +10,7 @@ export default function GlobalContextContainer(props) {
   const [prevRoute, setPrevRoute] = useState('/'); // Previous route for the back button
 
   // Cursor
+  const cursorPos = useRef({x: 0, y: 0});
   const [cursorState, setCursorState] = useState('default');
   const [hover, setHover] = useState({active: false, x: 0, y: 0, w: 0, h: 0});
   const cursorTrail = useRef(true);
@@ -29,6 +30,7 @@ export default function GlobalContextContainer(props) {
 
   return (
     <GlobalContext.Provider value={{
+      cursorPos,
       cursorState,
       setCursorState,
       cursorTrail,

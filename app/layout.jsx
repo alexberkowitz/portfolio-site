@@ -10,7 +10,7 @@ import BackButton from '@/components/BackButton/BackButton';
 const DynamicBackground = dynamic(() => import('@/components/Background/Background'), {
   ssr: false,
 });
-const DynamicOverlay = dynamic(() => import('@/components/Overlay/Overlay'), {
+const DynamicCursor = dynamic(() => import('@/components/Cursor/Cursor'), {
   ssr: false,
 });
 
@@ -56,7 +56,7 @@ export default function RootLayout({ children }) {
             <DynamicBackground />
             {children}
             <BackButton />
-            <DynamicOverlay />
+            <DynamicCursor />
           </body>
         </html>
       </ViewTransitions>

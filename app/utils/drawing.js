@@ -34,7 +34,8 @@ export const updateTransition = (amount, duration, active) => {
 /* PIXEL TRANSFORMATIONS
 /*-------------------------------------------------------*/
 
-// Dither the canvas
+// Dither
+//
 // Based on Bayer Dithering by illus0r
 // https://editor.p5js.org/illus0r/sketches/YkkcqhLmY
 export const dither = (context, fgColor, bgColor, autoUpdate) => {
@@ -70,6 +71,7 @@ export const dither = (context, fgColor, bgColor, autoUpdate) => {
     context.updatePixels();
   }
 }
+
 
 // Flatten alpha transparencty values to white
 export const flattenTransparency = (context) => {

@@ -7,12 +7,12 @@ import { usePathname } from "next/navigation";
 import styles from './link.module.scss';
 
 const Link = (props) => {
+
   const globalContext = useGlobalContext();
   const router = useTransitionRouter();
   const pathname = usePathname();
 
   const isExternal = !props.href.startsWith('/');
-  const isFixed = !!props.isFixed;
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -24,7 +24,7 @@ const Link = (props) => {
     <a
       {...props}
       href={props.href}
-      onMouseEnter={(e) => globalContext.setHoverState(e, true, isFixed)}
+      onMouseEnter={(e) => globalContext.setHoverState(e, true)}
       onMouseLeave={(e) => globalContext.setHoverState(e, false)}
       className={`${styles.link} ${props.className}`}
       target="_blank"
@@ -36,7 +36,7 @@ const Link = (props) => {
     <a
       {...props}
       onClick={handleClick}
-      onMouseEnter={(e) => globalContext.setHoverState(e, true, isFixed)}
+      onMouseEnter={(e) => globalContext.setHoverState(e, true)}
       onMouseLeave={(e) => globalContext.setHoverState(e, false)}
       className={`${styles.link} ${props.className}`}
       >

@@ -96,6 +96,7 @@ const Background = () => {
 
       p.draw = () => {
         p.frameRate(Constants.frameRate);
+        globalContext.cursorPos.current = {x: p.mouseX, y: p.mouseY}; // Store the cursor pos for other components to use
 
         // Draw the background
         p.background(255);
