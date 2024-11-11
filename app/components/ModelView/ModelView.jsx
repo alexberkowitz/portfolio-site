@@ -1,6 +1,5 @@
 'use client'
 
-import dynamic from 'next/dynamic';
 import { useEffect, useState, useRef } from "react";
 import p5 from 'p5';
 import { dither, ease, updateTransition } from '@/utils/drawing';
@@ -16,7 +15,7 @@ const ModelView = (props) => {
 
   // 3D model viewer
   let viewportBuffer;
-  let mesh;
+  // let mesh;
   
   // Initial setup
   useEffect(() => {
@@ -35,7 +34,7 @@ const ModelView = (props) => {
   const drawP5 = () => {
     new p5(p => {
       p.preload = () => {
-        mesh = p.loadModel(props.model, true);
+        // mesh = p.loadModel(props.model, true);
       }
 
       p.setup = () => {
@@ -152,17 +151,6 @@ const ModelView = (props) => {
     });
 
     ready.current = true;
-  }
-
-  const p2dToWebGL = (p2dX, p2dY, p2dWidth, p2dHeight) => {
-    // Assuming WEBGL canvas is centered in the same size canvas as P2D
-    let webglX = p2dX - p2dWidth / 2;
-    let webglY = p2dY - p2dHeight / 2;
-    
-    return {
-      x: webglX,
-      y: webglY
-    };
   }
   
 
