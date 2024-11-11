@@ -37,7 +37,16 @@ export default function Home() {
         </Link>
       </div>
       <div className={styles.modelView}>
-        <DynamicModelView model="/meshes/teapot.obj"/>
+        <DynamicModelView
+          model="/3d/sword/sword.obj"
+          options={{
+            texture: "/3d/sword/sword_diffuse.png",
+            solid: true,
+            rotationX: 0,
+            rotationY: 0,
+            rotationZ: 45,
+            scale: 4
+          }}/>
       </div>
     </main>
   );

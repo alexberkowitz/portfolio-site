@@ -27,7 +27,7 @@ const Overlay = () => {
   const targetMinSize = 3 * Constants.pixelDensity;
   const hoverCorner = Constants.interactiveCornerRadius;
   const targetPadding = 10; // In pixel-density units
-  const transitionDuration = .3; // In seconds
+  const hoverDuration = .3; // In seconds
 
   const cursorPos = useRef({x: 0, y: 0}); // Local copy of the global cursorPos variable
   const showCursor = useRef(true);
@@ -145,7 +145,7 @@ const Overlay = () => {
     const transitionEndSize = (Math.sqrt(triangleA ** 2 + triangleB ** 2) + (blurAmount * 2)) * 2;
     
     // Animate the transition in or out
-    const transitionDuration = Constants.transitionDuration * 30; // Converting ms to frames
+    const transitionDuration = Constants.transitionDuration * Constants.frameRate; // Converting ms to frames
     transitionAmount.current = updateTransition(transitionAmount.current, transitionDuration, transition.active);
     
     if( transitionAmount.current > 0 ){
@@ -271,7 +271,7 @@ const Overlay = () => {
     }
 
     // Increment the hoverAmount
-    hoverAmount.current = updateTransition(hoverAmount.current, transitionDuration, true);
+    hoverAmount.current = updateTransition(hoverAmount.current, hoverDuration, true);
 
     targetBox.current = {
       x: context.lerp(

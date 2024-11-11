@@ -7,15 +7,18 @@ import * as Constants from '@/Constants';
 
 import styles from "./modelView.module.scss";
 
-const ModelView = () => {
+const ModelView = (props) => {
+  const {model, options} = props;
   const renderRef = useRef();
   const [initialized, setInitialized] = useState(false);
   const ready = useRef(false);
   const transitionAmount = useRef(0);
+  const rotationSpeed = 15; // Degrees per second
 
   // 3D model viewer
   let viewportBuffer;
-  // let mesh;
+  let mesh;
+  let texture;
   
   // Initial setup
   useEffect(() => {
@@ -34,7 +37,13 @@ const ModelView = () => {
   const drawP5 = () => {
     new p5(p => {
       p.preload = () => {
-        // mesh = p.loadModel(props.model, true);
+        if( !!model ){
+          mesh = p.loadModel(model, true);
+        }
+
+        if( !!options.texture ){
+          texture = p.loadImage(options.texture);
+        }
       }
 
       p.setup = () => {
@@ -73,11 +82,11 @@ const ModelView = () => {
         if( ready.current ){
           transitionAmount.current = updateTransition(transitionAmount.current, 1, true);
         }
-        p.background(128, 128, 128, 255 * ease(1 - transitionAmount.current, 'easeOut', 3));
+        // p.background(128, 128, 128, 255 * ease(1 - transitionAmount.current, 'easeOut', 3));
 
         // Apply dither effect
-        const bgColor = [0, 0, 0, 0]; // Transparent
-        dither(p, Constants.fgColor, bgColor, 60, true);
+        const transparentColor = [0, 0, 0, 0]; // Transparent
+        dither(p, Constants.fgColor, options.solid ? Constants.accentColor : transparentColor, 120, true);
       }
     });
   }
@@ -87,14 +96,45 @@ const ModelView = () => {
   /*-------------------------------------------------------*/
   /* 3D SCENE RENDER
   /*-------------------------------------------------------*/
+  let baseAngle = 0;
   const renderScene = (context, p) => {
     context.frameRate(Constants.frameRate);
     context.clear();
+
 
     // A variable unit based on a square that is contained by the cavnas
     const units = (value) => {
       return Math.min(context.width, context.height) * value / 100; // Percentages for ease ( e.g. 50% = units(50) )
     }
+
+    
+    // Draw the shape.
+    context.fill(64);
+    context.noStroke();
+    
+    context.push();
+    context.angleMode(context.DEGREES);
+    const maxRotation = 45; // Degrees in either direction
+    const rotationAmount = {
+      x: ((p.mouseY / p.height) - 0.5) * maxRotation * -1,
+      y: ((p.mouseX / p.width) - 0.5) * maxRotation
+    }
+    context.rotateX(rotationAmount.x + props.options?.rotationX);
+    context.rotateY(baseAngle + rotationAmount.y + props.options?.rotationY);
+    context.rotateZ(180 + props.options?.rotationZ);
+    context.scale(props.options?.scale);
+    
+    if( !!texture ){
+      context.texture(texture);
+    }
+    if( !!mesh ){
+      context.model(mesh);
+    } else {
+      context.sphere(units(2));
+      context.torus(units(10), units(3), 64, 32);
+    }
+    context.pop();
+
 
     // Lighting
     context.ambientLight(32, 32, 32);
@@ -116,25 +156,9 @@ const ModelView = () => {
       200
     );
 
-    // context.specularMaterial(128);
-    // context.shininess(1);
-    context.fill(64);
-    context.noStroke();
-    
-    // Draw the shape.
-    context.push();
-    const maxRotation = 45; // Degrees in either direction
-    const rotationAmount = {
-      x: ((p.mouseX / p.width) - 0.5) * maxRotation * (Math.PI / 180),
-      y: ((p.mouseY / p.height) - 0.5) * maxRotation * (Math.PI / 180) * -1
-    }
-    context.rotateY(rotationAmount.x);
-    context.rotateX(rotationAmount.y);
-    
-    // context.model(mesh);
-    context.sphere(units(10));
-    context.torus(units(30), units(10), 64, 32);
-    context.pop();
+
+    // Increment the angle to enable rotation
+    baseAngle += rotationSpeed / Constants.frameRate;
   }
 
 
