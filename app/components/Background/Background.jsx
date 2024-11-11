@@ -2,12 +2,14 @@
 
 import { useEffect, useState, useRef } from "react";
 import p5 from 'p5';
+import { useGlobalContext } from '@/GlobalContext';
 import { dither, ease } from '@/utils/drawing';
 import * as Constants from '@/Constants';
 
 import styles from "./background.module.scss";
 
 const Background = () => {
+  const globalContext = useGlobalContext();
   const renderRef = useRef();
   const [initialized, setInitialized] = useState(false);
 
@@ -96,19 +98,24 @@ const Background = () => {
         p.frameRate(Constants.frameRate);
 
         // Draw the background
-        p.background(Constants.bgColor[0], Constants.bgColor[1], Constants.bgColor[2]);
+        p.background(255);
 
         // Apply dot grid
         drawDotGrid(gridBuffer);
         p.image(gridBuffer, 0, 0);
         
         // Draw the cursor trail
-        drawCursorTrail(cursorBuffer, p);
-        p.image(cursorBuffer, 0, 0);
+        if( globalContext.cursorTrail.current ){
+          drawCursorTrail(cursorBuffer, p);
+          p.image(cursorBuffer, 0, 0);
+        }
         
         // Draw click explosions
         drawExplosions(explosionBuffer);
         p.image(explosionBuffer, 0, 0);
+
+        // Apply dither effect
+        dither(p, Constants.fgColor, Constants.bgColor, true);
       }
     });
   }
@@ -125,8 +132,9 @@ const Background = () => {
   
   // Draw a fading trail following the cursor
   const drawCursorTrail = (context, p) => {
-    const cursorPointMaxAge = 10; // In frames
     context.noFill();
+
+    const cursorPointMaxAge = 10; // In frames
 
     // Add the current cursor position to the points list
     if( cursorDraw.current ){
@@ -138,7 +146,7 @@ const Background = () => {
     }
 
     if( cursorPoints.current.length > 0 ){
-      context.background(255);
+      context.clear();
       context.strokeWeight(cursorLineWidth.current);
       context.strokeCap(context.ROUND);
 
@@ -175,10 +183,6 @@ const Background = () => {
 
       // Apply blur
       context.filter(context.BLUR, cursorLineWidth.current / 5);
-
-      // Apply dither effect
-      const bgColor = [0, 0, 0, 0]; // Transparent
-      dither(context, Constants.fgColor, bgColor, true);
     }
   }
 
@@ -193,13 +197,12 @@ const Background = () => {
     const explosionEndSize = 400; // In px
 
     if( explosions.current.length > 0 ){ // Don't try to draw explosions if there aren't any
-      context.background(255);
+      context.clear(255);
       context.noFill();
       context.stroke(0, 0, 0, 255);
 
       explosions.current.forEach((explosion, i) => {
         if( explosion.age <= explosionDuration ){
-          // const explosionSize = context.map(explosion.age, 0, explosionDuration, explosionStartSize, explosionEndSize);
           const explosionSize = context.lerp(
             explosionStartSize,
             explosionEndSize,
@@ -222,10 +225,6 @@ const Background = () => {
 
       // Apply blur
       context.filter(context.BLUR, explosionStartSize / 4);
-
-      // Apply dither effect
-      const bgColor = [0, 0, 0, 0]; // Transparent
-      dither(context, Constants.fgColor, bgColor, true);
     }
   }
 

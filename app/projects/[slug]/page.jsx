@@ -61,7 +61,7 @@ export default function Project({ params }) {
   }
 
   return (
-    <>
+    <main>
 
       <div className={styles.info}>
         <div className={styles.title}>
@@ -78,10 +78,10 @@ export default function Project({ params }) {
         </dl>
       </div>
 
-      <main className={styles.projectPage}>
-      <CustomMDX source={project.content} />
-      </main>
+      <article className={styles.projectPage}>
+        <CustomMDX source={project.content} />
+      </article>
       
-    </>
+    </main>
   )
 }

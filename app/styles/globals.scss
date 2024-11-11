@@ -36,6 +36,7 @@ body {
   --cornerRadius: .5rem;
   --interactiveCornerRadius: 40px;
 
+  // Page border
   &:after {
     content: '';
     box-sizing: content-box;
@@ -63,8 +64,34 @@ main {
   flex-direction: column;
   gap: var(--gap);
   padding: var(--gap) var(--gap) calc(var(--gap) + 3rem) var(--gap);
+  view-transition-name: page-content;
 }
 
+@keyframes fade-in {
+  from { opacity: 0; }
+}
+
+@keyframes fade-out {
+  to { opacity: 0; }
+}
+
+@keyframes slide-from-right {
+  from { transform: translateX(30px); }
+}
+
+@keyframes slide-to-left {
+  to { transform: translateX(-30px); }
+}
+
+::view-transition-old(page-content) {
+  animation: 90ms cubic-bezier(0.4, 0, 1, 1) both fade-out,
+    300ms cubic-bezier(0.4, 0, 0.2, 1) both slide-to-left;
+}
+
+::view-transition-new(page-content) {
+  animation: 210ms cubic-bezier(0, 0, 0.2, 1) 90ms both fade-in,
+    300ms cubic-bezier(0.4, 0, 0.2, 1) both slide-from-right;
+}
 
 
 /*-------------------------------------------------------*/

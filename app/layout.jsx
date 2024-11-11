@@ -1,6 +1,7 @@
 import { MuseoModerno, Oxanium } from "next/font/google";
 
 import GlobalContextContainer from './GlobalContext';
+import { ViewTransitions } from 'next-view-transitions';
 import * as Constants from '@/Constants';
 import dynamic from 'next/dynamic';
 import BackButton from '@/components/BackButton/BackButton';
@@ -40,23 +41,25 @@ export const viewport = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <GlobalContextContainer>
-        <body className={`${museoModerno.variable} ${oxanium.variable}`} style={{
-          '--transitionDuration': `${Constants.transitionDuration}s`,
-          '--bgColor': `rgb(${Constants.bgColor[0]}, ${Constants.bgColor[1]}, ${Constants.bgColor[2]})`,
-          '--fgColor': `rgb(${Constants.fgColor[0]}, ${Constants.fgColor[1]}, ${Constants.fgColor[2]})`,
-          '--bodyColor': `rgb(${Constants.bodyColor[0]}, ${Constants.bodyColor[1]}, ${Constants.bodyColor[2]})`,
-          '--accentColor': `rgb(${Constants.accentColor[0]}, ${Constants.accentColor[1]}, ${Constants.accentColor[2]})`,
-          '--borderWidth': `${Constants.pixelDensity}px`,
-          '--interactiveCornerRadius': `${Constants.interactiveCornerRadius}px`
-          }}>
-          <DynamicBackground />
-          {children}
-          <BackButton />
-          <DynamicOverlay />
-        </body>
-      </GlobalContextContainer>
-    </html>
+    <GlobalContextContainer>
+      <ViewTransitions>
+        <html lang="en">
+          <body className={`${museoModerno.variable} ${oxanium.variable}`} style={{
+            '--transitionDuration': `${Constants.transitionDuration}s`,
+            '--bgColor': `rgb(${Constants.bgColor[0]}, ${Constants.bgColor[1]}, ${Constants.bgColor[2]})`,
+            '--fgColor': `rgb(${Constants.fgColor[0]}, ${Constants.fgColor[1]}, ${Constants.fgColor[2]})`,
+            '--bodyColor': `rgb(${Constants.bodyColor[0]}, ${Constants.bodyColor[1]}, ${Constants.bodyColor[2]})`,
+            '--accentColor': `rgb(${Constants.accentColor[0]}, ${Constants.accentColor[1]}, ${Constants.accentColor[2]})`,
+            '--borderWidth': `${Constants.pixelDensity}px`,
+            '--interactiveCornerRadius': `${Constants.interactiveCornerRadius}px`
+            }}>
+            <DynamicBackground />
+            {children}
+            <BackButton />
+            <DynamicOverlay />
+          </body>
+        </html>
+      </ViewTransitions>
+    </GlobalContextContainer>
   );
 }

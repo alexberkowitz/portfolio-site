@@ -31,12 +31,12 @@ export const updateTransition = (amount, duration, active) => {
 
 
 /*-------------------------------------------------------*/
-/* DITHERING
-/*-------------------------------------------------------*/
-/* Based on Bayer Dithering by illus0r
-/* https://editor.p5js.org/illus0r/sketches/YkkcqhLmY
+/* PIXEL TRANSFORMATIONS
 /*-------------------------------------------------------*/
 
+// Dither the canvas
+// Based on Bayer Dithering by illus0r
+// https://editor.p5js.org/illus0r/sketches/YkkcqhLmY
 export const dither = (context, fgColor, bgColor, autoUpdate) => {
   const normalizedWidth = Math.floor(context.width / Constants.pixelDensity);
   const m = [
@@ -69,6 +69,26 @@ export const dither = (context, fgColor, bgColor, autoUpdate) => {
   if( autoUpdate !== undefined && autoUpdate ){
     context.updatePixels();
   }
+}
+
+// Flatten alpha transparencty values to white
+export const flattenTransparency = (context) => {
+  context.loadPixels();
+
+  for (let i = 0; i < context.pixels.length; i += 4) {
+    if( context.pixels[i + 3] > 51 ){ // Below this threshold the pixels will be transparent
+      const brightnessVal = (1 - (context.pixels[i + 3] / 255));
+      const colorVal = 1 - (1 - context.map(context.pixels[i], 0, 255, 0, 1)) * (1 - brightnessVal);
+      context.pixels[i] = colorVal * 255;
+      context.pixels[i + 1] = colorVal * 255;
+      context.pixels[i + 2] = colorVal * 255;
+      context.pixels[i + 3] = 255;
+    } else {
+      context.pixels[i + 3] = 0;
+    }
+  }
+
+  context.updatePixels();
 }
 
 

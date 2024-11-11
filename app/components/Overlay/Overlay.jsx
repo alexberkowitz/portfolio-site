@@ -21,7 +21,7 @@ const Overlay = () => {
   const [initialized, setInitialized] = useState(false);
 
   // Transition
-  const transitionAmount = useRef(globalContext.transition.current.active ? 1 : 0);
+  // const transitionAmount = useRef(globalContext.transition.current.active ? 1 : 0);
   
   // Cursor
   const targetMinSize = 3 * Constants.pixelDensity;
@@ -112,8 +112,8 @@ const Overlay = () => {
         cursorPos.current = {x: p.mouseX, y: p.mouseY};
         
         // Draw the transition
-        drawTransition(transitionBuffer, p);
-        p.image(transitionBuffer, 0, 0);
+        // drawTransition(transitionBuffer, p);
+        // p.image(transitionBuffer, 0, 0);
 
         // Draw the cursor
         if( showCursor.current ){
@@ -132,46 +132,46 @@ const Overlay = () => {
   /*-------------------------------------------------------*/
   /* TRANSITIONS
   /*-------------------------------------------------------*/
-  const drawTransition = (context, p) => {
-    const transition = globalContext.transition.current;
+  // const drawTransition = (context, p) => {
+  //   const transition = globalContext.transition.current;
 
-    // The default center point for the transition is the cursor position
-    transition.x = transition.x === undefined ? p.mouseX : transition.x;
-    transition.y = transition.y === undefined ? p.mouseY : transition.y;
+  //   // The default center point for the transition is the cursor position
+  //   transition.x = transition.x === undefined ? p.mouseX : transition.x;
+  //   transition.y = transition.y === undefined ? p.mouseY : transition.y;
 
-    const blurAmount = 50;
-    const triangleA = Math.max(transition.x, context.width - transition.x);
-    const triangleB = Math.max(transition.y, context.width - transition.y);
-    const transitionEndSize = (Math.sqrt(triangleA ** 2 + triangleB ** 2) + (blurAmount * 2)) * 2;
+  //   const blurAmount = 50;
+  //   const triangleA = Math.max(transition.x, context.width - transition.x);
+  //   const triangleB = Math.max(transition.y, context.width - transition.y);
+  //   const transitionEndSize = (Math.sqrt(triangleA ** 2 + triangleB ** 2) + (blurAmount * 2)) * 2;
     
-    // Animate the transition in or out
-    const transitionDuration = Constants.transitionDuration * Constants.frameRate; // Converting ms to frames
-    transitionAmount.current = updateTransition(transitionAmount.current, transitionDuration, transition.active);
+  //   // Animate the transition in or out
+  //   const transitionDuration = Constants.transitionDuration * Constants.frameRate; // Converting ms to frames
+  //   transitionAmount.current = updateTransition(transitionAmount.current, transitionDuration, transition.active);
     
-    if( transitionAmount.current > 0 ){
-      context.background(255);
-      context.fill(0);
-      const transitionSize = context.lerp(
-        0,
-        transitionEndSize,
-        ease(transitionAmount.current, 'easeOut', 5)
-      );
-      context.circle(
-        transition.x,
-        transition.y,
-        transitionSize
-      );
+  //   if( transitionAmount.current > 0 ){
+  //     context.background(255);
+  //     context.fill(0);
+  //     const transitionSize = context.lerp(
+  //       0,
+  //       transitionEndSize,
+  //       ease(transitionAmount.current, 'easeOut', 5)
+  //     );
+  //     context.circle(
+  //       transition.x,
+  //       transition.y,
+  //       transitionSize
+  //     );
   
-      // Apply blur
-      context.filter(context.BLUR, blurAmount);
+  //     // Apply blur
+  //     context.filter(context.BLUR, blurAmount);
   
-      // Apply dither effect
-      const bgColor = [0, 0, 0, 0]; // Transparent
-      dither(context, Constants.fgColor, bgColor, 150, true);
-    } else {
-      context.clear();
-    }
-  }
+  //     // Apply dither effect
+  //     const bgColor = [0, 0, 0, 0]; // Transparent
+  //     dither(context, Constants.fgColor, bgColor, 150, true);
+  //   } else {
+  //     context.clear();
+  //   }
+  // }
 
 
 
