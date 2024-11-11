@@ -1,22 +1,18 @@
 'use client'
 
 import { useEffect, useState, useRef } from "react";
-import { useGlobalContext } from '@/GlobalContext';
+// import { useGlobalContext } from '@/GlobalContext';
 import p5 from 'p5';
 import {
   roundToPixel,
-  pixelCoord,
   pixelDim,
-  updateTransition,
-  dither,
-  ease
 } from '@/utils/drawing';
 import * as Constants from '@/Constants';
 
 import styles from "./cursor.module.scss";
 
 const Cursor = () => {
-  const globalContext = useGlobalContext();
+  // const globalContext = useGlobalContext();
   const renderRef = useRef();
   const [initialized, setInitialized] = useState(false);
   
