@@ -39,14 +39,16 @@ export default function Home() {
       <div className={styles.modelView}>
         <DynamicModelView
           model="/3d/sword/sword.obj"
-          options={{
-            texture: "/3d/sword/sword_diffuse.png",
-            solid: true,
-            rotationX: 0,
-            rotationY: 0,
-            rotationZ: 45,
-            scale: 4
-          }}/>
+          texture="/3d/sword/sword_diffuse.png"
+          solid={true}
+          rotationX={0}
+          rotationY={0}
+          rotationZ={45}
+          rotationSpeed={0}
+          xInfluence={90}
+          yInfluence={90}
+          scale={4}
+          />
       </div>
     </main>
   );

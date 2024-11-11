@@ -1,24 +1,43 @@
+/*-------------------------------------------------------*/
+/* 3D MODEL VIEWER
+/*-------------------------------------------------------*/
+/* Displays a 3D model
+/*---
+/* PROPS:
+/*
+/* model: (url) Path of the 3D model
+/* texture: (url) Path of a texture file
+/* solid: (boolean) Whether white pixels should display as the accentColor (true) or transparent (false)
+/* rotationX: (number) Base X rotation value
+/* rotationY: (number) Base Y rotation value
+/* rotationZ: (number) Base Z rotation value
+/* rotationSpeed: (number) Static rotation speed around Y axis
+/* xInfluence: (number) Max cursor influence on X rotation
+/* yInfluence: (number) Max cursor influence on Y rotation
+/* scale: (number) Scaling factor
+/* text: (string) Text to display if no model is provided
+/*-------------------------------------------------------*/
+
 'use client'
 
 import { useEffect, useState, useRef } from "react";
 import p5 from 'p5';
-import { dither, ease, updateTransition } from '@/utils/drawing';
+import { dither } from '@/utils/drawing';
 import * as Constants from '@/Constants';
 
 import styles from "./modelView.module.scss";
 
 const ModelView = (props) => {
-  const {model, options} = props;
   const renderRef = useRef();
   const [initialized, setInitialized] = useState(false);
   const ready = useRef(false);
   const transitionAmount = useRef(0);
-  const rotationSpeed = 15; // Degrees per second
 
   // 3D model viewer
   let viewportBuffer;
   let mesh;
   let texture;
+  let font;
   
   // Initial setup
   useEffect(() => {
@@ -37,13 +56,15 @@ const ModelView = (props) => {
   const drawP5 = () => {
     new p5(p => {
       p.preload = () => {
-        if( !!model ){
-          mesh = p.loadModel(model, true);
+        if( !!props.model ){
+          mesh = p.loadModel(props.model, true);
         }
 
-        if( !!options.texture ){
-          texture = p.loadImage(options.texture);
+        if( !!props.texture ){
+          texture = p.loadImage(props.texture);
         }
+
+        font = p.loadFont('/fonts/c64_mono.ttf');
       }
 
       p.setup = () => {
@@ -78,15 +99,23 @@ const ModelView = (props) => {
         renderScene(viewportBuffer, p);
         p.image(viewportBuffer, 0, 0);
 
+        // p.noFill();
+        // for (var y = 0; y < p.height; y++) {
+        //   var inter = p.map(y, 0, p.height, 0, 1);
+        //   var c = p.lerp(0, 255, inter);
+        //   p.stroke(c);
+        //   p.line(0, y, p.width, y);
+        // }
+
         // Fade-in once the canvas and buffers are resized properly
-        if( ready.current ){
-          transitionAmount.current = updateTransition(transitionAmount.current, 1, true);
-        }
-        // p.background(128, 128, 128, 255 * ease(1 - transitionAmount.current, 'easeOut', 3));
+        // if( ready.current ){
+        //   transitionAmount.current = updateTransition(transitionAmount.current, 1, true);
+        // }
+        // p.background(255, 255, 255, 255 * ease(1 - transitionAmount.current, 'easeOut', 3));
 
         // Apply dither effect
         const transparentColor = [0, 0, 0, 0]; // Transparent
-        dither(p, Constants.fgColor, options.solid ? Constants.accentColor : transparentColor, 120, true);
+        dither(p, Constants.fgColor, props.solid ? Constants.accentColor : transparentColor, true);
       }
     });
   }
@@ -109,31 +138,49 @@ const ModelView = (props) => {
 
     
     // Draw the shape.
+    context.angleMode(context.DEGREES);
     context.fill(64);
     context.noStroke();
     
     context.push();
-    context.angleMode(context.DEGREES);
-    const maxRotation = 45; // Degrees in either direction
+    const maxRotationX = props.xInfluence || 0; // Degrees in either direction
+    const maxRotationY = props.yInfluence || 0; // Degrees in either direction
     const rotationAmount = {
-      x: ((p.mouseY / p.height) - 0.5) * maxRotation * -1,
-      y: ((p.mouseX / p.width) - 0.5) * maxRotation
+      x: ((p.mouseY / p.height) - 0.5) * maxRotationX * -1,
+      y: ((p.mouseX / p.width) - 0.5) * maxRotationY
     }
-    context.rotateX(rotationAmount.x + props.options?.rotationX);
-    context.rotateY(baseAngle + rotationAmount.y + props.options?.rotationY);
-    context.rotateZ(180 + props.options?.rotationZ);
-    context.scale(props.options?.scale);
+    context.rotateX(rotationAmount.x + props.rotationX);
+    context.rotateY(baseAngle + rotationAmount.y + props.rotationY);
     
+    // Apply texture
     if( !!texture ){
       context.texture(texture);
     }
+
+    // Display mesh
     if( !!mesh ){
+      context.rotateZ(180 + props.rotationZ); // Meshes tend to import upside-down
+      context.scale(props.scale);
       context.model(mesh);
+
+    // Display text
     } else {
-      context.sphere(units(2));
-      context.torus(units(10), units(3), 64, 32);
+      context.textFont(font);
+      context.textAlign(context.CENTER, context.CENTER);
+      context.textSize(units(4));
+
+      const textDepth = 20;
+      for( let i = 0; i < textDepth; i++ ) {
+        context.fill(context.map(i, 0, textDepth, 0, 255));
+        context.translate(0, 0, 5);
+        context.text(props.text || "Something went wrong!", 0, 0);
+      }
     }
     context.pop();
+
+    // Increment the angle to enable rotation
+    const rotationSpeed = props.rotationSpeed || 0;
+    baseAngle += rotationSpeed / Constants.frameRate;
 
 
     // Lighting
@@ -155,10 +202,6 @@ const ModelView = (props) => {
       units(50),
       200
     );
-
-
-    // Increment the angle to enable rotation
-    baseAngle += rotationSpeed / Constants.frameRate;
   }
 
 

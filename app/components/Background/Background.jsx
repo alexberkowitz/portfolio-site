@@ -17,7 +17,7 @@ const Background = () => {
   // Cursor trail setup
   let cursorBuffer;
   let cursorPoints = useRef([]); // Cursor trail points
-  const cursorLineWidth = useRef(300); // In px
+  const cursorLineWidth = useRef(200); // In px
   const cursorDraw = useRef(true); // Whether or not to draw cursor trail
   
   // Explosions setup
@@ -38,6 +38,15 @@ const Background = () => {
         cursorDraw.current = false;
         document.addEventListener("touchstart", () => cursorDraw.current = true);
         document.addEventListener("touchend", () => cursorDraw.current = false);
+      } else {
+        // Only show the cursor trail when it is over the document
+        // to avoid the image being "left behind"
+        document.addEventListener("mouseleave", () => {
+          cursorDraw.current = false;
+        });
+        document.addEventListener("mouseenter", () => {
+          cursorDraw.current = true;
+        });
       }
     }
   }, []);
@@ -111,7 +120,7 @@ const Background = () => {
 
   // Update cursor trail line width
   const setCursorTrailLineWidth = () => {
-    cursorLineWidth.current = Math.min(Math.max(window.innerWidth / 4, 100), 250);
+    cursorLineWidth.current = Math.min(Math.max(window.innerWidth / 4, 80), 150);
   }
   
   // Draw a fading trail following the cursor
@@ -165,11 +174,11 @@ const Background = () => {
       });
 
       // Apply blur
-      context.filter(context.BLUR, cursorLineWidth.current / 4);
+      context.filter(context.BLUR, cursorLineWidth.current / 5);
 
       // Apply dither effect
       const bgColor = [0, 0, 0, 0]; // Transparent
-      dither(context, Constants.fgColor, bgColor, 60, true);
+      dither(context, Constants.fgColor, bgColor, true);
     }
   }
 
@@ -216,7 +225,7 @@ const Background = () => {
 
       // Apply dither effect
       const bgColor = [0, 0, 0, 0]; // Transparent
-      dither(context, Constants.fgColor, bgColor, 90, true);
+      dither(context, Constants.fgColor, bgColor, true);
     }
   }
 
