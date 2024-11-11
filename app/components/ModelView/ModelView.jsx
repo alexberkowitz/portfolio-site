@@ -7,7 +7,7 @@ import * as Constants from '@/Constants';
 
 import styles from "./modelView.module.scss";
 
-const ModelView = (props) => {
+const ModelView = () => {
   const renderRef = useRef();
   const [initialized, setInitialized] = useState(false);
   const ready = useRef(false);
