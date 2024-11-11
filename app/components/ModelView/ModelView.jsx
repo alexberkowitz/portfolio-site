@@ -7,13 +7,12 @@
 /*
 /* model: (url) Path of the 3D model
 /* texture: (url) Path of a texture file
-/* solid: (boolean) Whether white pixels should display as the accentColor (true) or transparent (false)
 /* rotationX: (number) Base X rotation value
 /* rotationY: (number) Base Y rotation value
 /* rotationZ: (number) Base Z rotation value
-/* rotationSpeed: (number) Static rotation speed around Y axis
-/* xInfluence: (number) Max cursor influence on X rotation
-/* yInfluence: (number) Max cursor influence on Y rotation
+/* rotationSpeed: (number) Static rotation speed around Y axis in degrees per second
+/* xInfluence: (number) Max cursor influence on X rotation in degrees
+/* yInfluence: (number) Max cursor influence on Y rotation in degrees
 /* scale: (number) Scaling factor
 /* text: (string) Text to display if no model is provided
 /*-------------------------------------------------------*/
@@ -31,7 +30,6 @@ const ModelView = (props) => {
   const renderRef = useRef();
   const [initialized, setInitialized] = useState(false);
   const ready = useRef(false);
-  const transitionAmount = useRef(0);
 
   // 3D model viewer
   let viewportBuffer;
@@ -57,7 +55,9 @@ const ModelView = (props) => {
     new p5(p => {
       p.preload = () => {
         if( !!props.model ){
-          mesh = p.loadModel(props.model, true);
+          mesh = p.loadModel(props.model, {
+            normalize: true
+          });
         }
 
         if( !!props.texture ){
@@ -96,26 +96,12 @@ const ModelView = (props) => {
         p.frameRate(Constants.frameRate);
         p.clear();
 
+        // Draw the model
         renderScene(viewportBuffer, p);
         p.image(viewportBuffer, 0, 0);
 
-        // p.noFill();
-        // for (var y = 0; y < p.height; y++) {
-        //   var inter = p.map(y, 0, p.height, 0, 1);
-        //   var c = p.lerp(0, 255, inter);
-        //   p.stroke(c);
-        //   p.line(0, y, p.width, y);
-        // }
-
-        // Fade-in once the canvas and buffers are resized properly
-        // if( ready.current ){
-        //   transitionAmount.current = updateTransition(transitionAmount.current, 1, true);
-        // }
-        // p.background(255, 255, 255, 255 * ease(1 - transitionAmount.current, 'easeOut', 3));
-
         // Apply dither effect
-        const transparentColor = [0, 0, 0, 0]; // Transparent
-        dither(p, Constants.fgColor, props.solid ? Constants.accentColor : transparentColor, true);
+        dither(p, Constants.fgColor, Constants.bgColor, true);
       }
     });
   }
@@ -151,15 +137,17 @@ const ModelView = (props) => {
     }
     context.rotateX(rotationAmount.x + props.rotationX);
     context.rotateY(baseAngle + rotationAmount.y + props.rotationY);
+    context.rotateZ(props.rotationZ);
     
     // Apply texture
     if( !!texture ){
       context.texture(texture);
+    } else {
+      context.fill(128);
     }
 
     // Display mesh
     if( !!mesh ){
-      context.rotateZ(180 + props.rotationZ); // Meshes tend to import upside-down
       context.scale(props.scale);
       context.model(mesh);
 
