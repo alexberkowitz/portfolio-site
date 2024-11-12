@@ -1,35 +1,79 @@
+@import '@/styles/variables.scss';
+
 .mdx {
   display: grid;
   grid-template-columns: 1fr minmax(0, 6rem) min(100%, 600px) minmax(0, 6rem) 1fr;
   gap: var(--gap) 0;
   z-index: 1;
-
+  
   > * {
     grid-column: 3;
   }
 }
 
+
+
 /*-------------------------------------------------------*/
-/* MODIFIER CLASSES
+/* DEFAULT ELEMENTS
 /*-------------------------------------------------------*/
 
-.wide {
+$corner-size: var(--cornerRadius);
+.h1 {
   grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: subgrid;
 
-  > * {
-    width: 100%;
+  .marker {
+    position: relative;
+    display: block;
+    grid-column: 1 / 2;
+    height: 100%;
+    width: calc(100% + var(--gap) - 1rem);
+    transform: translateX(calc(var(--gap) * -1));
+    border-radius: 0 var(--cornerRadius) var(--cornerRadius) 0;
+    background-color: var(--fgColor);
+
+    &:before,
+    &:after {
+      content: '';
+      position: absolute;
+      left: 0;
+      display: block;
+      width: $corner-size;
+      height: $corner-size;
+      background-color: var(--fgColor);
+      mask-size: 100% 100%;
+      mask-repeat: no-repeat;
+    }
+
+    &:before {
+      top: 100%;
+      mask-image: radial-gradient(circle #{$corner-size} at bottom 0 right 0, transparent 0, transparent #{$corner-size}, black #{$corner-size});
+    }
+    
+    &:after {
+      bottom: 100%;
+      mask-image: radial-gradient(circle #{$corner-size} at top 0 right 0, transparent 0, transparent #{$corner-size}, black #{$corner-size});
+    }
+  }
+
+  > *:not(.marker) {
+    grid-column: 2 / -2;
+    display: inline-block;
+    padding: .5rem 0;
+    text-transform: uppercase;
+    font-size: 2rem;
+    font-weight: 400;
   }
 }
 
-
-
-/*-------------------------------------------------------*/
-/* ELEMENTS
-/*-------------------------------------------------------*/
+.h2 {
+  color: var(--fgColor);
+}
 
 .blockquote {
   position: relative;
-  padding: 1rem 1rem 1rem calc(1rem + var(--cornerRadius) + var(--borderWidth));
+  padding: 1rem 1rem 1rem calc(1rem + var(--cornerRadius));
   background-color: var(--accentColor);
   border-radius: var(--cornerRadius);
 
@@ -40,7 +84,11 @@
     left: var(--cornerRadius);
     bottom: var(--cornerRadius);
     width: var(--borderWidth);
-    background-color: var(--fgColor);
+    background-color: var(--bodyColor);
+  }
+
+  .text {
+    background-color: transparent;
   }
 }
 
@@ -54,6 +102,37 @@
   border-radius: var(--cornerRadius);
 }
 
+.hr {
+  position: relative;
+  width: .5rem;
+  height: .5rem;
+  margin: 0 auto;
+  border: none;
+  border-radius: 50%;
+  background-color: var(--accentColor);
+  overflow: visible;
+
+  &:before,
+  &:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-color: inherit;
+    border-radius: 50%;
+  }
+
+  &:before {
+    right: 300%;
+  }
+
+  &:after {
+    left: 300%;
+  }
+}
+
 .pre {
   grid-column: 2 / -2;
   position: relative;
@@ -61,6 +140,7 @@
   background-color: var(--accentColor);
   border-radius: var(--cornerRadius);
   overflow-x: auto;
+  white-space: pre-wrap !important;
   
   > .code {
     display: inline-block;
@@ -114,4 +194,77 @@
   position: absolute;
   top: 0;
   right: 0;
+}
+
+.ol {
+  list-style-type: none;
+  counter-reset: list;
+
+  li:before {
+    content: counter(list);
+    counter-increment: list;
+    display: inline-block;
+    margin-right: .5rem;
+    width: 2rem;
+    text-align: right;
+    font-weight: 600;
+    color: var(--fgColor);
+  }
+}
+
+.ul {
+  list-style-type: none;
+
+  li:before {
+    content: '';
+    display: inline-block;
+    width: .3rem;
+    height: .3rem;
+    margin: 0 .5rem .25em 1.7rem;
+    border-radius: 50%;
+    background-color: var(--fgColor);
+  }
+}
+
+.table {
+  background: red;
+}
+
+
+
+/*-------------------------------------------------------*/
+/* WRAPPERS & CONTAINERS
+/*-------------------------------------------------------*/
+
+.columns {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+  
+  @media(min-width: $break-mobile) {
+    flex-direction: row;
+    justify-content: center;
+    grid-column: 1 / -1;
+    
+    & > * {
+      width: 0;
+      flex-grow: 1;
+    }
+  }
+}
+
+.wide {
+  grid-column: 1 / -1;
+
+  > * {
+    width: 100%;
+  }
+}
+
+// Catch-all wrapper for all text to improve legibility
+.text {
+  padding: .25em;
+  background-color: var(--bgColor);
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
 }

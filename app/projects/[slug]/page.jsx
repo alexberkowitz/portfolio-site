@@ -21,34 +21,30 @@ export function generateMetadata({ params }) {
 
   let {
     title,
-    publishedAt: publishedTime,
-    summary: description,
-    image,
+    date,
+    role,
+    cover
   } = project.metadata
-  let ogImage = image
-    ? image
-    : `${baseUrl}/og?title=${encodeURIComponent(title)}`
 
   return {
     title,
-    description,
+    description: title,
     openGraph: {
       title,
-      description,
       type: 'article',
-      publishedTime,
+      publishedTime: date,
       url: `${baseUrl}/${project.slug}`,
-      images: [
+      image: [
         {
-          url: ogImage,
+          url: cover,
         },
       ],
     },
     twitter: {
-      card: 'summary_large_image',
+      card: cover,
       title,
-      description,
-      images: [ogImage],
+      description: title,
+      images: [cover],
     },
   }
 }

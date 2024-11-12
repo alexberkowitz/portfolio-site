@@ -15,11 +15,20 @@ import styles from './mdx.module.scss';
 // H1 - H6
 function Heading(level) {
   const HeadingElem = ({ children }) => {
-    let slug = slugify(children);
-    return React.createElement(
-      `h${level}`,
-      { id: slug },
-      children
+    const slug = slugify(children);
+    return (
+      <div className={styles[`h${level}`]}>
+        {level === 1 && <div className={styles.marker}></div>}
+        {
+          React.createElement(
+            `h${level + 1}`,
+            { id: slug },
+            <span className={styles.text}>
+              {children}
+            </span>
+          )
+        }
+      </div>
     )
   }
 
@@ -37,26 +46,12 @@ function slugify(str) {
     .replace(/\-\-+/g, '-') // Replace multiple - with single -
 }
 
-// Table
-function Table({ data }) {
-  let headers = data.headers.map((header, index) => (
-    <th key={index}>{header}</th>
-  ))
-  let rows = data.rows.map((row, index) => (
-    <tr key={index}>
-      {row.map((cell, cellIndex) => (
-        <td key={cellIndex}>{cell}</td>
-      ))}
-    </tr>
-  ))
-
+// Paragraph
+function P(props) {
   return (
-    <table>
-      <thead>
-        <tr>{headers}</tr>
-      </thead>
-      <tbody>{rows}</tbody>
-    </table>
+    <p>
+      <span className={styles.text}>{props.children}</span>
+    </p>
   )
 }
 
@@ -76,6 +71,11 @@ function CustomLink(props) {
 // Image
 function CustomImage(props) {
   return <img {...props} alt={props.alt} className={`${styles.image} ${styles[props.className]}`} />
+}
+
+// Horizontal Rule
+function HR(props) {
+  return <hr className={styles.hr} />
 }
 
 // Preformatted
@@ -109,11 +109,38 @@ function Blockquote(props) {
   )
 }
 
+// Ordered List
+function OL(props) {
+  return (
+    <ol className={styles.ol}>
+      {props.children}
+    </ol>
+  )
+}
+
+// Unordered List
+function UL(props) {
+  return (
+    <ul className={styles.ul}>
+      {props.children}
+    </ul>
+  )
+}
+
 
 
 /*-------------------------------------------------------*/
 /* WRAPPERS & MODIFIERS
 /*-------------------------------------------------------*/
+
+// Columns
+function Columns(props) {
+  return (
+    <div className={styles.columns}>
+      {props.children}
+    </div>
+  )
+}
 
 // Full-width element
 function Wide(props) {
@@ -126,18 +153,22 @@ function Wide(props) {
 
 
 const components = {
-  h1: Heading(2),
-  h2: Heading(3),
-  h3: Heading(4),
-  h4: Heading(5),
-  h5: Heading(6),
+  h1: Heading(1),
+  h2: Heading(2),
+  h3: Heading(3),
+  h4: Heading(4),
+  h5: Heading(5),
   h6: Heading(6),
-  img: CustomImage,
+  p: P,
   a: CustomLink,
+  img: CustomImage,
+  hr: HR,
   pre: Pre,
   code: Code,
-  Table,
   blockquote: Blockquote,
+  ol: OL,
+  ul: UL,
+  Columns,
   Wide
 }
 

@@ -35,6 +35,12 @@ export default function Home() {
           >
           Maker
         </Link>
+        <br/>
+        <Link
+          href='/test'
+          >
+          TESTS
+        </Link>
       </div>
       <div className={styles.modelView}>
         <DynamicModelView

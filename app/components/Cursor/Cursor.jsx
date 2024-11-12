@@ -57,9 +57,7 @@ const Cursor = () => {
 
         // When the window resizes, update the drawing parameters
         window.addEventListener("resize", () => {
-          const calculatedWidth = Math.round(Math.floor(window.innerWidth) / Constants.pixelDensity) * Constants.pixelDensity;
-          const calculatedHeight = Math.round(Math.floor(window.innerHeight) / Constants.pixelDensity) * Constants.pixelDensity;
-          p.resizeCanvas(calculatedWidth, calculatedHeight);
+          p.resizeCanvas(window.innerWidth, window.innerHeight);
         });
       }
 
