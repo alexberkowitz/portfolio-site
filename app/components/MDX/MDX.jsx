@@ -76,7 +76,7 @@ function CustomImage(props) {
 }
 
 // Horizontal Rule
-function HR(props) {
+function HR() {
   return <hr className={styles.hr} />
 }
 

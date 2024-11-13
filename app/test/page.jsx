@@ -16,7 +16,7 @@ export default function Test() {
       <PageTitle>Tests</PageTitle>
       <p>
         <span class="text">
-          You've found my super-secret test page! This is where I test the reusable components found throughout the site. Feel free to play around!
+          {"You've found my super-secret test page! This is where I test the reusable components found throughout the site. Feel free to play around!"}
         </span>
       </p>
 
