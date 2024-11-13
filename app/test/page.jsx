@@ -44,7 +44,7 @@ export default function Test() {
             <h3><span class="text">Dithered model with mouse influence</span></h3>
             <div style={{width: '100%', height: 400}}>
               <DynamicModelView
-                model="/3d/logo.obj"
+                model="/media/logo.obj"
                 rotationX={0}
                 rotationY={180}
                 rotationZ={180}
@@ -61,7 +61,7 @@ export default function Test() {
             <h3><span class="text">Clean model with static rotation</span></h3>
             <div style={{width: '100%', height: 400}}>
               <DynamicModelView
-                model="/3d/logo.obj"
+                model="/media/logo.obj"
                 rotationX={0}
                 rotationY={180}
                 rotationZ={180}

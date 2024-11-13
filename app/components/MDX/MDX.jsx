@@ -1,3 +1,5 @@
+// Based on https://github.com/vercel/examples/tree/main/solutions/blog
+
 import React from 'react';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import Link from '@/components/Link/Link';
@@ -135,6 +137,34 @@ function UL(props) {
   )
 }
 
+// Figure
+function Figure(props) {
+  return (
+    <figure className={styles.figure}>
+      {props.children}
+    </figure>
+  )
+}
+
+// Embedded Video
+function Video(props) {
+  if( props.youtube ){
+    return (
+      <div className={styles.video} >
+        <iframe
+          id="ytplayer"
+          type="text/html"
+          width="1280"
+          height="720"
+          src={`https://www.youtube.com/embed/${props.id}?rel=0&loop=1`}
+          frameborder="0"
+          >
+        </iframe>
+      </div>
+    )
+  }
+}
+
 
 
 /*-------------------------------------------------------*/
@@ -150,10 +180,28 @@ function Columns(props) {
   )
 }
 
-// Full-width element
+// Centered content
+function Center(props) {
+  return (
+    <div className={styles.center}>
+      {props.children}
+    </div>
+  )
+}
+
+// Wide element
 function Wide(props) {
   return (
     <div className={styles.wide}>
+      {props.children}
+    </div>
+  )
+}
+
+// Full-width element
+function Full(props) {
+  return (
+    <div className={styles.full}>
       {props.children}
     </div>
   )
@@ -176,16 +224,20 @@ const components = {
   blockquote: Blockquote,
   ol: OL,
   ul: UL,
+  Figure,
   Columns,
-  Wide
+  Center,
+  Wide,
+  Full,
+  Video
 }
 
-export function CustomMDX(props) {
+export async function CustomMDX(props) {
   return (
     <div className={styles.mdx}>
       <MDXRemote
         {...props}
-        components={{ ...components, ...(props.components || {}) }}
+        components={components}
       />
     </div>
   )

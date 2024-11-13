@@ -1,0 +1,137 @@
+---
+title: 'UI Animation Article'
+date: 'June 2019'
+role: designer
+cover: media/ui-animation-article/cover.gif
+width: 1
+height: 1
+---
+
+Below is an article I wrote in June of 2019 for Eight Bit Studios. The original article can be found [here](https://medium.com/eight-bit-studios/three-uses-for-ui-animation-in-digital-products-d701c0f1c74a).
+
+* * *
+
+In the digital world, motion is often seen as a luxury. A nice-to-have addition to a product that may be included at the end of the process as long as there is some leftover budget available. But in the physical world, motion is everything. Every object moves. Every change takes time. This is the world in which we develop and learn to be perceptive. And by designing our digital products with motion as a core principle, we can create more natural and intuitive interfaces.
+
+UI animation can be used to serve three purposes: informing user actions, telling a story, and creating a memorable experience. These purposes are not mutually exclusive; many animations will serve multiple purposes at the same time. Let’s explore each of these three purposes individually.
+
+* * *
+
+# Informing User Actions
+
+The first purpose of motion in UI design is to inform user actions. Animations used in this way can teach users about the interactivity of a product. Often, these type of animations are directly tied to user input in some way. They can precede user input as a way of encouraging interaction, or they can follow user input in order to provide contextual feedback.
+
+Any time something changes in an interface it is called a _state change_. State changes can be obvious, such as loading a new page, or subtle, such as increasing the value of a timestamp. In either case, instantly changing the information that is visible to users can lead to confusion.
+
+By animating elements in and out of view during page navigation, we can rely on users’ natural spatial awareness to orient them. A good example of this can be found in the Settings app for iOS. When a user visits a sub-section of their current view, the previous view moves to the left while the new view moves in from the right. This informs users that the content they were previously viewing now exists to the left and naturally leads them to seek out an option to return to that content — in this case, a back button — on the left side of the screen. This is reinforced by the motion of the page title as it transforms into the back button.
+
+<Figure>
+  ![A screen transition in the iOS Settings app](/media/ui-animation-article/settings_transition.gif)
+  <figcaption>
+    In the iOS Settings app, the use of layered motion provides an intuitive sense of space. It’s easy to understand where an action leads and how to return to a previous page.
+  </figcaption>
+</Figure>
+
+Animation can also reinforce changes within a view. We can slow down the introduction, removal, or modification of elements in order to draw attention to important information.
+
+<Figure>
+  ![An animated 'toast' alert in an iPhone mockup frame](/media/ui-animation-article/banner_alert.gif)
+  <figcaption>
+    Banner alerts, such as this example by [Yugi Aragão](https://dribbble.com/yugiQ), often feature animated transitions that draw attention.
+  </figcaption>
+</Figure>
+
+Animation can also be used to reveal or reinforce action areas. In the iOS Settings app example above, the scrollbar briefly appears after the page transition, indicating to users that the page can be scrolled. Mobile apps can utilize these types of teaser animations to suggest where interactions lie. On the web, we have an extra tool at our disposal: hover states. Users will naturally explore a page with their mouse, hovering over elements that seem like they might be interactive. They expect those that change on hover to be clickable, and we should reinforce those expectations to make our UI as intuitive as possible.
+
+<Figure>
+  ![A comparison between hover states on active and inactive button elements](/media/ui-animation-article/button_hover.gif)
+  <figcaption>
+    Users expect interactive elements to change on hover and noninteractive elements to not change on hover. Reinforcing those expectations creates a more intuitive experience.
+  </figcaption>
+</Figure>
+
+Finally, animation can be used to reinforce user action after an interaction has taken place. Buttons that react to a click or tap action tell users that their actions were registered. Inputs that change when focused on help users find and maintain their place on a page. In some cases, a lack of motion may even cause negative reinforcement. Animated loading states inform users that information is being processed or prepared for them, and that they can wait confidently. On the other hand, static loading states may be perceived as frozen, causing confusion and discouragement. Proper use of motion can encourage a sense of trust in the product.
+
+<Figure>
+  ![A 'send' button with an animated loading state and completion transition](/media/ui-animation-article/button_load.gif)
+  <figcaption>
+    This button by [Gabriele Malaspina](https://dribbble.com/gabrielemalaspina) features an animated loading state to inform users that their input is being processed, and a transition that draws attention to the success state change.
+  </figcaption>
+</Figure>
+
+### What are the considerations?
+
+User-informing animations are generally considered to be the easiest to implement. Hover, click, tap, and focus states are simple to implement across platforms, and can often be done so by developers with minimal input from a designer. These features may be considered essential inclusions in every project, regardless of scope. Larger animations, such as page and element transitions, may increase in complexity and thus require additional time or budget to implement.
+
+* * *
+
+# Telling a Story
+
+Animation can also be leveraged to help tell a story. As a fluid visual medium, concepts conveyed via motion may be easier to understand than text and static images alone.
+
+The simplest way animation can be used to tell a story is by complementing existing information. By pairing video or animated content with written copy, we can clarify and reinforce the information being presented. Users can relate what they’re told with what they’re shown in order to form a more complete understanding of a concept. A common example of this can be found in onboarding tutorials, where titles and short descriptions may be paired with animations in order to familiarize users with the interaction patterns they can expect within a product.
+
+<Figure>
+  ![An interactive slider element on the marketing website for a wallet company](/media/ui-animation-article/wallet_site.gif)
+  <figcaption>
+    The marketing site for [Bellroy wallets](https://bellroy.com/explore/slim-your-wallet) don’t just tell users that their products are slim, they illustrate the point with an interactive animated graphic.
+  </figcaption>
+</Figure>
+
+In some cases, it may be beneficial to rely on animation as the primary method for conveying information. Visual demonstrations provide an opportunity to showcase a product in a more intuitive way than textual explanations. Users who are considering playing a new game, for instance, will likely find it easier to understand the gameplay mechanics when they are demonstrated in a video, rather than explained via text.
+
+<Figure>
+  ![A mobile game's website, featuring an animated demo of the game](/media/ui-animation-article/game_site.gif)
+  <figcaption>
+    The website for the game [Dots](https://www.dots.co/) includes an animated demo to showcase the game mechanics.
+  </figcaption>
+</Figure>
+
+### What are the considerations?
+
+Story-based animations require more forethought than interaction-based ones. They must be designed with a particular intent, and often require the creation of unique assets. However, implementation for developers is often fairly straightforward, so scope increases mostly fall onto the design team.
+
+* * *
+
+# Creating a Memorable Experience
+
+The third use for animation in digital products is to create a memorable experience. These animations are intended to leave an impact on users and provide a rewarding experience. Such experiences encourage user engagement and exploration, and allow a product to stand out among competitors.
+
+An easy way to add memorability to the motion design in a product is to enhance existing user interactions. For example, adding motion flourish to certain button transitions rewards users for clicking and encourage them to click again. This can be used to promote specific actions, such as the use of a ‘like’ function.
+
+<Figure>
+  ![The 'like' animation in Twitter's mobile app](/media/ui-animation-article/twitter_like_mobile.gif)
+  <figcaption>
+    The ‘like’ button on Twitter changes from white to red when clicked. But the transition has been enhanced with a burst effect, making it more enjoyable. This encourages users to ‘like’ things.
+  </figcaption>
+</Figure>
+
+Animated and interactive accents can also greatly contribute to a rewarding user experience. Often, there are motion possibilities within static designs that can be leveraged in order to amplify their impact. Attention may be drawn to foreground elements with the introduction of transitions that trigger when users reach a certain point on the page. The use of parallax — an effect in which certain elements move faster or slower across the screen based on their apparent distance from the camera — can be used to add depth to a design.
+
+<Figure>
+  ![A website banner illustration featuring parallax motion on scroll](/media/ui-animation-article/firewatch_website.gif)
+  <figcaption>
+    The website for the game [Firewatch](https://www.firewatchgame.com/) uses parallax scrolling to give the impression of a distant landscape, adding depth to the site’s hero graphic. It also encourages visitors to ‘play’ with the website.
+  </figcaption>
+</Figure>
+
+Sometimes, animation can be utilized as a core aspect of an experience, allowing a product to break free of traditional layouts and interactions entirely. These interfaces often verge on experimental and, when carefully considered, can leave a unique impact on users.
+
+<Figure>
+  ![A unique, mouse-based exploration interaction](/media/ui-animation-article/experimental_site.gif)
+  <figcaption>
+    The interactive documentary [Missing](https://www.sbs.com.au/missing/) uses unique interactions and effects in place of traditional web conventions in order to create a more compelling, immersive experience.
+  </figcaption>
+</Figure>
+
+### What are the considerations?
+
+Like story-driven animations, this type of motion generally requires unique assets from a designer to be accomplished. Beyond that, there are often special development considerations surrounding this type of animation, as well. It may be necessary to modify the structure of a product or page in order to accomplish certain effects. Input from both designers and developers is crucial in this regard, and scope changes on both fronts must be considered. Context in this case is also important. A marketing website is intended to entice users, so it may be appropriate to implement more complex animations and interactions in those instances than in the product being sold, where users may desire more familiarity and simplicity. Good animation is not designed in a bubble, but rather considers the context in which it lives.
+
+* * *
+
+![Hands clapping](/media/ui-animation-article/clap.gif)
+
+The most effective way to include motion in a new project is to start thinking about it early. Animations that are added after all design and development is completed are limited, and may be more difficult to properly implement. Considering motion from the start of the project gives designers the opportunity to incorporate animation into the product in a meaningful way, and provides developers the opportunity to plan for implementation.
+
+Animation is a powerful tool that can make or break an interface. Properly implemented, it can create natural interactions and intuitively convey information to users. It can create an emotion and leave a lasting impression. It can surprise and delight, or it can be subtle. Modern technologies empower our digital products to behave in a more fluid and dynamic manner than ever before, and by taking advantage of this capability for motion we can create experiences that satisfy and engage.

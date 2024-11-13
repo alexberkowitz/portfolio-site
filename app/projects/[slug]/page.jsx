@@ -6,15 +6,15 @@ import { baseUrl } from '@/sitemap';
 import styles from './page.module.scss';
 
 export async function generateStaticParams() {
-  let projects = getProjects('designer')
+  let projects = getProjects();
 
   return projects.map((project) => ({
-    slug: project.slug,
-  }))
+    slug: project.slug
+  }));
 }
 
 export function generateMetadata({ params }) {
-  let project = getProjects('designer').find((project) => project.slug === params.slug)
+  let project = getProjects().find((project) => project.slug === params.slug)
   if (!project) {
     return
   }
@@ -22,7 +22,6 @@ export function generateMetadata({ params }) {
   let {
     title,
     date,
-    role,
     cover
   } = project.metadata
 

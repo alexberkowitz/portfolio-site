@@ -9,7 +9,7 @@ const TestButton = () => {
     <Link
       className={styles.testButton}
       href='/test'
-      aria-title="Test"
+      title="Test"
       >
       {'</>'}
     </Link>

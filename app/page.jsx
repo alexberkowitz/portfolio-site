@@ -40,7 +40,7 @@ export default function Home() {
         </div>
         <div className={styles.modelView}>
           <DynamicModelView
-            model="/3d/logo.obj"
+            model="/media/logo.obj"
             rotationX={0}
             rotationY={180}
             rotationZ={180}

@@ -1,0 +1,74 @@
+---
+title: 'Shards vs Straugs'
+date: 'July 2020'
+role: designer, developer
+cover: /media/shards-vs-straugs/cover.png
+width: 2
+height: 1
+---
+
+<Full>![Shards vs Straugs Cover](/media/shards-vs-straugs/cover.png)</Full>
+
+If there's one skill I learned above all else during my time at [Eight Bit Studios](https://eightbitstudios.com), it's how to play a killer game of ping pong. We played it constantly. It's great for clearing your mind, stretching your legs, and getting your heart pumping during the workday. But keeping track of the score, who is serving, and other game information can be a hassle. So we decided to build an app that would do all of that for us. Part of a larger team, I was responsible for the overall design of the app as well as the front-end web implementation. The project's front-end was built using React. Whenever possible, visual effects and transitions were built using pure CSS for efficiency and flexibility.
+
+# Getting the Ball Rolling
+
+The first step for us was to define the goals for the project. Keeping track of both score and who is serving has historically been a pain point for us and, as with everything else in our lives, we would rather make a computer do that for us. We also wanted a way to record wins and losses over time, and the ability to rank players based on their performance. Some sort of board for leaders, if you will.
+
+<Figure>
+  ![Early app concept](/media/shards-vs-straugs/futurepong.jpg)
+  <figcaption>
+    I was presented with an early concept for the app that featured a projector to display graphics on a wall. The current implementation uses an iPad mounted close to the table, but a projector or larger screen is still a possibility.
+  </figcaption>
+</Figure>
+
+We didn’t want to force players to walk away from the table in order to update their score, so we decided to add buttons to our table, one at each end. Whenever a team scored, they would be able to simply press the button and the scoreboard would update automatically, easy-peasy. After some exploration, we found some Bluetooth-enabled adhesive buttons that fit our needs perfectly.  
+  
+We also reached out to the broader Eight Bit team for suggestions on features they would like to see in the app. Some ideas, such as tracking the ball automatically using a Kinect sensor, were a little ambitious for the MVP. Others were more grounded, such as allowing players to upload custom avatars and display them in-game. Although there were (and still are) many features we'd like to add to the app, we knew that prioritization would be key in order to get the project completed.
+
+# Serving it Up
+
+Once we had an understanding of the basic feature set for version 1, we got to work defining the overall structure of the interface. We knew early on that the app would be designed to run on an iPad, and that the device would be mounted somewhere near the table. This meant that we needed to design interactions that could easily be performed from a standing position and that information would be legible from a distance. Before the start of the game, players would be viewing the device from a distance of a foot or two away as they chose teams. Later, during gameplay, they would be farther away, as much as several feet. Thus, the allowable information density changes in different sections of the app.
+
+<Figure>
+  ![](/media/shards-vs-straugs/whiteboards.png)
+  <figcaption>
+    Our ideation process often took the form of quick sketches on a whiteboard, allowing us to quickly iterate and discuss multiple ideas for a screen or interaction.
+  </figcaption>
+</Figure>
+
+It was also important to consider the type of interactions within the app. We needed to figure out how to display a list of available players, add them to teams, and start the game in an intuitive way -- since newcomers could be using the app at any time, displaying a tutorial isn't a viable option. The app needs to be as self-explanatory as possible.
+
+# Returning the Shot
+
+Once we had a fairly strong idea of the overall structure of the app, I was ready to start working on high-fidelity designs. My initial instinct was to brand the app in a way that felt similar to other sports-related media, such as NFL broadcast graphics or Nike's training apps. But ultimately I decided to go in a direction that had a little bit more of Eight Bit's personality in it. This app was designed for internal use (although it may not stay that way) and so I had a little more creative freedom with the visuals.  
+  
+I ended up taking inspiration from the interfaces found in video games from the 80s and 90s, such as Street Fighter and Super Smash Bros. The concept of choosing characters from a large roster for head-to-head competitions fit perfectly with our goals.
+
+<Figure>
+  ![Player select screen](/media/shards-vs-straugs/player-select.png)
+  <figcaption>
+    Team names, like much of the content within the app, were inspired by company in-jokes. A production version of the app would likely see them changed to "home" and "away" or perhaps even become customizable.
+  </figcaption>
+</Figure>
+
+With the video game aesthetic direction, I got to break a lot of the modern 'rules' about design and really have fun with the interface. Everything is shiny and chrome, with over-the-top title effects and transitions between every screen. I wanted the app to feel exciting, with an energy to match the fast-paced game of ping pong.
+
+After choosing their teams, players must decide who serves first. A 'head to head' screen is displayed, prompting players to press one of two buttons affixed to either end of the table in order to indicate which team starts with the ball.
+
+Once the game has started, the scoreboard is displayed. The scoreboard is broken up into three sections: one for each team, featuring their score and avatars, and a marquee below. The marquee's content changes based on the state of the game, similar to the jumbotron at a sporting event. This was an opportunity to inject some fun visuals to the game. There are dozens of game states available such as _EQUALIZER_ (tie game), _RESPECTABLE_ (the losing team reaches 10 points), and _GOOSE_ (a team wins all five points on their serve). Each game state includes a custom animated marquee graphic.
+
+It's pretty rare for anyone at Eight Bit Studios to play just one game of ping pong. An unwritten rule states that every match consists of two games, sometimes three if a tie-breaker is in order. We decided to add an easy way to start a rematch from the win screen. Pressing that button automatically starts a new game with the same players (on opposite sides of the table, just in case someone only lost because the sun was in their eyes).
+
+<Figure>
+  ![Leaderboard](/media/shards-vs-straugs/leaderboard.png)
+  <figcaption>
+    Of course, what’s the point of keeping track of scores if we can’t rub them in each other’s faces? We added a leaderboard to the app to track wins and losses and rank players by how well they perform.
+  </figcaption>
+</Figure>
+
+# Grabbing the Win
+
+What's next for our little ping pong app? Well, there are plenty of ideas on the table. We discussed the possibility of creating a production version with additional social features, and even partnering with a manufacturer of ping pong equipment on the project. My time at Eight Bit Studios has since come to an end, but I have no doubts they will continue to innovate, experiment, and play as much as possible.
+
+<Center>![](/media/shards-vs-straugs/paddle_spin.gif)</Center>
