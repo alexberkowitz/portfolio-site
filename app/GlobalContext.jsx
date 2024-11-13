@@ -10,7 +10,7 @@ export default function GlobalContextContainer(props) {
   // Cursor
   const cursorPos = useRef({x: 0, y: 0});
   const cursorState = useRef('default');
-  const cursorTrail = useRef(true);
+  const cursorTrail = useRef(false);
 
   const setCursorState = (state) => {
     cursorState.current = state;
