@@ -113,7 +113,11 @@ function Blockquote(props) {
 function OL(props) {
   return (
     <ol className={styles.ol}>
-      {props.children}
+      {props.children.map((item, index) => item.type === 'li' ? (
+        <li key={index}>
+          <span className={styles.text}>{item.props.children}</span>
+        </li>
+      ) : '')}
     </ol>
   )
 }
@@ -122,7 +126,11 @@ function OL(props) {
 function UL(props) {
   return (
     <ul className={styles.ul}>
-      {props.children}
+      {props.children.map((item, index) => item.type === 'li' ? (
+        <li key={index}>
+          <span className={styles.text}>{item.props.children}</span>
+        </li>
+      ) : '')}
     </ul>
   )
 }
