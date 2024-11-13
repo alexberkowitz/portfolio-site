@@ -140,7 +140,7 @@ function UL(props) {
 // Figure
 function Figure(props) {
   return (
-    <figure className={styles.figure}>
+    <figure className={`${styles.figure} ${props.padded ? styles.padded : ''}`}>
       {props.children}
     </figure>
   )
@@ -175,6 +175,15 @@ function Video(props) {
 function Columns(props) {
   return (
     <div className={styles.columns}>
+      {props.children}
+    </div>
+  )
+}
+
+// Grid layout
+function Grid(props) {
+  return (
+    <div className={styles.grid}>
       {props.children}
     </div>
   )
@@ -226,6 +235,7 @@ const components = {
   ul: UL,
   Figure,
   Columns,
+  Grid,
   Center,
   Wide,
   Full,

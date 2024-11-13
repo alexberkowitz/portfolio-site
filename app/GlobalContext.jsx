@@ -9,21 +9,11 @@ export default function GlobalContextContainer(props) {
 
   // Cursor
   const cursorPos = useRef({x: 0, y: 0});
-  const [cursorState, setCursorState] = useState('default');
-  const [hover, setHover] = useState({active: false, x: 0, y: 0, w: 0, h: 0});
+  const cursorState = useRef('default');
   const cursorTrail = useRef(true);
 
-  // Set the hover state
-  const setHoverState = (e, active, isFixed) => {
-    const coords = e.target.getBoundingClientRect();
-    setHover({
-      active: active,
-      x: coords.x + (coords.width / 2),
-      y: coords.y + (coords.height / 2),
-      w: coords.width,
-      h: coords.height,
-      isFixed: isFixed === true
-    });
+  const setCursorState = (state) => {
+    cursorState.current = state;
   }
 
   return (
@@ -32,8 +22,6 @@ export default function GlobalContextContainer(props) {
       cursorState,
       setCursorState,
       cursorTrail,
-      hover,
-      setHoverState,
       prevRoute,
       setPrevRoute
     }}>

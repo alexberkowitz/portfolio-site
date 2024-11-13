@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState, useRef } from "react";
-// import { useGlobalContext } from '@/GlobalContext';
+import { useGlobalContext } from '@/GlobalContext';
 import p5 from 'p5';
 import {
   roundToPixel,
@@ -12,12 +12,12 @@ import * as Constants from '@/Constants';
 import styles from "./cursor.module.scss";
 
 const Cursor = () => {
-  // const globalContext = useGlobalContext();
+  const globalContext = useGlobalContext();
   const renderRef = useRef();
   const [initialized, setInitialized] = useState(false);
   
   // Cursor
-  const cursorPos = useRef({x: 0, y: 0}); // Local copy of the global cursorPos variable
+  const cursorPos = useRef({x: 0, y: 0});
   const showCursor = useRef(true);
   
   // Initial setup
@@ -66,7 +66,7 @@ const Cursor = () => {
         p.noSmooth();
         p.clear();
 
-        // Save the cursor pos to globalContext to enable other effects
+        // Store the cursor pos
         cursorPos.current = {x: p.mouseX, y: p.mouseY};
 
         // Draw the cursor
@@ -95,33 +95,35 @@ const Cursor = () => {
     // Crosshair
     const crosshairSize = pixelDim(24);
     const crosshairInnerSize = pixelDim(12);
-    context.line( // Top line
-      posX,
-      posY - (crosshairSize / 2),
-      posX,
-      posY - (crosshairInnerSize / 2)
-    );
+    if( globalContext.cursorState.current !== 'hover' ){
+      context.line( // Top line
+        posX,
+        posY - (crosshairSize / 2),
+        posX,
+        posY - (crosshairInnerSize / 2)
+      );
 
-    context.line( // Bottom line
-      posX,
-      posY + (crosshairSize / 2),
-      posX,
-      posY + (crosshairInnerSize / 2)
-    );
+      context.line( // Bottom line
+        posX,
+        posY + (crosshairSize / 2),
+        posX,
+        posY + (crosshairInnerSize / 2)
+      );
 
-    context.line(  // Left line
-      posX - (crosshairSize / 2),
-      posY,
-      posX - (crosshairInnerSize / 2),
-      posY
-    );
-
-    context.line(  // Right line
-      posX + (crosshairSize / 2),
-      posY,
-      posX + (crosshairInnerSize / 2),
-      posY
-    );
+      context.line(  // Left line
+        posX - (crosshairSize / 2),
+        posY,
+        posX - (crosshairInnerSize / 2),
+        posY
+      );
+  
+      context.line(  // Right line
+        posX + (crosshairSize / 2),
+        posY,
+        posX + (crosshairInnerSize / 2),
+        posY
+      );
+    }
 
 
     // Center Box
