@@ -1,34 +1,81 @@
+'use client'
+
+import PageTitle from '@/components/PageTitle/PageTitle';
 import dynamic from 'next/dynamic';
-import { ProjectsList } from '@/components/ProjectsList/ProjectsList';
+import Icon from '@/components/Icon/Icon';
+import * as Constants from '@/Constants';
 
 const DynamicModelView = dynamic(() => import('@/components/ModelView/ModelView'), {
   ssr: false,
 });
 
 export default function Test() {
+
   return (
     <main>
-      <h1>Test</h1>
+      <PageTitle>Tests</PageTitle>
       <p>
-        This page is used as a test for the components on my site. Feel free to play around! 
+        <span class="text">
+          You've found my super-secret test page! This is where I test the reusable components found throughout the site. Feel free to play around!
+        </span>
       </p>
 
-      <h2>Projects List</h2>
-      <ProjectsList type="maker"/>
-
-      <h2>3D Model Viewer</h2>
-      <div style={{width: '100%', height: 400}}>
-        <DynamicModelView
-          model="/3d/logo.obj"
-          rotationX={0}
-          rotationY={180}
-          rotationZ={180}
-          rotationSpeed={15}
-          xInfluence={90}
-          yInfluence={90}
-          scale={3}
-          />
+      <div>
+        <h2><span class="text">Icons</span></h2>
+        <div style={{
+          display: 'flex',
+          gap: 32,
+          padding: 16,
+          backgroundColor: `rgba(${Constants.accentColor[0]},${Constants.accentColor[1]},${Constants.accentColor[2]},${Constants.accentColor[3]})`,
+          borderRadius: 8
+        }}>
+          <Icon type="copy"/>
+        </div>
       </div>
+
+      <div>
+        <h2><span class="text">3D Model Viewer</span></h2>
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat( auto-fit, minmax(500px, 1fr) )',
+          gap: 32
+        }}>
+          <div>
+            <h3><span class="text">Dithered model with mouse influence</span></h3>
+            <div style={{width: '100%', height: 400}}>
+              <DynamicModelView
+                model="/3d/logo.obj"
+                rotationX={0}
+                rotationY={180}
+                rotationZ={180}
+                rotationSpeed={0}
+                xInfluence={90}
+                yInfluence={90}
+                scale={1}
+                dither={true}
+                />
+            </div>
+          </div>
+
+          <div>
+            <h3><span class="text">Clean model with static rotation</span></h3>
+            <div style={{width: '100%', height: 400}}>
+              <DynamicModelView
+                model="/3d/logo.obj"
+                rotationX={0}
+                rotationY={180}
+                rotationZ={180}
+                rotationSpeed={30}
+                xInfluence={0}
+                yInfluence={0}
+                scale={1}
+                dither={false}
+                />
+            </div>
+          </div>
+        </div>
+      </div>
+
     </main>
   );
 }

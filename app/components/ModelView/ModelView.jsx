@@ -15,6 +15,7 @@
 /* yInfluence: (number) Max cursor influence on Y rotation in degrees
 /* scale: (number) Scaling factor
 /* text: (string) Text to display if no model is provided
+/* dither: (boolean) Whether or not to display the model in a dithered style
 /*-------------------------------------------------------*/
 
 'use client'
@@ -76,7 +77,9 @@ const ModelView = (props) => {
         );
 
         canvas.parent(renderRef.current);
-        p.pixelDensity(1 / Constants.pixelDensity);
+        if( props.dither ){
+          p.pixelDensity(1 / Constants.pixelDensity);
+        }
 
         // Graphics buffers
         viewportBuffer = p.createGraphics(p.width, p.height, p.WEBGL);
@@ -101,7 +104,9 @@ const ModelView = (props) => {
         p.image(viewportBuffer, 0, 0);
 
         // Apply dither effect
-        dither(p, Constants.fgColor, Constants.bgColor, true);
+        if( props.dither ){
+          dither(p, Constants.fgColor, Constants.bgColor, true);
+        }
       }
     });
   }
