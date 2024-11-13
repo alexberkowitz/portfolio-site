@@ -1,0 +1,13 @@
+.button {
+  padding: .75rem 2rem;
+  background-color: var(--accentColor);
+  border-radius: var(--cornerRadius);
+  font-size: 1.25rem;
+  text-transform: uppercase;
+  text-decoration: none;
+
+  &:hover,
+  &:focus-visible {
+    background-color: var(--fgColor);
+  }
+}

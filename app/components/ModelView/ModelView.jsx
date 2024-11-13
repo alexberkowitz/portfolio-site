@@ -160,12 +160,14 @@ const ModelView = (props) => {
     } else {
       context.textFont(font);
       context.textAlign(context.CENTER, context.CENTER);
-      context.textSize(units(4));
+      context.textSize(units(props.scale));
 
       const textDepth = 20;
+      const textOffset = 5;
+      context.translate(0, 0, textDepth * textOffset / -2);
       for( let i = 0; i < textDepth; i++ ) {
-        context.fill(context.map(i, 0, textDepth, 0, 255));
-        context.translate(0, 0, 5);
+        context.fill(context.map(i, 0, textDepth, 255, 0));
+        context.translate(0, 0, textOffset);
         context.text(props.text || "Something went wrong!", 0, 0);
       }
     }
@@ -219,7 +221,7 @@ const ModelView = (props) => {
   /* RENDER
   /*-------------------------------------------------------*/
   return (
-    <div className={styles.modelView} ref={renderRef}></div>
+    <div className={styles.modelView} ref={renderRef} title={props.text || ''}></div>
   );
 }
 

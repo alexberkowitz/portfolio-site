@@ -52,6 +52,9 @@ export function getProjects(role) {
 
   if( !!role ){
     return projects.filter((project) => {
+      console.log(project.metadata.title);
+      console.log(project.metadata.role);
+      console.log(project.metadata.role.includes(role));
       return project.metadata.role.includes(role);
    } );
   } else {
