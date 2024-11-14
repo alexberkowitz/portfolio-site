@@ -21,13 +21,8 @@ h2 {
 p {
   max-width: 70ch;
   line-height: 1.5;
+  letter-spacing: .5px;
   text-wrap: pretty;
-
-  &.text,
-  > .text {
-    padding: .25em;
-    margin: -.25em;
-  }
 }
 
 a {
@@ -42,10 +37,4 @@ a {
 *::selection {
   background-color: var(--fgColor);
   color: var(--accentColor);
-}
-
-.text {
-  background-color: var(--bgColor);
-  box-decoration-break: clone;
-  -webkit-box-decoration-break: clone;
 }

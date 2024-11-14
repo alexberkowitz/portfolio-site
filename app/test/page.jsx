@@ -1,6 +1,7 @@
 'use client'
 
 import PageTitle from '@/components/PageTitle/PageTitle';
+import TextWrapper from '@/components/TextWrapper/TextWrapper';
 import dynamic from 'next/dynamic';
 import Icon from '@/components/Icon/Icon';
 import * as Constants from '@/Constants';
@@ -15,13 +16,13 @@ export default function Test() {
     <main>
       <PageTitle>Tests</PageTitle>
       <p>
-        <span class="text">
+        <TextWrapper>
           {"You've found my super-secret test page! This is where I test the reusable components found throughout the site. Feel free to play around!"}
-        </span>
+        </TextWrapper>
       </p>
 
       <div>
-        <h2><span class="text">Icons</span></h2>
+        <h2><TextWrapper>Icons</TextWrapper></h2>
         <div style={{
           display: 'flex',
           gap: 32,
@@ -34,14 +35,14 @@ export default function Test() {
       </div>
 
       <div>
-        <h2><span class="text">3D Model Viewer</span></h2>
+        <h2><TextWrapper>3D Model Viewer</TextWrapper></h2>
         <div style={{
           display: 'grid',
           gridTemplateColumns: 'repeat( auto-fit, minmax(500px, 1fr) )',
           gap: 32
         }}>
           <div>
-            <h3><span class="text">Dithered model with mouse influence</span></h3>
+            <h3><TextWrapper>Dithered model with mouse influence</TextWrapper></h3>
             <div style={{width: '100%', height: 400}}>
               <DynamicModelView
                 model="/media/logo.obj"
@@ -58,7 +59,7 @@ export default function Test() {
           </div>
 
           <div>
-            <h3><span class="text">Clean model with static rotation</span></h3>
+            <h3><TextWrapper>Clean model with static rotation</TextWrapper></h3>
             <div style={{width: '100%', height: 400}}>
               <DynamicModelView
                 model="/media/logo.obj"

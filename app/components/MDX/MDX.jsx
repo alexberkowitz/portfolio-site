@@ -3,6 +3,7 @@
 import React from 'react';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import Link from '@/components/Link/Link';
+import TextWrapper from '@/components/TextWrapper/TextWrapper';
 import { highlight } from 'sugar-high';
 import CodeHeader from './CodeHeader';
 
@@ -25,9 +26,9 @@ function Heading(level) {
           React.createElement(
             `h${level + 1}`,
             { id: slug },
-            <span className={styles.text}>
+            <TextWrapper>
               {children}
-            </span>
+            </TextWrapper>
           )
         }
       </div>
@@ -52,7 +53,7 @@ function slugify(str) {
 function P(props) {
   return (
     <p>
-      <span className={styles.text}>{props.children}</span>
+      <TextWrapper>{props.children}</TextWrapper>
     </p>
   )
 }
@@ -117,7 +118,7 @@ function OL(props) {
     <ol className={styles.ol}>
       {props.children.map((item, index) => item.type === 'li' ? (
         <li key={index}>
-          <span className={styles.text}>{item.props.children}</span>
+          <TextWrapper>{item.props.children}</TextWrapper>
         </li>
       ) : '')}
     </ol>
@@ -130,7 +131,7 @@ function UL(props) {
     <ul className={styles.ul}>
       {props.children.map((item, index) => item.type === 'li' ? (
         <li key={index}>
-          <span className={styles.text}>{item.props.children}</span>
+          <TextWrapper>{item.props.children}</TextWrapper>
         </li>
       ) : '')}
     </ul>
