@@ -10,8 +10,6 @@ const Button = (props) => {
   return (
     <button
       onClick={props.onClick}
-      onMouseEnter={(e) => globalContext.setHoverState(e, true)}
-      onMouseLeave={(e) => globalContext.setHoverState(e, false)}
       className={`${styles.button} ${props.icon ? styles.icon : ''} ${props.className}`}
       >
       {props.children}

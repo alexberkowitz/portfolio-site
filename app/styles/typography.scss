@@ -39,6 +39,11 @@ a {
   }
 }
 
+*::selection {
+  background-color: var(--fgColor);
+  color: var(--accentColor);
+}
+
 .text {
   background-color: var(--bgColor);
   box-decoration-break: clone;

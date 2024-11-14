@@ -24,9 +24,7 @@ const Link = (props) => {
     <a
       {...props}
       href={props.href}
-      onMouseEnter={() => globalContext.setCursorState('hover')}
-      onMouseLeave={() => globalContext.setCursorState('default')}
-      className={`${styles.link} ${props.button ? styles.button : ''} ${props.className}`}
+      className={`${props.button ? styles.button : ''} ${props.className || ''}`}
       target="_blank"
       rel="noopener noreferrer"
       >
@@ -36,9 +34,7 @@ const Link = (props) => {
     <a
       {...props}
       onClick={handleClick}
-      onMouseEnter={() => globalContext.setCursorState('hover')}
-      onMouseLeave={() => globalContext.setCursorState('default')}
-      className={`${styles.link} ${props.button ? styles.button : ''} ${props.className}`}
+      className={`${props.button ? styles.button : ''} ${props.className || ''}`}
       >
       {props.children}
     </a>

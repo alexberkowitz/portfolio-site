@@ -30,6 +30,7 @@ import styles from "./modelView.module.scss";
 const ModelView = (props) => {
   const renderRef = useRef();
   const [initialized, setInitialized] = useState(false);
+  let removeFunction; // Storage for the p.remove() function so we can call it from useEffect
   const ready = useRef(false);
 
   // 3D model viewer
@@ -44,6 +45,11 @@ const ModelView = (props) => {
       setInitialized(true);
       
       drawP5(); // Start the drawing
+    }
+
+    // Clean up before unmounting
+    return () => {
+      removeFunction();
     }
   }, []);
 
@@ -93,11 +99,14 @@ const ModelView = (props) => {
         window.addEventListener("resize", () => {
           setCanvasBounds(p, [viewportBuffer]);
         });
+
+        removeFunction = p.remove; // Store the remove() function
       }
 
       p.draw = () => {
         p.frameRate(Constants.frameRate);
         p.clear();
+        console.log(p.frameCount);
 
         // Draw the model
         renderScene(viewportBuffer, p);

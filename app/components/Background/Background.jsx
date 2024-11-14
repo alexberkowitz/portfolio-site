@@ -12,6 +12,7 @@ const Background = () => {
   const globalContext = useGlobalContext();
   const renderRef = useRef();
   const [initialized, setInitialized] = useState(false);
+  let removeFunction; // Storage for the p.remove() function so we can call it from useEffect
 
   // Grid setup
   let gridBuffer;
@@ -50,6 +51,11 @@ const Background = () => {
           cursorDraw.current = true;
         });
       }
+    }
+
+    // Clean up before unmounting
+    return () => {
+      removeFunction();
     }
   }, []);
 
@@ -93,21 +99,20 @@ const Background = () => {
             age: 0
           });
         }
+
+        removeFunction = p.remove; // Store the remove() function
       }
 
       p.draw = () => {
         p.frameRate(Constants.frameRate);
-        globalContext.setCursorPos({x: p.mouseX, y: p.mouseY}); // Store the cursor pos for other components to use
         p.translate(p.width / -2, p.height / -2, 0);
 
         // Draw the background
         p.background(255);
 
         // Draw the cursor trail
-        if( globalContext.cursorTrail.current ){
-          drawCursorTrail(cursorBuffer, p);
-          p.image(cursorBuffer, 0, 0);
-        }
+        drawCursorTrail(cursorBuffer, p);
+        p.image(cursorBuffer, 0, 0);
         
         // Draw click explosions
         drawExplosions(explosionBuffer);
