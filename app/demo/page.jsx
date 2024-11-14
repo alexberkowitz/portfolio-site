@@ -14,15 +14,16 @@ export default function Test() {
 
   return (
     <main>
-      <PageTitle>Tests</PageTitle>
+      <PageTitle>Demos</PageTitle>
       <p>
         <TextWrapper>
-          {"You've found my super-secret test page! This is where I test the reusable components found throughout the site. Feel free to play around!"}
+          {"You've found my super-secret demo page! This is where I test the reusable components found throughout the site. Feel free to play around!"}
         </TextWrapper>
       </p>
 
       <div>
         <h2><TextWrapper>Icons</TextWrapper></h2>
+        <p><TextWrapper>There aren't many icons in use on this site, but the ones that are there are entirely custom.</TextWrapper></p>
         <div style={{
           display: 'flex',
           gap: 32,
@@ -32,6 +33,11 @@ export default function Test() {
         }}>
           <Icon type="copy"/>
         </div>
+      </div>
+
+      <div>
+        <h2><TextWrapper>Cursor</TextWrapper></h2>
+        <p><TextWrapper>The cursor on my site is custom-built with p5.js. Try hovering over this text, or perhaps <a href="#">this link!</a></TextWrapper></p>
       </div>
 
       <div>

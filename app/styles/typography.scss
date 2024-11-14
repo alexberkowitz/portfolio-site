@@ -1,16 +1,18 @@
+@import '@/styles/variables.scss';
+
 h1 {
   max-width: 70ch;
   margin-top: -.12em; // Accommodate the extra spacing around characters
   margin-bottom: -.12em; // Accommodate the extra spacing around characters
   font-family: var(--font-museo-moderno);
   font-weight: 200;
-  font-size: 4rem;
+  font-size: 2rem;
   line-height: 1;
   text-transform: uppercase;
   text-wrap: balance;
 
-  @media(max-width: 720px) {
-    font-size: 2rem;
+  @media(min-width: $break-mobile) {
+    font-size: 4rem;
   }
 }
 

@@ -4,6 +4,9 @@
   background-color: var(--bgColor);
   box-decoration-break: clone;
   -webkit-box-decoration-break: clone;
+  text-wrap: pretty;
+  padding: .25rem;
+  margin: -.25rem;
 }
 
 // For some elements, we only enable pointer events on the wrapper
@@ -16,16 +19,12 @@
   }
 }
 
-p.textWrapper,
-p .textWrapper {
-  padding: .25em;
-  margin: -.25em;
-}
-
 // Some elements can have text wrappers applied implicitly due
 // to the way markdown nests markup, so we can undo the
 // background to avoid style clashing.
 blockquote .textWrapper,
 figure .textWrapper {
+  margin: 0;
+  padding: 0;
   background-color: transparent;
 }

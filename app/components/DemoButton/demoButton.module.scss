@@ -1,0 +1,19 @@
+.demoButton {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: calc(var(--gap) * 1.4);
+  height: calc(var(--gap) * 1.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accentColor);
+  font-size: calc(var(--gap) / 2);
+  text-decoration: none;
+  z-index: 12;
+
+  &:hover,
+  &:focus-visible {
+    color: var(--fgColor);
+  }
+}

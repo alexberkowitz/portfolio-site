@@ -231,13 +231,14 @@ const Cursor = () => {
 
   // Draw the cursor
   const drawCursor = (context) => {
+    const posX = roundToPixel(context.width / 2) - (Constants.pixelDensity / 2);
+    const posY = roundToPixel(context.height / 2) - (Constants.pixelDensity / 2);
+
     context.strokeCap(context.PROJECT);
     context.strokeWeight(Constants.pixelDensity);
     context.stroke(Constants.bodyColor);
+    context.noFill();
     context.rectMode(context.CENTER);
-    
-    const posX = roundToPixel(context.width / 2) - (Constants.pixelDensity / 2);
-    const posY = roundToPixel(context.height / 2) - (Constants.pixelDensity / 2);
 
     // Crosshair
     const crosshairInnerSize = pixelDim(cursor.current.targetBoxSize + (2 * cursor.current.crosshairGap));
@@ -287,9 +288,6 @@ const Cursor = () => {
 
 
     // Target Box
-    context.push();
-    context.stroke(Constants.bodyColor);
-    context.noFill();
     context.rect(
       posX,
       posY,
@@ -297,7 +295,6 @@ const Cursor = () => {
       pixelDim(cursor.current.targetBoxSize),
       pixelDim(cursor.current.targetBoxCorner)
     );
-    context.pop();
 
 
     // Center Dot

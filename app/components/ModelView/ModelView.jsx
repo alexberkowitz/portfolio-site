@@ -38,6 +38,8 @@ const ModelView = (props) => {
   let mesh;
   let texture;
   let font;
+
+  let resizeHandler;
   
   // Initial setup
   useEffect(() => {
@@ -50,6 +52,7 @@ const ModelView = (props) => {
     // Clean up before unmounting
     return () => {
       removeFunction();
+      window.removeEventListener("resize", resizeHandler);
     }
   }, []);
 
@@ -96,9 +99,8 @@ const ModelView = (props) => {
         }, 300);
 
         // When the window resizes, update the drawing parameters
-        window.addEventListener("resize", () => {
-          setCanvasBounds(p, [viewportBuffer]);
-        });
+        resizeHandler = setCanvasBounds.bind(null, p, [viewportBuffer]);
+        window.addEventListener("resize", resizeHandler);
 
         removeFunction = p.remove; // Store the remove() function
       }
@@ -106,7 +108,6 @@ const ModelView = (props) => {
       p.draw = () => {
         p.frameRate(Constants.frameRate);
         p.clear();
-        console.log(p.frameCount);
 
         // Draw the model
         renderScene(viewportBuffer, p);

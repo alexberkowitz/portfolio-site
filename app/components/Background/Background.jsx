@@ -2,14 +2,12 @@
 
 import { useEffect, useState, useRef } from "react";
 import p5 from 'p5';
-import { useGlobalContext } from '@/GlobalContext';
 import { dither, ease } from '@/utils/drawing';
 import * as Constants from '@/Constants';
 
 import styles from "./background.module.scss";
 
 const Background = () => {
-  const globalContext = useGlobalContext();
   const renderRef = useRef();
   const [initialized, setInitialized] = useState(false);
   let removeFunction; // Storage for the p.remove() function so we can call it from useEffect
@@ -26,6 +24,8 @@ const Background = () => {
   // Explosions setup
   let explosionBuffer;
   let explosions = useRef([]); // Click effect explosions
+
+  let resizeHandler;
   
   // Initial setup
   useEffect(() => {
@@ -56,6 +56,7 @@ const Background = () => {
     // Clean up before unmounting
     return () => {
       removeFunction();
+      window.removeEventListener("resize", resizeHandler);
     }
   }, []);
 
@@ -81,7 +82,7 @@ const Background = () => {
         explosionBuffer = p.createGraphics(p.width, p.height, p.P2D);
 
         // When the window resizes, update the drawing parameters
-        window.addEventListener("resize", () => {
+        resizeHandler = () => {
           const calculatedWidth = Math.round(Math.floor(window.innerWidth) / Constants.pixelDensity) * Constants.pixelDensity;
           const calculatedHeight = Math.round(Math.floor(window.innerHeight) / Constants.pixelDensity) * Constants.pixelDensity;
           p.resizeCanvas(calculatedWidth, calculatedHeight);
@@ -89,7 +90,8 @@ const Background = () => {
           cursorBuffer.resizeCanvas(calculatedWidth, calculatedHeight);
           explosionBuffer.resizeCanvas(calculatedWidth, calculatedHeight);
           setCursorTrailLineWidth();
-        });
+        }
+        window.addEventListener("resize", resizeHandler);
 
         // Make explosions when the user clicks
         p.mouseClicked = () => {
