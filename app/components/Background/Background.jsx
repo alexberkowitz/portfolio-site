@@ -64,7 +64,8 @@ const Background = () => {
       p.setup = () => {
         p.createCanvas(
           Math.round(Math.floor(window.innerWidth) / Constants.pixelDensity) * Constants.pixelDensity,
-          Math.round(Math.floor(window.innerHeight) / Constants.pixelDensity) * Constants.pixelDensity
+          Math.round(Math.floor(window.innerHeight) / Constants.pixelDensity) * Constants.pixelDensity,
+          p.WEBGL
         ).parent(renderRef.current);
         p.pixelDensity(1 / Constants.pixelDensity);
 
@@ -97,6 +98,7 @@ const Background = () => {
       p.draw = () => {
         p.frameRate(Constants.frameRate);
         globalContext.setCursorPos({x: p.mouseX, y: p.mouseY}); // Store the cursor pos for other components to use
+        p.translate(p.width / -2, p.height / -2, 0);
 
         // Draw the background
         p.background(255);
