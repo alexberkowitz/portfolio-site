@@ -1,5 +1,5 @@
 "use client";
-import { createContext, useContext, useState, useRef } from 'react';
+import { createContext, useContext, useState } from 'react';
 
 const GlobalContext = createContext();
 

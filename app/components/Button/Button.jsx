@@ -1,11 +1,8 @@
 'use client'
 
-import { useGlobalContext } from '@/GlobalContext';
-
 import styles from './button.module.scss';
 
 const Button = (props) => {
-  const globalContext = useGlobalContext();
 
   return (
     <button
