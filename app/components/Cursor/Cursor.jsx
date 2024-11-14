@@ -18,29 +18,27 @@ const Cursor = () => {
   
   // Cursor
   const [cursorPos, setCursorPos] = useState({x: 0, y: 0});
-  const showCursor = useRef(true);
-  const cursorSize = pixelDim(24);
+  const [showCursor, setShowCursor] = useState(true);
+  const cursorSize = pixelDim(23);
   
   // Initial setup
   useEffect(() => {
     if( !initialized ){
       setInitialized(true);
 
-      document.body.style.cursor = 'none'; // This way if the component doesn't load the cursor falls back to the default
+      // If the component fails to load, the cursor styles fall back to the default
+      const style = document.createElement("style");
+      style.textContent = "* { cursor: none !important; }";
+      document.head.appendChild(style);
 
-      // Users without a mouse won't see the cursor
-      if( !window.matchMedia('(pointer: fine)').matches ){
-        showCursor.current = false;
-      } else {
-        // Only show the cursor when it is over the document
-        // to avoid the image being "left behind"
-        document.addEventListener("mouseleave", () => {
-          showCursor.current = false;
-        });
-        document.addEventListener("mouseenter", () => {
-          showCursor.current = true;
-        });
-      }
+      // Only show the cursor if one of the following conditions are met:
+      // - The user has a mouse and the cursor is within the viewport
+      // - The user has a touch device and is touching the screen
+      document.addEventListener('mousemove', () => { setShowCursor(true); });
+      document.addEventListener('mouseenter', () => { setShowCursor(true); });
+      document.addEventListener('touchstart', () => { setShowCursor(true); });
+      document.addEventListener('mouseleave', () => { setShowCursor(false); });
+      document.addEventListener('touchend', () => { setShowCursor(false); });
 
       drawP5(); // Start the drawing
     }
@@ -55,14 +53,9 @@ const Cursor = () => {
         p.createCanvas(
           cursorSize,
           cursorSize,
-          p.WEBGL
+          p.P2D
         ).parent(renderRef.current);
         p.pixelDensity(1 / Constants.pixelDensity);
-
-        // When the window resizes, update the drawing parameters
-        window.addEventListener("resize", () => {
-          p.resizeCanvas(window.innerWidth, window.innerHeight);
-        });
       }
 
       p.draw = () => {
@@ -74,7 +67,7 @@ const Cursor = () => {
         setCursorPos({...globalContext.cursorPos.current});
 
         // Draw the cursor
-        if( showCursor.current ){
+        if( showCursor ){
           drawCursor(p);
         }
       }
@@ -93,40 +86,38 @@ const Cursor = () => {
     context.strokeWeight(Constants.pixelDensity);
     context.stroke(Constants.bodyColor);
     
-    const posX = roundToPixel(context.width / 2) + (Constants.pixelDensity / 2);
-    const posY = roundToPixel(context.height / 2) + (Constants.pixelDensity / 2);
+    const posX = roundToPixel(context.width / 2) - (Constants.pixelDensity / 2);
+    const posY = roundToPixel(context.height / 2) - (Constants.pixelDensity / 2);
 
     // Crosshair
     const crosshairInnerSize = pixelDim(12);
-    if( globalContext.cursorState.current !== 'hover' ){
-      context.line( // Top line
-        posX,
-        0,
-        posX,
-        posY - (crosshairInnerSize / 2)
-      );
+    context.line( // Top line
+      posX,
+      0,
+      posX,
+      posY - (crosshairInnerSize / 2)
+    );
 
-      context.line( // Bottom line
-        posX,
-        context.height,
-        posX,
-        posY + (crosshairInnerSize / 2)
-      );
+    context.line( // Bottom line
+      posX,
+      context.height,
+      posX,
+      posY + (crosshairInnerSize / 2)
+    );
 
-      context.line(  // Left line
-        0,
-        posY,
-        posX - (crosshairInnerSize / 2),
-        posY
-      );
-  
-      context.line(  // Right line
-        context.width,
-        posY,
-        posX + (crosshairInnerSize / 2),
-        posY
-      );
-    }
+    context.line(  // Left line
+      0,
+      posY,
+      posX - (crosshairInnerSize / 2),
+      posY
+    );
+
+    context.line(  // Right line
+      context.width,
+      posY,
+      posX + (crosshairInnerSize / 2),
+      posY
+    );
 
 
     // Center Box
@@ -167,6 +158,8 @@ const Cursor = () => {
       className={styles.cursor}
       ref={renderRef}
       style={{
+        width: `${cursorSize}px`,
+        height: `${cursorSize}px`,
         transform: `translateX(-${cursorSize / 2}px) translateY(-${cursorSize / 2}px)`,
         '--xPos': `${cursorPos.x}px`,
         '--yPos': `${cursorPos.y}px`,
