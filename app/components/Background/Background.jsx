@@ -2,7 +2,11 @@
 
 import { useEffect, useState, useRef } from "react";
 import p5 from 'p5';
-import { dither, ease } from '@/utils/drawing';
+import {
+  roundToPixel,
+  dither,
+  ease
+ } from '@/utils/drawing';
 import * as Constants from '@/Constants';
 
 import styles from "./background.module.scss";
@@ -11,6 +15,10 @@ const Background = () => {
   const renderRef = useRef();
   const [initialized, setInitialized] = useState(false);
   let removeFunction; // Storage for the p.remove() function so we can call it from useEffect
+
+  // Canvas sizing
+  let canvasSize = useRef({w: roundToPixel(window.innerWidth, 'floor'), h: roundToPixel(window.innerHeight, 'floor'),});
+  let resizeHandler;
 
   // Grid setup
   let gridBuffer;
@@ -24,8 +32,6 @@ const Background = () => {
   // Explosions setup
   let explosionBuffer;
   let explosions = useRef([]); // Click effect explosions
-
-  let resizeHandler;
   
   // Initial setup
   useEffect(() => {
@@ -70,8 +76,8 @@ const Background = () => {
     new p5(p => {
       p.setup = () => {
         p.createCanvas(
-          Math.round(Math.floor(window.innerWidth) / Constants.pixelDensity) * Constants.pixelDensity,
-          Math.round(Math.floor(window.innerHeight) / Constants.pixelDensity) * Constants.pixelDensity,
+          canvasSize.current.w,
+          canvasSize.current.h,
           p.WEBGL
         ).parent(renderRef.current);
         p.pixelDensity(1 / Constants.pixelDensity);
@@ -83,8 +89,10 @@ const Background = () => {
 
         // When the window resizes, update the drawing parameters
         resizeHandler = () => {
-          const calculatedWidth = Math.round(Math.floor(window.innerWidth) / Constants.pixelDensity) * Constants.pixelDensity;
-          const calculatedHeight = Math.round(Math.floor(window.innerHeight) / Constants.pixelDensity) * Constants.pixelDensity;
+          const calculatedWidth = roundToPixel(window.innerWidth, 'floor');
+          const calculatedHeight = roundToPixel(window.innerHeight, 'floor');
+          canvasSize.current = {w: calculatedWidth, h: calculatedHeight};
+          console.log(calculatedWidth);
           p.resizeCanvas(calculatedWidth, calculatedHeight);
           gridBuffer.resizeCanvas(calculatedWidth, calculatedHeight);
           cursorBuffer.resizeCanvas(calculatedWidth, calculatedHeight);
