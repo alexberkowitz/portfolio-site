@@ -75,7 +75,7 @@
   position: relative;
   display: grid;
   align-self: flex-start;
-  grid-template-columns: repeat(4, auto);
+  grid-template-columns: repeat(2, auto);
   gap: 1rem;
   background-color: var(--bgColor);
   font-size: 0.8rem;
@@ -92,7 +92,6 @@
 
   @media(min-width: $break-mobile) {
     padding: calc(var(--gap) / 2) 0 calc(var(--gap) / 2) calc(var(--gap) / 2);
-    grid-template-columns: repeat(2, auto);
     border-radius: 0.25rem 0  0 0.25rem;
 
     &:after {
