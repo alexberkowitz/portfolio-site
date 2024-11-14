@@ -96,15 +96,11 @@ const Background = () => {
 
       p.draw = () => {
         p.frameRate(Constants.frameRate);
-        globalContext.cursorPos.current = {x: p.mouseX, y: p.mouseY}; // Store the cursor pos for other components to use
+        globalContext.setCursorPos({x: p.mouseX, y: p.mouseY}); // Store the cursor pos for other components to use
 
         // Draw the background
         p.background(255);
 
-        // Apply dot grid
-        drawDotGrid(gridBuffer);
-        p.image(gridBuffer, 0, 0);
-        
         // Draw the cursor trail
         if( globalContext.cursorTrail.current ){
           drawCursorTrail(cursorBuffer, p);
@@ -117,6 +113,10 @@ const Background = () => {
 
         // Apply dither effect
         dither(p, Constants.fgColor, Constants.bgColor, true);
+
+        // Apply dot grid
+        drawDotGrid(gridBuffer);
+        p.image(gridBuffer, 0, 0);
       }
     });
   }
@@ -133,6 +133,7 @@ const Background = () => {
   
   // Draw a fading trail following the cursor
   const drawCursorTrail = (context, p) => {
+    context.clear();
     context.noFill();
 
     const cursorPointMaxAge = 10; // In frames
@@ -146,41 +147,51 @@ const Background = () => {
       });
     }
 
-    if( cursorPoints.current.length > 0 ){
-      context.clear();
+    if( cursorPoints.current.length >= 4 ){
       context.strokeWeight(cursorLineWidth.current);
       context.strokeCap(context.ROUND);
 
-      // Loop through the points array and draw each one
-      let prevPoint = {};
+      // Loop through the points array and draw a curve connecting them
       cursorPoints.current.forEach((point, i) => {
         if( point.age <= cursorPointMaxAge ){
-          const fadeIn = cursorPointMaxAge * 3; // In frames
-          const delay = 10; // In frames
-
-          // Draw a line connecting each point to the previous one
-          if( i > 0 ){
+          // Draw a curve connecting each point to the previous three
+          // (curve vertices require four coordinates: two points and two handles)
+          if( i >= 4 ){
+            const fadeIn = cursorPointMaxAge * 3; // In frames
+            const delay = 10; // In frames
             if( p.frameCount - delay < fadeIn ){
               const strokeWeight = ease(Math.max(0, p.frameCount - delay) / fadeIn, 'new3') * cursorLineWidth.current;
               context.strokeWeight(strokeWeight);
             }
             const value = 255 * (point.age / cursorPointMaxAge);
             context.stroke(value, value, value);
-            context.line(
-              prevPoint.x,
-              prevPoint.y,
-              point.x, 
+            context.beginShape();
+            context.curveVertex(
+              cursorPoints.current[i-3].x,
+              cursorPoints.current[i-3].y
+            );
+            context.curveVertex(
+              cursorPoints.current[i-2].x,
+              cursorPoints.current[i-2].y
+            );
+            context.curveVertex(
+              cursorPoints.current[i-1].x,
+              cursorPoints.current[i-1].y
+            );
+            context.curveVertex(
+              point.x,
               point.y
             );
+            context.endShape();
           }
-          prevPoint = point;
 
         } else {
-          delete cursorPoints.current[i]; // Delete the circle when it gets too old
+          delete cursorPoints.current[i-3]; // Delete the circle when it gets too old
         }
 
         point.age += 1;
       });
+      // context.endShape();
 
       // Apply blur
       context.filter(context.BLUR, cursorLineWidth.current / 5);

@@ -18,13 +18,15 @@ export const pixelDim = (value) => {
   return value * Constants.pixelDensity;
 }
 
-// Update the value of a transition control variable
-// Linearly animates between 0 and 1 based on the active param
-export const updateTransition = (amount, duration, active) => {
+// Update the value of a transition control variable.
+// Linearly animates between 0 and 1, going forwards while axctive === true
+// and backwards while active === false
+export const updateTransition = (amount, active, duration) => {
+  const durVal = duration || 1; // Default duration is 1 second
   if( active ) {
-    return Math.min(amount + (1 / duration / Constants.frameRate), 1);
+    return Math.min(amount + (1 / durVal / Constants.frameRate), 1);
   } else {
-    return Math.max(amount - (1 / duration / Constants.frameRate), 0);
+    return Math.max(amount - (1 / durVal / Constants.frameRate), 0);
   }
 }
 

@@ -17,13 +17,16 @@ const Cursor = () => {
   const [initialized, setInitialized] = useState(false);
   
   // Cursor
-  const cursorPos = useRef({x: 0, y: 0});
+  const [cursorPos, setCursorPos] = useState({x: 0, y: 0});
   const showCursor = useRef(true);
+  const cursorSize = pixelDim(24);
   
   // Initial setup
   useEffect(() => {
     if( !initialized ){
       setInitialized(true);
+
+      document.body.style.cursor = 'none'; // This way if the component doesn't load the cursor falls back to the default
 
       // Users without a mouse won't see the cursor
       if( !window.matchMedia('(pointer: fine)').matches ){
@@ -50,8 +53,9 @@ const Cursor = () => {
     new p5(p => {
       p.setup = () => {
         p.createCanvas(
-          Math.floor(window.innerWidth),
-          Math.floor(window.innerHeight)
+          cursorSize,
+          cursorSize,
+          p.WEBGL
         ).parent(renderRef.current);
         p.pixelDensity(1 / Constants.pixelDensity);
 
@@ -66,8 +70,8 @@ const Cursor = () => {
         p.noSmooth();
         p.clear();
 
-        // Store the cursor pos
-        cursorPos.current = {x: p.mouseX, y: p.mouseY};
+        // Get the global cursor pos
+        setCursorPos({...globalContext.cursorPos.current});
 
         // Draw the cursor
         if( showCursor.current ){
@@ -89,36 +93,35 @@ const Cursor = () => {
     context.strokeWeight(Constants.pixelDensity);
     context.stroke(Constants.bodyColor);
     
-    const posX = roundToPixel(cursorPos.current.x) - (Constants.pixelDensity / 2);
-    const posY = roundToPixel(cursorPos.current.y) - (Constants.pixelDensity / 2);
+    const posX = roundToPixel(context.width / 2) + (Constants.pixelDensity / 2);
+    const posY = roundToPixel(context.height / 2) + (Constants.pixelDensity / 2);
 
     // Crosshair
-    const crosshairSize = pixelDim(24);
     const crosshairInnerSize = pixelDim(12);
     if( globalContext.cursorState.current !== 'hover' ){
       context.line( // Top line
         posX,
-        posY - (crosshairSize / 2),
+        0,
         posX,
         posY - (crosshairInnerSize / 2)
       );
 
       context.line( // Bottom line
         posX,
-        posY + (crosshairSize / 2),
+        context.height,
         posX,
         posY + (crosshairInnerSize / 2)
       );
 
       context.line(  // Left line
-        posX - (crosshairSize / 2),
+        0,
         posY,
         posX - (crosshairInnerSize / 2),
         posY
       );
   
       context.line(  // Right line
-        posX + (crosshairSize / 2),
+        context.width,
         posY,
         posX + (crosshairInnerSize / 2),
         posY
@@ -160,7 +163,15 @@ const Cursor = () => {
   /* RENDER
   /*-------------------------------------------------------*/
   return (
-    <div className={styles.cursor} ref={renderRef}></div>
+    <div
+      className={styles.cursor}
+      ref={renderRef}
+      style={{
+        transform: `translateX(-${cursorSize / 2}px) translateY(-${cursorSize / 2}px)`,
+        '--xPos': `${cursorPos.x}px`,
+        '--yPos': `${cursorPos.y}px`,
+      }}
+      ></div>
   );
 }
 
