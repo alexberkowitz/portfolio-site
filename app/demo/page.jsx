@@ -83,6 +83,10 @@ export default function Test() {
         </div>
       </div>
 
+      <br/><br/><br/>
+      <p style={{textAlign: 'center'}}><TextWrapper>Some text with <a href="#">a link</a></TextWrapper></p>
+      <br/><br/><br/>
+
     </main>
   );
 }

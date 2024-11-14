@@ -1,8 +1,12 @@
 @import '@/styles/variables.scss';
 
 .homePage {
-  position: relative;
-  flex-grow: 1;
+  position: fixed;
+  top: var(--gap);
+  bottom: var(--gap);
+  left: var(--gap);
+  right: var(--gap);
+  width: unset;
   display: flex;
   flex-direction: column;
   gap: var(--gap);
