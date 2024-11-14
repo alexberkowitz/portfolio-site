@@ -1,0 +1,48 @@
+---
+title: Lucida
+date: October 2024
+type: Web App
+role: developer
+cover: /media/lucida/cover.png
+width: 2
+height: 2
+---
+
+<Full>![Cover](https://cdn.britannica.com/79/232779-050-6B0411D7/German-Shepherd-dog-Alsatian.jpg)</Full>
+
+Lucida is an experiment designed to explore the way AI models distort information. When a user captures an image, they are presented with an AI interpretation of the scene. These images often have a surreal quality to them--perfectly lit, expertly composed, and yet wrong in fundamental ways. By translating scenes through the lens of an algorithm, we can view our world the way a machine might.
+
+# The Process
+
+The process for creating these images is quite straightforward. Upon taking a picture, the image is provided to ChatGPT 4 and a description is generated. That description is then processed by Dall‑E 3 and a new image is generated, which is then presented to the user. This virtual telephone game results in images where certain details may be magnified while others are inexplicably lost.  
+
+# UI of a Dream
+
+The design of Lucida is based around the concept of dreams. The images produced by AI have a distorted, unreal quality to them that feels not unlike the chaotic veneer of a dream, so a UI was designed to match. Hard edges are avoided wherever possible, and colors blend softly together. White was chosen as the base color for the interface to evoke feelings of clouds. A rainbow of bright hues is then added as a sort of heavenly light.
+
+<Figure>  
+  ![Lucida Icon](/media/lucida/cover.png)
+  <figcaption>    
+    The Lucida icon, which also doubles as the capture button, was designed to appear as a glowing orb of colored light.
+  </figcaption>
+</Figure>
+
+Animations are also key to the UI of Lucida. While most apps focus on feeling snappy and efficient, Lucida is not meant to be a highly optimized tool. Rather, the animations that are employed are designed to feel soft and ethereal. Where one might expect to find a shutter animation, capturing an image instead invokes a slow fade into white mist. Loading states feature gentle particle systems and abstract light displays in place of more traditional spinners. Transitions tend to leverage a combination of effects such as opacity and blur to create a seamless feeling.
+
+<Figure>  
+  ![Loading Animation](https://cdn.britannica.com/79/232779-050-6B0411D7/German-Shepherd-dog-Alsatian.jpg)
+  <figcaption>    
+    AI image generation can take some time, so a unique particle-based loading animation was developed. This particle system is populated randomly using JavaScript at runtime and then animated using CSS transforms with no third-party libraries required.
+  </figcaption>
+</Figure>
+
+# Technology
+
+Lucida is written as a front-end web app using Next.js. Because of this, it can run on any device with a web browser and a camera and can be easily updated without going through any secondary app review processes. UI animations are built using CSS transforms for performance, and stylesheets are also employed over static assets for visual accents.
+
+<Figure>  
+  ![Icon Animation](https://cdn.britannica.com/79/232779-050-6B0411D7/German-Shepherd-dog-Alsatian.jpg)
+  <figcaption>    
+    Even the app icon and favicon are generated programmatically using CSS filters. A test page was created with independently-controllable instances of the shutter button component, allowing me to generate static assets directly, rather than having to rebuild the visuals in a graphics editor.
+  </figcaption>
+</Figure>

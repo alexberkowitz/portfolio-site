@@ -23,11 +23,9 @@ export function ProjectsList(props) {
               href={`/projects/${project.slug}`}
               >
               <img src={project.metadata.cover} className={styles.cover} />
-              <p className={styles.type}>
-                {project.metadata.type}
-              </p>
-              <div className={styles.title}>
-                <p>{project.metadata.title}</p>
+              <div className={styles.info}>
+                <p className={styles.type}>{project.metadata.type}</p>
+                <p className={styles.title}>{project.metadata.title}</p>
               </div>
             </Link>
           </li>
