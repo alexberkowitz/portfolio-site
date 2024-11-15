@@ -6,6 +6,7 @@
   &:focus-visible {
 
     svg {
+      display: block;
       --primaryColor: var(--fgColor);
       --secondaryColor: var(--fgColor);
     }

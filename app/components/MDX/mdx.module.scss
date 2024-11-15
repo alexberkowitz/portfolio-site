@@ -175,6 +175,7 @@ $corner-size: var(--cornerRadius);
   justify-content: space-between;
   padding-right: .25rem;
   background-color: rgba(0,0,0,.05);
+  font-family: var(--font-oxanium);
 
   p {
     padding: .5rem 1rem;
@@ -194,6 +195,31 @@ $corner-size: var(--cornerRadius);
   position: absolute;
   top: 0;
   right: 0;
+  font-family: var(--font-oxanium);
+  --animDuration: 1s;
+
+  &:after {
+    content: 'Copied!';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 100%;
+    display: flex;
+    align-items: center;
+    text-transform: uppercase;
+    color: var(--fgColor);
+    font-size: .8rem;
+    opacity: 0;
+  }
+
+  &.success:after {
+    animation: success-fade var(--animDuration) linear forwards;
+  }
+}
+
+@keyframes success-fade {
+  0%, 50% { opacity: 100% }
+  100%    { opacity: 0%}
 }
 
 .ol {

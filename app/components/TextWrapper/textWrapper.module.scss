@@ -7,6 +7,7 @@
   text-wrap: pretty;
   padding: .25rem;
   margin: -.25rem;
+  border-radius: calc(var(--cornerRadius) / 2);
 }
 
 // For some elements, we only enable pointer events on the wrapper
