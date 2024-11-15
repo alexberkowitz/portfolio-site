@@ -51,11 +51,18 @@ function slugify(str) {
 
 // Paragraph
 function P(props) {
-  return (
-    <p>
-      <TextWrapper>{props.children}</TextWrapper>
-    </p>
-  )
+  // Markdown likes to pass many things through the <p> tag constructor, but some things we don't want wrapped.
+  const passThroughTypes = [CustomImage];
+
+  if( passThroughTypes.indexOf(props.children.type) >= 0 ){
+    return props.children;
+  } else {
+    return (
+      <p>
+        <TextWrapper>{props.children}</TextWrapper>
+      </p>
+    )
+  }
 }
 
 // Anchor
@@ -162,6 +169,17 @@ function Video(props) {
           >
         </iframe>
       </div>
+    )
+  } else {
+    return (
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
+        >
+        <source src={props.src} type="video/mp4"></source>
+      </video>
     )
   }
 }

@@ -60,16 +60,22 @@ export default function Project({ params }) {
 
       <div className={styles.info}>
         <div className={styles.title}>
-          <span>
-            <h1>{project.metadata.title}</h1>
-          </span>
+          <h1>
+            <span className={styles.textWrapper}>{project.metadata.title}</span>
+          </h1>
         </div>
 
         <dl className={styles.details}>
           <dt>Role</dt>
           <dd>{project.metadata.role}</dd>
-          <dt>Completed</dt>
-          <dd style={{whiteSpace: 'nowrap'}}>{project.metadata.date}</dd>
+          {project.metadata.date && (<>
+            <dt>Completed</dt>
+            <dd style={{whiteSpace: 'nowrap'}}>{project.metadata.date}</dd>
+          </>)}
+          {project.metadata.tools && (<>
+            <dt>Tools Used</dt>
+            <dd>{project.metadata.tools}</dd>
+          </>)}
         </dl>
       </div>
 

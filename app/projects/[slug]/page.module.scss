@@ -8,7 +8,7 @@
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  gap: var(--gap);
+  gap: var(--padding);
   padding: calc(var(--gap) / 2) var(--gap);
   background-color: var(--bgColor);
   pointer-events: none;
@@ -17,7 +17,7 @@
     pointer-events: all;
   }
   
-  @media(min-width: $break-mobile) {
+  @media(min-width: $break-tablet) {
     position: sticky;
     top: calc(var(--gap) * 2);
     flex-direction: row;
@@ -33,9 +33,18 @@
     z-index: 2;
 
     @container style(--animate: true) {
-      .title span {
+      .title h1 {
         transform: scale(0.5);
-        border-radius: 0 0.5rem 0.5rem 0;
+        color: var(--fgColor);
+
+        &:before {
+          border-radius: 0 calc(var(--cornerRadius) * 2) calc(var(--cornerRadius) * 2) 0;
+          background-color: var(--accentColor);
+        }
+      }
+
+      .details {
+        transform: translateX(calc(100% + var(--padding)));
       }
     }
   }
@@ -48,25 +57,51 @@
   margin: 0;
   text-wrap: unset !important;
   
-  span {
+  h1 {
     position: relative;
     display: inline-block;
     padding: calc(var(--gap) / 2) calc(var(--gap) / 2) calc(var(--gap) / 2) 0;
-    background-color: var(--bgColor);
-    border-radius: 0 0.25rem 0.25rem 0;
     transform-origin: 0% 0%;
     transition: all .5s ease-in-out;
+
+    span {
+      position: relative;
+    }
   }
 
-  @media(min-width: $break-mobile) {
-    span:before {
+  @media(min-width: $break-tablet) {
+    h1:before {
       content: '';
       position: absolute;
       top: 0;
       bottom: 0;
-      right: 100%;
-      width: calc(var(--gap) * 2);
-      background-color: inherit;
+      right: 0;
+      width: calc(100% + (var(--padding) * 2) + var(--gap));
+      border-radius: 0 var(--cornerRadius) var(--cornerRadius) 0;
+      background-color: var(--bgColor);
+      transition: inherit;
+      z-index: -1;
+    }
+
+    @supports (anchor-name: --foo) { /* Shrink-wrap the background if supported */
+      h1 {
+        position: relative;
+        isolation: isolate;
+        background: none;
+    
+        span {
+          anchor-name: --textWrapper;
+        }
+    
+        &:before {
+          position-anchor: --textWrapper;
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          right: calc(anchor(right) - var(--gap));
+          width: calc(anchor-size(width) + (var(--padding) * 2) + var(--gap));
+        }
+      }
     }
   }
 }
@@ -79,7 +114,8 @@
   gap: 1rem;
   background-color: var(--bgColor);
   font-size: 0.8rem;
-  transition: padding .5s ease-in-out;
+  transition: all .5s ease-in-out;
+
   dt {
     font-weight: 600;
     text-transform: uppercase;
@@ -90,7 +126,8 @@
     text-transform: uppercase;
   }
 
-  @media(min-width: $break-mobile) {
+  @media(min-width: $break-tablet) {
+    max-width: 300px;
     padding: calc(var(--gap) / 2) 0 calc(var(--gap) / 2) calc(var(--gap) / 2);
     border-radius: 0.25rem 0  0 0.25rem;
 

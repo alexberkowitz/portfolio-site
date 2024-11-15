@@ -23,7 +23,8 @@ export default function Test() {
 
       <div>
         <h2><TextWrapper>Icons</TextWrapper></h2>
-        <p><TextWrapper>{"There aren't many icons in use on this site, but the ones that are there are entirely custom."}</TextWrapper></p>
+        {/* <p><TextWrapper>{"There aren't many icons in use on this site, but the ones that are there are entirely custom."}</TextWrapper></p> */}
+        <p><TextWrapper>{"Right now I only have one icon in use on the site, but if I add any more they'll go right here!"}</TextWrapper></p>
         <div style={{
           display: 'flex',
           gap: 32,

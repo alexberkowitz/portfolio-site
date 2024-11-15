@@ -29,8 +29,8 @@ $corner-size: var(--cornerRadius);
     display: block;
     grid-column: 1 / 2;
     height: 100%;
-    width: calc(100% + var(--gap) - 1rem);
-    transform: translateX(calc(var(--gap) * -1));
+    width: calc(100% + var(--padding) - 1rem);
+    transform: translateX(calc(var(--padding) * -1));
     border-radius: 0 var(--cornerRadius) var(--cornerRadius) 0;
     background-color: var(--fgColor);
 
@@ -65,6 +65,12 @@ $corner-size: var(--cornerRadius);
     text-transform: uppercase;
     font-size: 2rem;
     font-weight: 400;
+  }
+
+  @media(min-width: $break-mobile) {
+    .marker {
+      
+    }
   }
 }
 

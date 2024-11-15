@@ -1,5 +1,16 @@
 /*-------------------------------------------------------*/
+/* TEXT OFFSETS
+/*-------------------------------------------------------*/
+/* These are used to apply negative margins to text
+/* elements so the characters align with the edges of
+/* their containers, making the layout more consistent.
+/*-------------------------------------------------------*/
+
+$offset-museo: -0.12em;
+
+/*-------------------------------------------------------*/
 /* BREAKPOINTS
 /*-------------------------------------------------------*/
 
 $break-mobile: 640px;
+$break-tablet: 960px;
