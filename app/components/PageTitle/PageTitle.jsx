@@ -16,11 +16,11 @@ const PageTitle = (props) => {
     if( !initialized && props.marquee ){
       setInitialized(true);
       getMarqueeSize();
-    }
-
-    // Clean up event listeners before component unmounts
-    return () => {
-      window.removeEventListener("resize", getMarqueeSize);
+  
+      // Clean up event listeners before component unmounts
+      return () => {
+        window.removeEventListener("resize", getMarqueeSize);
+      }
     }
   }, []);
 
