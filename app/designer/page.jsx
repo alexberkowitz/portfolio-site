@@ -1,5 +1,5 @@
 import PageTitle from '@/components/PageTitle/PageTitle';
-import TextWrapper from '@/components/TextWrapper/TextWrapper';
+import Text from '@/components/Text/Text';
 import { ProjectsList } from '@/components/ProjectsList/ProjectsList';
 
 export default function Designer() {
@@ -7,10 +7,10 @@ export default function Designer() {
   return (
     <main>
       <PageTitle marquee>Designer</PageTitle>
-      <p>
-        <TextWrapper>
-          Fusce semper semper felis eget mattis. In sed lectus eu purus elementum vulputate eget sed mauris. Aenean dapibus luctus aliquam. Nunc rutrum lobortis dui sed tempus. Praesent porta quam vitae massa elementum, sit amet malesuada mi rutrum. Donec at posuere nisl. Curabitur diam augue, ornare sit amet erat vitae, suscipit faucibus tortor. 
-        </TextWrapper>
+      <p style={{padding: 'calc(var(--pagePadding) * 2) 0', marginLeft: 'var(--pagePadding)'}}>
+        <Text>
+          For as long as I&lsquo;ve been able to use a computer (since <Text style="emphasis">the 90s</Text>!) I've been using them to design things. I started with graphic design all the way back in elementary school, and quickly picked up 3D modeling and animation soon thereafter. I now have a degree in 3D Digital Graphics from The Rochester Institute of Technology, and have held professional positions as a Motion Graphics Artist, Graphic Designer, and UI/UX Designer.
+        </Text>
       </p>
       <ProjectsList type="designer"/>
     </main>

@@ -28,7 +28,6 @@ $corner-size: calc(var(--pagePadding) / 2);
     height: $corner-size;
     background-color: var(--fgColor);
     mask-image: radial-gradient(circle #{$corner-size} at bottom left, transparent 0, transparent #{$corner-size}, black #{$corner-size});
-    mask-position: bottom left;
     mask-size: 100% 100%;
     mask-repeat: no-repeat;
   }
@@ -57,7 +56,7 @@ $marquee-padding: calc(var(--titleSize) * 0.2);
   top: var(--pagePadding);
   left: var(--pagePadding);
   right: var(--pagePadding);
-  padding-bottom: $corner-size;
+  padding-bottom: var(--pagePadding);
   border-radius: var(--pagePadding) var(--pagePadding) 0 0;
   font-size: var(--titleSize);
   color: var(--accentColor);
@@ -72,15 +71,15 @@ $marquee-padding: calc(var(--titleSize) * 0.2);
   align-items: flex-start;
   transform: translateY(-100%);
   background-color: var(--fgColor);
-  animation: slide-in 1s .5s cubic-bezier(0,.5,.5,1) forwards;
+  animation: slide-in 1s .5s cubic-bezier(0.3,0,.5,1) forwards;
 
   &:before,
   &:after {
     content: '';
     position: absolute;
     top: 100%;
-    width: $corner-size;
-    height: $corner-size;
+    width: var(--pagePadding);
+    height: var(--pagePadding);
     background-color: var(--fgColor);
     mask-size: 100% 100%;
     mask-repeat: no-repeat;
@@ -88,14 +87,12 @@ $marquee-padding: calc(var(--titleSize) * 0.2);
 
   &:before {
     left: 0;
-    mask-image: radial-gradient(circle #{$corner-size} at bottom right, transparent 0, transparent #{$corner-size}, black #{$corner-size});
-    mask-position: bottom right;
+    mask-image: radial-gradient(circle var(--pagePadding) at bottom right, transparent 0, transparent var(--pagePadding), black var(--pagePadding));
   }
 
   &:after {
     right: 0;
-    mask-image: radial-gradient(circle #{$corner-size} at bottom left, transparent 0, transparent #{$corner-size}, black #{$corner-size});
-    mask-position: bottom left;
+    mask-image: radial-gradient(circle var(--pagePadding) at bottom left, transparent 0, transparent var(--pagePadding), black var(--pagePadding));
   }
 
   h1 {
@@ -149,7 +146,7 @@ main:has(.marqueeTitle) {
     bottom: var(--pagePadding);
     left: unset;
     padding-bottom: 0;
-    padding-left: $corner-size;
+    padding-left: var(--pagePadding);
     border-radius: 0 var(--pagePadding) var(--pagePadding) 0;
     writing-mode: vertical-rl;
     text-orientation: mixed;
@@ -162,16 +159,14 @@ main:has(.marqueeTitle) {
       top: 0;
       right: 100%;
       left: unset;
-      mask-image: radial-gradient(circle #{$corner-size} at bottom left, transparent 0, transparent #{$corner-size}, black #{$corner-size});
-      mask-position: bottom left;
+      mask-image: radial-gradient(circle var(--pagePadding) at bottom left, transparent 0, transparent var(--pagePadding), black var(--pagePadding));
     }
 
     &:after {
       top: unset;
       bottom: 0;
       right: 100%;
-      mask-image: radial-gradient(circle #{$corner-size} at top left, transparent 0, transparent #{$corner-size}, black #{$corner-size});
-      mask-position: top left;
+      mask-image: radial-gradient(circle var(--pagePadding) at top left, transparent 0, transparent var(--pagePadding), black var(--pagePadding));
     }
   }
 

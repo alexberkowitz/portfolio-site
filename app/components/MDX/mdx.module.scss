@@ -66,12 +66,6 @@ $corner-size: var(--cornerRadius);
     font-size: 2rem;
     font-weight: 400;
   }
-
-  @media(min-width: $break-mobile) {
-    .marker {
-      
-    }
-  }
 }
 
 .h2 {
@@ -150,10 +144,10 @@ $corner-size: var(--cornerRadius);
 }
 
 .code {
-  background-color: var(--accentColor);
-  border-radius: .25rem;
   margin: -.125rem;
   padding: .125rem;
+  background-color: var(--accentColor);
+  border-radius: .25rem;
 
   --sh-class: #2d5e9d;
   --sh-identifier: #354150;

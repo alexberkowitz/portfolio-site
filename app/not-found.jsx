@@ -1,7 +1,7 @@
 'use client'
 
 import dynamic from 'next/dynamic';
-import TextWrapper from '@/components/TextWrapper/TextWrapper';
+import Text from '@/components/Text/Text';
 import Link from '@/components/Link/Link';
 
 const DynamicModelView = dynamic(() => import('@/components/ModelView/ModelView'), {
@@ -25,7 +25,7 @@ export default function NotFound() {
           />
       </div>
       <p style={{textWrap: 'balance'}}>
-        <TextWrapper>{"Looks like you've found yourself in a bit of a pickle! No worries; let's get you back on track."}</TextWrapper>
+        <Text>Looks like youI&lsquo;veve found yourself in a bit of a pickle! No worries; letI&lsquo;ves get you back on track.</Text>
       </p>
       <Link href="/" button>Take me back</Link>
     </main>

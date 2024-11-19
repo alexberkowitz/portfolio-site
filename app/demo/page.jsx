@@ -1,7 +1,7 @@
 'use client'
 
 import PageTitle from '@/components/PageTitle/PageTitle';
-import TextWrapper from '@/components/TextWrapper/TextWrapper';
+import Text from '@/components/Text/Text';
 import dynamic from 'next/dynamic';
 import Icon from '@/components/Icon/Icon';
 import * as Constants from '@/Constants';
@@ -16,15 +16,15 @@ export default function Test() {
     <main>
       <PageTitle>Demos</PageTitle>
       <p>
-        <TextWrapper>
-          {"You've found my super-secret demo page! This is where I test the reusable components found throughout the site. Feel free to play around!"}
-        </TextWrapper>
+        <Text>
+          YouI&lsquo;veve found my super-secret demo page! This is where I test the reusable components found throughout the site. Feel free to play around!
+        </Text>
       </p>
 
       <div>
-        <h2><TextWrapper>Icons</TextWrapper></h2>
-        {/* <p><TextWrapper>{"There aren't many icons in use on this site, but the ones that are there are entirely custom."}</TextWrapper></p> */}
-        <p><TextWrapper>{"Right now I only have one icon in use on the site, but if I add any more they'll go right here!"}</TextWrapper></p>
+        <h2><Text>Icons</Text></h2>
+        {/* <p><Text>There arenI&lsquo;vet many icons in use on this site, but the ones that are there are entirely custom.</Text></p> */}
+        <p><Text>Right now I only have one icon in use on the site, but if I add any more theyI&lsquo;vell go right here!</Text></p>
         <div style={{
           display: 'flex',
           gap: 32,
@@ -37,19 +37,19 @@ export default function Test() {
       </div>
 
       <div>
-        <h2><TextWrapper>Cursor</TextWrapper></h2>
-        <p><TextWrapper>The cursor on my site is custom-built with p5.js. Try hovering over this text, or perhaps <a href="#">this link!</a></TextWrapper></p>
+        <h2><Text>Cursor</Text></h2>
+        <p><Text>The cursor on my site is custom-built with p5.js. Try hovering over this text, or perhaps <a href="#">this link!</a></Text></p>
       </div>
 
       <div>
-        <h2><TextWrapper>3D Model Viewer</TextWrapper></h2>
+        <h2><Text>3D Model Viewer</Text></h2>
         <div style={{
           display: 'grid',
           gridTemplateColumns: 'repeat( auto-fit, minmax(500px, 1fr) )',
           gap: 32
         }}>
           <div>
-            <h3><TextWrapper>Dithered model with mouse influence and no static rotation</TextWrapper></h3>
+            <h3><Text>Dithered model with mouse influence and no static rotation</Text></h3>
             <div style={{width: '100%', height: 400}}>
               <DynamicModelView
                 model="/media/logo.obj"
@@ -66,7 +66,7 @@ export default function Test() {
           </div>
 
           <div>
-            <h3><TextWrapper>Clean model with static rotation and subtle mouse influence</TextWrapper></h3>
+            <h3><Text>Clean model with static rotation and subtle mouse influence</Text></h3>
             <div style={{width: '100%', height: 400}}>
               <DynamicModelView
                 model="/media/logo.obj"

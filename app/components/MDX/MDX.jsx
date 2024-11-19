@@ -3,7 +3,7 @@
 import React from 'react';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import Link from '@/components/Link/Link';
-import TextWrapper from '@/components/TextWrapper/TextWrapper';
+import Text from '@/components/Text/Text';
 import { highlight } from 'sugar-high';
 import CodeHeader from './CodeHeader';
 
@@ -26,9 +26,9 @@ function Heading(level) {
           React.createElement(
             `h${level + 1}`,
             { id: slug },
-            <TextWrapper>
+            <Text>
               {children}
-            </TextWrapper>
+            </Text>
           )
         }
       </div>
@@ -59,7 +59,7 @@ function P(props) {
   } else {
     return (
       <p>
-        <TextWrapper>{props.children}</TextWrapper>
+        <Text>{props.children}</Text>
       </p>
     )
   }
@@ -125,7 +125,7 @@ function OL(props) {
     <ol className={styles.ol}>
       {props.children.map((item, index) => item.type === 'li' ? (
         <li key={index}>
-          <TextWrapper>{item.props.children}</TextWrapper>
+          <Text>{item.props.children}</Text>
         </li>
       ) : '')}
     </ol>
@@ -138,7 +138,7 @@ function UL(props) {
     <ul className={styles.ul}>
       {props.children.map((item, index) => item.type === 'li' ? (
         <li key={index}>
-          <TextWrapper>{item.props.children}</TextWrapper>
+          <Text>{item.props.children}</Text>
         </li>
       ) : '')}
     </ul>

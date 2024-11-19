@@ -1,3 +1,7 @@
+/*-------------------------------------------------------*/
+/* TEXT WRAPPER
+/*-------------------------------------------------------*/
+
 // Give text a background color to improve legibility
 // against the grid background
 .textWrapper {
@@ -28,4 +32,22 @@ figure .textWrapper {
   margin: 0;
   padding: 0;
   background-color: transparent;
+}
+
+
+
+/*-------------------------------------------------------*/
+/* TEXT MODIFIERS
+/*-------------------------------------------------------*/
+
+.accent {
+  margin: -.125rem;
+  padding: .125rem;
+  background-color: var(--accentColor);
+  border-radius: .25rem;
+}
+
+.emphasis {
+  color: var(--fgColor);
+  font-style: italic;
 }
