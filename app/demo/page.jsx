@@ -51,7 +51,7 @@ export default function Test() {
           borderRadius: 'var(--cornerRadius)',
           color: 'var(--accentColor)'
         }}>
-          <p>Here's some text on a dark background. It also has <a href="#" >a link</a>.</p>
+          <p>Here&lsquo;s some text on a dark background. It also has <a href="#" >a link</a>.</p>
         </div>
       </div>
 
