@@ -55,7 +55,7 @@ body {
     background-size: var(--gridSize) var(--gridSize), var(--gridSize) var(--gridSize);
     background-position: top calc(var(--gridSize) / 2 - var(--borderWidth)) left calc(var(--gridSize) / 2 - var(--borderWidth));
     background-attachment: fixed;
-    z-index: 0;
+    z-index: -2;
   }
 
   // Page border

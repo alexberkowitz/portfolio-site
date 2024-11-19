@@ -23,6 +23,7 @@ const Cursor = () => {
   const showCursor = useRef(false);
   const transitionAmount = useRef(0); // 0-1 interpolation between prevCursor and cursor values
   const transitionDuration = .3; // Seconds
+  const canvasPadding = 5; // Pixels
 
   // Definitions for the different cursor types
   const cursorTypes = {
@@ -195,8 +196,8 @@ const Cursor = () => {
     new p5(p => {
       p.setup = () => {
         p.createCanvas(
-          pixelDim(cursorTypes.default.crosshairWidth),
-          pixelDim(cursorTypes.default.crosshairHeight),
+          pixelDim(cursorTypes.default.crosshairWidth + (canvasPadding * 2)),
+          pixelDim(cursorTypes.default.crosshairHeight + (canvasPadding * 2)),
           p.P2D
         ).parent(renderRef.current);
 
@@ -234,80 +235,111 @@ const Cursor = () => {
     const posX = roundToPixel(context.width / 2) - (Constants.pixelDensity / 2);
     const posY = roundToPixel(context.height / 2) - (Constants.pixelDensity / 2);
 
-    context.strokeCap(context.PROJECT);
-    context.strokeWeight(Constants.pixelDensity);
-    context.stroke(Constants.bodyColor);
     context.noFill();
+    context.strokeCap(context.PROJECT);
     context.rectMode(context.CENTER);
 
-    // Crosshair
-    const crosshairInnerSize = pixelDim(cursor.current.targetBoxSize + (2 * cursor.current.crosshairGap));
-    context.line( // Top line
-      posX,
-      posY - pixelDim(cursor.current.crosshairHeight / 2),
-      posX,
-      posY - (crosshairInnerSize / 2)
-    );
+    // Apply the shapes multiple time to ensure contrast against all backgrounds
+    [
+      {
+        weight: Constants.pixelDensity * 2,
+        color: [Constants.bgColor[0], Constants.bgColor[1], Constants.bgColor[2], 255 * .5]
+      },
+      {
+        weight: Constants.pixelDensity,
+        color: Constants.bodyColor
+      }
+    ].forEach((param) => {
+      context.strokeWeight(param.weight);
+      context.stroke(param.color);
 
-    context.line( // Bottom line
-      posX,
-      posY + pixelDim(cursor.current.crosshairHeight / 2),
-      posX,
-      posY + (crosshairInnerSize / 2)
-    );
+      //
+      // Crosshair
+      //
+      const crosshairInnerSize = pixelDim(cursor.current.targetBoxSize + (2 * cursor.current.crosshairGap));
+      const verticalLineOffset = cursor.current.beamWidth > 0 ? param.weight : 0; // Prevent overlaps on transparent strokes
 
-    context.line(  // Left line
-      posX - pixelDim(cursor.current.crosshairWidth / 2),
-      posY,
-      posX - (crosshairInnerSize / 2),
-      posY
-    );
+      if( cursor.current.crosshairHeight > 0 ){
+        context.line( // Top line
+          posX,
+          posY - pixelDim(cursor.current.crosshairHeight / 2) + verticalLineOffset,
+          posX,
+          posY - (crosshairInnerSize / 2) - verticalLineOffset/2
+        );
+    
+        context.line( // Bottom line
+          posX,
+          posY + pixelDim(cursor.current.crosshairHeight / 2) - verticalLineOffset,
+          posX,
+          posY + (crosshairInnerSize / 2) + verticalLineOffset/2
+        );
+      }
+  
+      if( cursor.current.crosshairWidth > 0 ){
+        context.line(  // Left line
+          posX - pixelDim(cursor.current.crosshairWidth / 2),
+          posY,
+          posX - (crosshairInnerSize / 2),
+          posY
+        );
+    
+        context.line(  // Right line
+          posX + pixelDim(cursor.current.crosshairWidth / 2),
+          posY,
+          posX + (crosshairInnerSize / 2),
+          posY
+        );
+      }
+  
+  
+      //
+      // Horizontal beams
+      //
+      if( cursor.current.beamWidth > 0 ){
+        context.line ( // Top beam
+          posX - pixelDim(cursor.current.beamWidth / 2),
+          posY - pixelDim(cursor.current.crosshairHeight / 2),
+          posX + pixelDim(cursor.current.beamWidth / 2),
+          posY - pixelDim(cursor.current.crosshairHeight / 2)
+        );
+    
+        context.line ( // Bottom beam
+          posX - pixelDim(cursor.current.beamWidth / 2),
+          posY + pixelDim(cursor.current.crosshairHeight / 2),
+          posX + pixelDim(cursor.current.beamWidth / 2),
+          posY + pixelDim(cursor.current.crosshairHeight / 2)
+        );
+      }
+  
+  
+      //
+      // Center Box
+      //
+      if( cursor.current.targetBoxSize > 0 ){
+        // Target Box
+        context.rect(
+          posX,
+          posY,
+          pixelDim(cursor.current.targetBoxSize),
+          pixelDim(cursor.current.targetBoxSize),
+          pixelDim(cursor.current.targetBoxCorner)
+        );
 
-    context.line(  // Right line
-      posX + pixelDim(cursor.current.crosshairWidth / 2),
-      posY,
-      posX + (crosshairInnerSize / 2),
-      posY
-    );
+        // Center Dot
+        context.push();
+        context.noStroke();
+        context.fill(param.color);
+        context.rect(
+          posX,
+          posY,
+          param.weight,
+          param.weight
+        );
+        context.pop();
+      }
+    });
 
 
-    // Horizontal beams
-    context.line ( // Top beam
-      posX - pixelDim(cursor.current.beamWidth / 2),
-      posY - pixelDim(cursor.current.crosshairHeight / 2),
-      posX + pixelDim(cursor.current.beamWidth / 2),
-      posY - pixelDim(cursor.current.crosshairHeight / 2)
-    );
-
-    context.line ( // Bottom beam
-      posX - pixelDim(cursor.current.beamWidth / 2),
-      posY + pixelDim(cursor.current.crosshairHeight / 2),
-      posX + pixelDim(cursor.current.beamWidth / 2),
-      posY + pixelDim(cursor.current.crosshairHeight / 2)
-    );
-
-
-    // Target Box
-    context.rect(
-      posX,
-      posY,
-      pixelDim(cursor.current.targetBoxSize),
-      pixelDim(cursor.current.targetBoxSize),
-      pixelDim(cursor.current.targetBoxCorner)
-    );
-
-
-    // Center Dot
-    context.push();
-    context.noStroke();
-    context.fill(Constants.bodyColor);
-    context.rect(
-      posX,
-      posY,
-      Constants.pixelDensity,
-      Constants.pixelDensity
-    );
-    context.pop();
   }
 
   
@@ -321,8 +353,8 @@ const Cursor = () => {
       className={styles.cursor}
       ref={renderRef}
       style={{
-        width: `${pixelDim(cursorTypes.default.crosshairWidth)}px`,
-        height: `${pixelDim(cursorTypes.default.crosshairHeight)}px`,
+        width: `${pixelDim(cursorTypes.default.crosshairWidth + (canvasPadding * 2))}px`,
+        height: `${pixelDim(cursorTypes.default.crosshairHeight + (canvasPadding * 2))}px`,
         '--xPos': `${cursorPos.x}px`,
         '--yPos': `${cursorPos.y}px`,
       }}

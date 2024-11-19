@@ -10,10 +10,12 @@ const DynamicModelView = dynamic(() => import('@/components/ModelView/ModelView'
   ssr: false,
 });
 
+import styles from './page.module.scss';
+
 export default function Test() {
 
   return (
-    <main>
+    <main className={styles.demoPage}>
       <PageTitle>Demos</PageTitle>
       <p>
         <Text>
@@ -21,7 +23,7 @@ export default function Test() {
         </Text>
       </p>
 
-      <div>
+      <div className={styles.demoSection}>
         <h2><Text>Icons</Text></h2>
         {/* <p><Text>There arenI&lsquo;vet many icons in use on this site, but the ones that are there are entirely custom.</Text></p> */}
         <p><Text>Right now I only have one icon in use on the site, but if I add any more theyI&lsquo;vell go right here!</Text></p>
@@ -36,12 +38,20 @@ export default function Test() {
         </div>
       </div>
 
-      <div>
+      <div className={styles.demoSection}>
         <h2><Text>Cursor</Text></h2>
-        <p><Text>The cursor on my site is custom-built with p5.js. Try hovering over this text, or perhaps <a href="#">this link!</a></Text></p>
+        <p><Text>The cursor on my site is custom-built with p5.js. Try hovering over this text, or perhaps <a href="#">this link</a>!</Text></p>
+        <div style={{
+          padding: '5rem',
+          backgroundColor: 'var(--bodyColor)',
+          borderRadius: 'var(--cornerRadius)',
+          color: 'var(--accentColor)'
+        }}>
+          <p>Here's some text on a dark background. It also has <a href="#" style={{color: 'inherit'}}>a link</a>.</p>
+        </div>
       </div>
 
-      <div>
+      <div className={styles.demoSection}>
         <h2><Text>3D Model Viewer</Text></h2>
         <div style={{
           display: 'grid',
