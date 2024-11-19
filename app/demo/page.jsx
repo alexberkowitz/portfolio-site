@@ -49,13 +49,13 @@ export default function Test() {
           gap: 32
         }}>
           <div>
-            <h3><TextWrapper>Dithered model with mouse influence</TextWrapper></h3>
+            <h3><TextWrapper>Dithered model with mouse influence and no static rotation</TextWrapper></h3>
             <div style={{width: '100%', height: 400}}>
               <DynamicModelView
                 model="/media/logo.obj"
                 rotationX={0}
-                rotationY={180}
-                rotationZ={180}
+                rotationY={0}
+                rotationZ={0}
                 rotationSpeed={0}
                 xInfluence={90}
                 yInfluence={90}
@@ -66,15 +66,15 @@ export default function Test() {
           </div>
 
           <div>
-            <h3><TextWrapper>Clean model with static rotation</TextWrapper></h3>
+            <h3><TextWrapper>Clean model with static rotation and subtle mouse influence</TextWrapper></h3>
             <div style={{width: '100%', height: 400}}>
               <DynamicModelView
                 model="/media/logo.obj"
                 rotationX={0}
-                rotationY={180}
-                rotationZ={180}
+                rotationY={0}
+                rotationZ={0}
                 rotationSpeed={30}
-                xInfluence={0}
+                xInfluence={10}
                 yInfluence={0}
                 scale={1}
                 dither={false}
@@ -84,9 +84,14 @@ export default function Test() {
         </div>
       </div>
 
-      <br/><br/><br/>
-      <p style={{textAlign: 'center'}}><TextWrapper>Some text with <a href="#">a link</a></TextWrapper></p>
-      <br/><br/><br/>
+      <div style={{
+        height: 'calc(100vh - (6 * var(--padding)))',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'
+        }}>
+        <p>This area is used to test the background effects. Try moving your cursor (or finger) around on the screen and clicking (or tapping).</p>
+      </div>
 
     </main>
   );

@@ -50,6 +50,7 @@ export const updateTransition = (amount, duration, active) => {
 // Based on Bayer Dithering by illus0r
 // https://editor.p5js.org/illus0r/sketches/YkkcqhLmY
 export const dither = (context, fgColor, bgColor, autoUpdate) => {
+  const valueFactor = 255 / 5;
   const normalizedWidth = Math.floor(context.width / Constants.pixelDensity);
   const m = [
     [3, 1],
@@ -61,7 +62,7 @@ export const dither = (context, fgColor, bgColor, autoUpdate) => {
   for (let i = 0; i < context.pixels.length; i += 4) {
     let x = (i / 4 | 0) % normalizedWidth;
     let y = (i / 4 / normalizedWidth | 0);
-    let thresh = m[x%2][y%2] * 51 + 51; // 255 divided into 5 steps
+    let thresh = m[x%2][y%2] * valueFactor + valueFactor; // 255 divided into 5 steps
     let pixel = (context.pixels[i] + context.pixels[i + 1] + context.pixels[i + 2]) / 3; // Pixel brightness as an average of the R,G,B values
 
     if( context.pixels[i + 3] === 0 ){ // Support transparency

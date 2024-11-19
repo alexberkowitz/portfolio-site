@@ -92,7 +92,7 @@ const Background = () => {
           const calculatedWidth = roundToPixel(window.innerWidth, 'floor');
           const calculatedHeight = roundToPixel(window.innerHeight, 'floor');
           canvasSize.current = {w: calculatedWidth, h: calculatedHeight};
-          console.log(calculatedWidth);
+
           p.resizeCanvas(calculatedWidth, calculatedHeight);
           gridBuffer.resizeCanvas(calculatedWidth, calculatedHeight);
           cursorBuffer.resizeCanvas(calculatedWidth, calculatedHeight);
@@ -164,23 +164,28 @@ const Background = () => {
       });
     }
 
-    if( cursorPoints.current.length >= 4 ){
+    if( cursorPoints.current.length > 0 ){
       context.strokeWeight(cursorLineWidth.current);
       context.strokeCap(context.ROUND);
 
       // Loop through the points array and draw a curve connecting them
-      cursorPoints.current.forEach((point, i) => {
-        if( point.age <= cursorPointMaxAge ){
+      let points = [...cursorPoints.current];
+      points.forEach((point, i) => {
+        if( point.age < cursorPointMaxAge ){
           // Draw a curve connecting each point to the previous three
           // (curve vertices require four coordinates: two points and two handles)
           if( i >= 4 ){
+
+            // Initial fade-in animation on page load
             const fadeIn = cursorPointMaxAge * 3; // In frames
             const delay = 10; // In frames
             if( p.frameCount - delay < fadeIn ){
               const strokeWeight = ease(Math.max(0, p.frameCount - delay) / fadeIn, 'new3') * cursorLineWidth.current;
               context.strokeWeight(strokeWeight);
             }
-            const value = 255 * (point.age / cursorPointMaxAge);
+
+            // Draw the lines
+            let value = 255 * (point.age / cursorPointMaxAge);
             context.stroke(value, value, value);
             context.beginShape();
             context.curveVertex(
@@ -202,13 +207,13 @@ const Background = () => {
             context.endShape();
           }
 
-        } else {
-          delete cursorPoints.current[i-3]; // Delete the circle when it gets too old
-        }
+          point.age += 1;
 
-        point.age += 1;
+        } else {
+          points.splice(i, 1); // Delete the point when it gets too old
+        }
       });
-      // context.endShape();
+      cursorPoints.current = [...points];
 
       // Apply blur
       context.filter(context.BLUR, cursorLineWidth.current / 5);

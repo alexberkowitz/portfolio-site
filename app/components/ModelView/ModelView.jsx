@@ -30,8 +30,8 @@ import styles from "./modelView.module.scss";
 const ModelView = (props) => {
   const renderRef = useRef();
   const [initialized, setInitialized] = useState(false);
+
   let removeFunction; // Storage for the p.remove() function so we can call it from useEffect
-  const ready = useRef(false);
 
   // 3D model viewer
   let viewportBuffer;
@@ -189,7 +189,7 @@ const ModelView = (props) => {
 
 
     // Lighting
-    context.ambientLight(32, 32, 32);
+    context.ambientLight(16, 16, 16);
     context.pointLight(
       200,
       200,
@@ -221,8 +221,6 @@ const ModelView = (props) => {
     buffers.forEach((buffer) => {
       buffer.resizeCanvas(p.width, p.height);
     });
-
-    ready.current = true;
   }
   
 
