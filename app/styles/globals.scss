@@ -20,7 +20,12 @@ body {
   padding: var(--gap);
   overflow-x: hidden;
   overflow-y: auto;
-  background-color: var(--bgColor);
+  background-color: var(--fgColor);
+  background-image: linear-gradient(var(--bgColor) calc(var(--grid-size) - var(--borderWidth)), transparent 1%),
+                    linear-gradient(90deg, var(--bgColor) calc(var(--grid-size) - var(--borderWidth)), transparent 1%);
+  background-size: var(--grid-size) var(--grid-size), var(--grid-size) var(--grid-size);
+  background-position: top calc(var(--grid-size) / 2 - var(--borderWidth)) left calc(var(--grid-size) / 2 - var(--borderWidth));
+  background-attachment: fixed;
   color: var(--bodyColor);
   font-family: var(--font-oxanium);
   --transitionDuration: 0.3s;
@@ -32,6 +37,7 @@ body {
   --accentColor: yellow;
   --borderWidth: 2px;
   --cornerRadius: .5rem;
+  --grid-size: calc(var(--borderWidth) * 8);
 
   // Page border
   &:after {

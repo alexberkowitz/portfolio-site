@@ -16,12 +16,12 @@ const Background = () => {
   const [initialized, setInitialized] = useState(false);
   let removeFunction; // Storage for the p.remove() function so we can call it from useEffect
 
+  // Interaction
+  const hasTouch = useRef(false);
+
   // Canvas sizing
   let canvasSize = useRef({w: roundToPixel(window.innerWidth, 'floor'), h: roundToPixel(window.innerHeight, 'floor'),});
   let resizeHandler;
-
-  // Grid setup
-  let gridBuffer;
   
   // Cursor trail setup
   let cursorBuffer;
@@ -44,6 +44,7 @@ const Background = () => {
       // Users with a mouse will see a cursor trail.
       // Users with a touchscreen will see a touch effect.
       if( !window.matchMedia('(pointer: fine)').matches ){
+        hasTouch.current = true;
         cursorDraw.current = false;
         document.addEventListener("touchstart", () => cursorDraw.current = true);
         document.addEventListener("touchend", () => cursorDraw.current = false);
@@ -83,7 +84,6 @@ const Background = () => {
         p.pixelDensity(1 / Constants.pixelDensity);
 
         // Graphics buffers
-        gridBuffer = p.createGraphics(p.width, p.height, p.P2D);
         cursorBuffer = p.createGraphics(p.width, p.height, p.P2D);
         explosionBuffer = p.createGraphics(p.width, p.height, p.P2D);
 
@@ -94,7 +94,6 @@ const Background = () => {
           canvasSize.current = {w: calculatedWidth, h: calculatedHeight};
 
           p.resizeCanvas(calculatedWidth, calculatedHeight);
-          gridBuffer.resizeCanvas(calculatedWidth, calculatedHeight);
           cursorBuffer.resizeCanvas(calculatedWidth, calculatedHeight);
           explosionBuffer.resizeCanvas(calculatedWidth, calculatedHeight);
           setCursorTrailLineWidth();
@@ -129,11 +128,7 @@ const Background = () => {
         p.image(explosionBuffer, 0, 0);
 
         // Apply dither effect
-        dither(p, Constants.fgColor, Constants.bgColor, true);
-
-        // Apply dot grid
-        drawDotGrid(gridBuffer);
-        p.image(gridBuffer, 0, 0);
+        dither(p, Constants.fgColor, [0,0,0,0], true);
       }
     });
   }
@@ -171,7 +166,7 @@ const Background = () => {
       // Loop through the points array and draw a curve connecting them
       let points = [...cursorPoints.current];
       points.forEach((point, i) => {
-        if( point.age < cursorPointMaxAge ){
+        if( points[i].age < cursorPointMaxAge ){
           // Draw a curve connecting each point to the previous three
           // (curve vertices require four coordinates: two points and two handles)
           if( i >= 4 ){
@@ -179,7 +174,7 @@ const Background = () => {
             // Initial fade-in animation on page load
             const fadeIn = cursorPointMaxAge * 3; // In frames
             const delay = 10; // In frames
-            if( p.frameCount - delay < fadeIn ){
+            if( !hasTouch.current && p.frameCount - delay < fadeIn ){
               const strokeWeight = ease(Math.max(0, p.frameCount - delay) / fadeIn, 'new3') * cursorLineWidth.current;
               context.strokeWeight(strokeWeight);
             }
@@ -189,16 +184,16 @@ const Background = () => {
             context.stroke(value, value, value);
             context.beginShape();
             context.curveVertex(
-              cursorPoints.current[i-3].x,
-              cursorPoints.current[i-3].y
+              points[i-3].x,
+              points[i-3].y
             );
             context.curveVertex(
-              cursorPoints.current[i-2].x,
-              cursorPoints.current[i-2].y
+              points[i-2].x,
+              points[i-2].y
             );
             context.curveVertex(
-              cursorPoints.current[i-1].x,
-              cursorPoints.current[i-1].y
+              points[i-1].x,
+              points[i-1].y
             );
             context.curveVertex(
               point.x,
@@ -235,7 +230,8 @@ const Background = () => {
       context.noFill();
       context.stroke(0, 0, 0, 255);
 
-      explosions.current.forEach((explosion, i) => {
+      let explosionList = [...explosions.current];
+      explosionList.forEach((explosion, i) => {
         if( explosion.age <= explosionDuration ){
           const explosionSize = context.lerp(
             explosionStartSize,
@@ -249,41 +245,18 @@ const Background = () => {
             explosion.y,
             explosionSize
           );
-          
-        } else {
-          delete explosions.current[i];
-        }
+ 
+          explosion.age += 1;
 
-        explosion.age += 1;
+        } else {
+          explosionList.splice(i, 1);
+        }
       });
+      explosions.current = [...explosionList]; // Delete the explosion when it gets too old
 
       // Apply blur
       context.filter(context.BLUR, explosionStartSize / 4);
     }
-  }
-
-
-
-  /*-------------------------------------------------------*/
-  /* DOT GRID
-  /*-------------------------------------------------------*/
-  const drawDotGrid = (context) => {
-    const normalizedWidth = Math.floor(context.width / Constants.pixelDensity);
-    const gridSpace = 8;
-    const rowLength = normalizedWidth * 4; // There are four entries for each pixel
-
-    context.loadPixels();
-
-    for( let y = rowLength * gridSpace / 2; y < context.pixels.length; y += rowLength * gridSpace ){
-      for (let x = y + (gridSpace * 2); x < y + rowLength; x+= 4 * gridSpace) {
-        context.pixels[x] = Constants.fgColor[0] // red;
-        context.pixels[x+1] = Constants.fgColor[1]; // green
-        context.pixels[x+2] = Constants.fgColor[2]; // blue;
-        context.pixels[x+3] = 255; // alpha
-      }
-    }
-
-    context.updatePixels();
   }
   
 
