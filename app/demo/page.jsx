@@ -85,7 +85,7 @@ export default function Test() {
       </div>
 
       <div style={{
-        height: 'calc(100vh - (6 * var(--padding)))',
+        height: 'calc(100vh - (6 * var(--gap)))',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center'

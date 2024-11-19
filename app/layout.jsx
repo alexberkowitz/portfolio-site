@@ -45,7 +45,6 @@ export default function RootLayout({ children }) {
       <ViewTransitions>
         <html lang="en">
           <body className={`${museoModerno.variable} ${oxanium.variable}`} style={{
-            '--transitionDuration': `${Constants.transitionDuration}s`,
             '--bgColor': `rgb(${Constants.bgColor[0]}, ${Constants.bgColor[1]}, ${Constants.bgColor[2]})`,
             '--fgColor': `rgb(${Constants.fgColor[0]}, ${Constants.fgColor[1]}, ${Constants.fgColor[2]})`,
             '--bodyColor': `rgb(${Constants.bodyColor[0]}, ${Constants.bodyColor[1]}, ${Constants.bodyColor[2]})`,

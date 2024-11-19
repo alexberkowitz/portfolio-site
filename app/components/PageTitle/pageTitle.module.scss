@@ -1,46 +1,192 @@
+@import '@/styles/variables.scss';
+
+$corner-size: calc(var(--pagePadding) / 2);
+
+/*-------------------------------------------------------*/
+/* STANDARD TITLE
+/*-------------------------------------------------------*/
 .pageTitle {
   position: fixed;
-  top: var(--gap);
-  left: var(--gap);
-  max-width: calc(100% - (var(--gap) * 2));
+  top: var(--pagePadding);
+  right: var(--pagePadding);
+  max-width: calc(100% - (var(--pagePadding) * 2));
   margin: 0;
-  padding: calc(var(--gap) / 2) calc(var(--gap) * 1.25) calc(var(--gap) / 2) var(--gap);
+  padding: calc(var(--pagePadding) / 2) calc(var(--pagePadding) * 1.25) calc(var(--pagePadding) / 2) var(--pagePadding);
   display: block;
   background: var(--fgColor);
-  border-radius: var(--gap) 0;
+  border-radius: 0 var(--pagePadding);
   color: var(--accentColor);
-  font-size: 2.5rem;
   z-index: 11;
 
-  $corner-size: calc(var(--gap) / 2);
   &:before,
   &:after {
     content: '';
     position: absolute;
     top: 0;
-    left: 100%;
+    right: 100%;
     width: $corner-size;
     height: $corner-size;
     background-color: var(--fgColor);
-    mask-image: radial-gradient(circle #{$corner-size} at bottom right, transparent 0, transparent #{$corner-size}, black #{$corner-size});
-    mask-position: bottom right;
+    mask-image: radial-gradient(circle #{$corner-size} at bottom left, transparent 0, transparent #{$corner-size}, black #{$corner-size});
+    mask-position: bottom left;
     mask-size: 100% 100%;
     mask-repeat: no-repeat;
   }
 
   &:after {
+    top: 100%;
+    right: 0;
+  }
+}
+
+// Page content gap
+main:has(.pageTitle) {
+  padding-top: calc( var(--titleSize) + (var(--pagePadding) * 2) );
+}
+
+
+
+/*-------------------------------------------------------*/
+/* MARQUEE TITLE
+/*-------------------------------------------------------*/
+
+$marquee-padding: calc(var(--titleSize) * 0.2);
+
+.marqueeTitle {
+  position: fixed;
+  top: var(--pagePadding);
+  left: var(--pagePadding);
+  right: var(--pagePadding);
+  padding-bottom: $corner-size;
+  border-radius: var(--pagePadding) var(--pagePadding) 0 0;
+  font-size: var(--titleSize);
+  color: var(--accentColor);
+  overflow: hidden;
+  --textWidth: 100; // In pixels
+  --animSpeed: 100; // In pixels per second
+}
+
+.marqueeWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  transform: translateY(-100%);
+  background-color: var(--fgColor);
+  animation: slide-in 1s .5s cubic-bezier(0,.5,.5,1) forwards;
+
+  &:before,
+  &:after {
     content: '';
     position: absolute;
     top: 100%;
-    left: 0;
     width: $corner-size;
     height: $corner-size;
+    background-color: var(--fgColor);
+    mask-size: 100% 100%;
+    mask-repeat: no-repeat;
   }
 
-  + .spacer {
-    margin-top: calc(var(--gap) * -.25);
-    font-size: 2.5rem;
-    opacity: 0;
-    pointer-events: none;
+  &:before {
+    left: 0;
+    mask-image: radial-gradient(circle #{$corner-size} at bottom right, transparent 0, transparent #{$corner-size}, black #{$corner-size});
+    mask-position: bottom right;
+  }
+
+  &:after {
+    right: 0;
+    mask-image: radial-gradient(circle #{$corner-size} at bottom left, transparent 0, transparent #{$corner-size}, black #{$corner-size});
+    mask-position: bottom left;
+  }
+
+  h1 {
+    padding-block-start: $marquee-padding;
+    padding-block-end: $marquee-padding;
+  }
+}
+
+.marqueeContent {
+  display: inline-flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: .5em;
+  animation: marquee-scroll calc( var(--textWidth) / var(--animSpeed) * 1s ) linear infinite;
+
+  h1 {
+    margin: 0;
+  }
+}
+
+.marqueeCopies {
+  width: 0;
+  flex-grow: 0;
+  display: flex;
+  flex-direction: row;
+  gap: inherit;
+}
+
+// Page content gap
+main:has(.marqueeTitle) {
+  padding-top: calc( var(--titleSize) + var(--pagePadding) + (#{$marquee-padding} * 2) );
+
+  @media( min-width: $break-tablet ){
+    padding-top: var(--pagePadding);
+    padding-right: calc( var(--titleSize) + var(--pagePadding) + (#{$marquee-padding} * 2) );
+  }
+}
+
+@keyframes marquee-scroll {
+  from { transform: translateX(0%) }
+  to   { transform: translateX(-100%) }
+}
+
+@keyframes slide-in {
+  from { transform: translateY(-100%) }
+  to   { transform: translateY(0%) }
+}
+
+@media( min-width: $break-tablet ){
+  .marqueeTitle {
+    bottom: var(--pagePadding);
+    left: unset;
+    padding-bottom: 0;
+    padding-left: $corner-size;
+    border-radius: 0 var(--pagePadding) var(--pagePadding) 0;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+  }
+
+  .marqueeWrapper {
+    transform: translateX(100%);
+
+    &:before {
+      top: 0;
+      right: 100%;
+      left: unset;
+      mask-image: radial-gradient(circle #{$corner-size} at bottom left, transparent 0, transparent #{$corner-size}, black #{$corner-size});
+      mask-position: bottom left;
+    }
+
+    &:after {
+      top: unset;
+      bottom: 0;
+      right: 100%;
+      mask-image: radial-gradient(circle #{$corner-size} at top left, transparent 0, transparent #{$corner-size}, black #{$corner-size});
+      mask-position: top left;
+    }
+  }
+
+  .marqueeCopies {
+    width: unset;
+    height: 0;
+  }
+
+  @keyframes marquee-scroll {
+    from { transform: translateY(0%) }
+    to   { transform: translateY(-100%) }
+  }
+
+  @keyframes slide-in {
+    from { transform: translateX(100%) }
+    to   { transform: translateX(0%) }
   }
 }

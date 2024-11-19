@@ -2,15 +2,15 @@
 
 .homePage {
   position: fixed;
-  top: var(--gap);
-  bottom: var(--gap);
-  left: var(--gap);
-  right: var(--gap);
+  top: var(--pagePadding);
+  bottom: var(--pagePadding);
+  left: var(--pagePadding);
+  right: var(--pagePadding);
   width: unset;
   display: flex;
   flex-direction: column;
-  gap: var(--gap);
-  padding: var(--padding);
+  gap: var(--pagePadding);
+  padding: var(--gap);
   
   a {
     padding: .5rem;
@@ -30,7 +30,7 @@
   .links {
     display: flex;
     flex-direction: column;
-    gap: var(--gap);
+    gap: var(--pagePadding);
     align-items: center;
     margin: auto 0;
     padding: 0;
@@ -39,10 +39,10 @@
 
   .modelView {
     position: fixed;
-    top: var(--gap);
-    bottom: var(--gap);
-    left: var(--gap);
-    right: var(--gap);
+    top: var(--pagePadding);
+    bottom: var(--pagePadding);
+    left: var(--pagePadding);
+    right: var(--pagePadding);
     z-index: -1;
   }
 
@@ -58,20 +58,20 @@
 
     .designer {
       position: absolute;
-      bottom: var(--gap);
-      left: var(--gap);
+      bottom: var(--pagePadding);
+      left: var(--pagePadding);
     }
 
     .developer {
       position: absolute;
-      bottom: var(--gap);
-      right: var(--gap);
+      bottom: var(--pagePadding);
+      right: var(--pagePadding);
     }
 
     .maker {
       position: absolute;
-      top: var(--gap);
-      right: var(--gap);
+      top: var(--pagePadding);
+      right: var(--pagePadding);
     }
   }
 }

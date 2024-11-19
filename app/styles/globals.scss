@@ -16,47 +16,62 @@ body {
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: var(--gap);
-  padding: var(--gap);
+  gap: var(--pagePadding);
+  padding: var(--pagePadding);
   overflow-x: hidden;
   overflow-y: auto;
   background-color: var(--fgColor);
-  background-image: linear-gradient(var(--bgColor) calc(var(--grid-size) - var(--borderWidth)), transparent 1%),
-                    linear-gradient(90deg, var(--bgColor) calc(var(--grid-size) - var(--borderWidth)), transparent 1%);
-  background-size: var(--grid-size) var(--grid-size), var(--grid-size) var(--grid-size);
-  background-position: top calc(var(--grid-size) / 2 - var(--borderWidth)) left calc(var(--grid-size) / 2 - var(--borderWidth));
-  background-attachment: fixed;
   color: var(--bodyColor);
   font-family: var(--font-oxanium);
-  --transitionDuration: 0.3s;
-  --gap: 2rem; // Dynamic
-  --padding: 2rem; // Static
+
+  // Colors
   --bgColor: white;
-  --fgColor: green;
-  --bodyColor: blue;
-  --accentColor: yellow;
-  --borderWidth: 2px;
-  --cornerRadius: .5rem;
-  --grid-size: calc(var(--borderWidth) * 8);
+  --fgColor: red;
+  --bodyColor: black;
+  --accentColor: white;
+
+  // Spacing
+  --gap: 2rem; // Static
+  --pagePadding: clamp(1rem, 3vw, 2rem); // Dynamic
+
+  // Sizing
+  --borderWidth: 2px; // Equal to 1 pixel of the dither effects
+  --cornerRadius: .5rem; // General-use corner radius value for consistency
+  --titleSize: clamp(2.5rem, 5vw, 4rem); // Size of primary titles
+
+  // Misc
+  --gridSize: calc(var(--borderWidth) * 8); // Size of the background grid cells
+
+  // Grid background
+  &:before {
+    content: '';
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-image: linear-gradient(var(--bgColor) calc(var(--gridSize) - var(--borderWidth)), transparent 1%),
+                    linear-gradient(90deg, var(--bgColor) calc(var(--gridSize) - var(--borderWidth)), transparent 1%);
+    background-size: var(--gridSize) var(--gridSize), var(--gridSize) var(--gridSize);
+    background-position: top calc(var(--gridSize) / 2 - var(--borderWidth)) left calc(var(--gridSize) / 2 - var(--borderWidth));
+    background-attachment: fixed;
+    z-index: 0;
+  }
 
   // Page border
   &:after {
     content: '';
     box-sizing: content-box;
     position: fixed;
-    top: calc(var(--gap) - var(--borderWidth));
-    bottom: calc(var(--gap) - var(--borderWidth));
-    left: calc(var(--gap) - var(--borderWidth));
-    right: calc(var(--gap) - var(--borderWidth));
+    top: calc(var(--pagePadding) - var(--borderWidth));
+    bottom: calc(var(--pagePadding) - var(--borderWidth));
+    left: calc(var(--pagePadding) - var(--borderWidth));
+    right: calc(var(--pagePadding) - var(--borderWidth));
     border: solid var(--borderWidth) var(--fgColor);
-    border-radius: calc(var(--gap) + var(--borderWidth));
-    outline: solid calc(var(--gap) * 2) var(--bgColor);
+    border-radius: calc(var(--pagePadding) + var(--borderWidth));
+    outline: solid calc(var(--pagePadding) * 2) var(--bgColor);
     pointer-events: none;
     z-index: 10;
-  }
-
-  @media( max-width: 640px ){
-    --gap: 1rem;
   }
 }
 
@@ -66,8 +81,8 @@ main {
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: var(--padding);
-  padding: var(--padding) var(--padding) calc(var(--padding) + 3rem) var(--padding);
+  gap: var(--gap);
+  padding: var(--pagePadding) var(--pagePadding) calc(var(--pagePadding) + 3rem) var(--pagePadding);
   view-transition-name: page-content;
 }
 

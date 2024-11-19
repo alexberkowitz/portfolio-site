@@ -6,7 +6,7 @@ export default function Designer() {
 
   return (
     <main>
-      <PageTitle>Designer</PageTitle>
+      <PageTitle marquee>Designer</PageTitle>
       <p>
         <TextWrapper>
           Fusce semper semper felis eget mattis. In sed lectus eu purus elementum vulputate eget sed mauris. Aenean dapibus luctus aliquam. Nunc rutrum lobortis dui sed tempus. Praesent porta quam vitae massa elementum, sit amet malesuada mi rutrum. Donec at posuere nisl. Curabitur diam augue, ornare sit amet erat vitae, suscipit faucibus tortor. 

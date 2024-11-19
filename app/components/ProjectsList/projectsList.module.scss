@@ -4,7 +4,7 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(200px, 100%), 1fr));
   grid-auto-rows: 1fr;
-  gap: var(--gap);
+  gap: var(--pagePadding);
   grid-auto-flow: row dense;
   margin: 0;
   padding: 0;
@@ -94,7 +94,7 @@
   bottom: .5rem;
   left: .5rem;
   max-width: calc(100% - 1rem);
-  padding: calc(var(--gap) / 4) calc(var(--gap) / 2);
+  padding: calc(var(--pagePadding) / 4) calc(var(--pagePadding) / 2);
   background-color: var(--accentColor);
   border-radius: calc(var(--cornerRadius) / 2);
   pointer-events: none;

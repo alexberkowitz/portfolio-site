@@ -6,14 +6,10 @@ h1 {
   margin-bottom: $offset-museo; // Accommodate the extra spacing around characters
   font-family: var(--font-museo-moderno);
   font-weight: 200;
-  font-size: 2rem;
+  font-size: var(--titleSize);
   line-height: 1;
   text-transform: uppercase;
   text-wrap: balance;
-
-  @media(min-width: $break-mobile) {
-    font-size: 4rem;
-  }
 }
 
 h2 {
