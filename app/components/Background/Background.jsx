@@ -27,7 +27,7 @@ const Background = () => {
   let cursorBuffer;
   let cursorPoints = useRef([]); // Cursor trail points
   const cursorLineWidth = useRef(200); // In px
-  const cursorDraw = useRef(true); // Whether or not to draw cursor trail
+  const cursorDraw = useRef(false); // Whether or not to draw cursor trail
   
   // Explosions setup
   let explosionBuffer;
@@ -55,6 +55,9 @@ const Background = () => {
           cursorDraw.current = false;
         });
         document.addEventListener("mouseenter", () => {
+          cursorDraw.current = true;
+        });
+        document.addEventListener("mousemove", () => {
           cursorDraw.current = true;
         });
       }

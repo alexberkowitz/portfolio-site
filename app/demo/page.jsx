@@ -21,6 +21,10 @@ export default function Test() {
         <Text>
           YouI&lsquo;veve found my super-secret demo page! This is where I test the reusable components found throughout the site. Feel free to play around!
         </Text>
+        <br/><br/>
+        <Text>
+          Btw, you can find the source code for this site <a href="https://github.com/alexberkowitz/portfolio-site" target="_blank">here</a>.
+        </Text>
       </p>
 
       <div className={styles.demoSection}>
@@ -47,7 +51,7 @@ export default function Test() {
           borderRadius: 'var(--cornerRadius)',
           color: 'var(--accentColor)'
         }}>
-          <p>Here's some text on a dark background. It also has <a href="#" style={{color: 'inherit'}}>a link</a>.</p>
+          <p>Here's some text on a dark background. It also has <a href="#" >a link</a>.</p>
         </div>
       </div>
 
@@ -100,7 +104,7 @@ export default function Test() {
         alignItems: 'center',
         justifyContent: 'center'
         }}>
-        <p>This area is used to test the background effects. Try moving your cursor (or finger) around on the screen and clicking (or tapping).</p>
+        <p>This big blank area helps me test the background effects. Try moving your cursor (or finger) around on the screen and clicking (or tapping).</p>
       </div>
 
     </main>

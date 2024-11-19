@@ -22,6 +22,7 @@ export function ProjectsList(props) {
           loop
           muted
           playsInline
+          disablePictureInPicture
           >
         <source src={source} type="video/mp4"></source>
       </video>

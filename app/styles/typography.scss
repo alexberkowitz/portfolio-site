@@ -24,11 +24,11 @@ p {
 }
 
 a {
-  color: var(--bodyColor);
+  color: inherit;
   
   &:hover,
   &:focus-visible {
-    color: white;
+    color: var(--fgColor);
   }
 }
 

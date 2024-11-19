@@ -1,5 +1,8 @@
 @import '@/styles/variables.scss';
 
+// How small the title gets on scroll
+$title-scroll-scale: 0.6;
+
 .projectPage {
   position: relative;
 }
@@ -34,11 +37,11 @@
 
     @container style(--animate: true) {
       .title h1 {
-        transform: scale(0.5);
+        transform: scale($title-scroll-scale);
         color: var(--fgColor);
 
         &:before {
-          border-radius: 0 calc(var(--cornerRadius) * 2) calc(var(--cornerRadius) * 2) 0;
+          border-radius: 0 calc(var(--cornerRadius) * #{1 / $title-scroll-scale}) calc(var(--cornerRadius) * #{1 / $title-scroll-scale}) 0;
           background-color: var(--accentColor);
         }
       }
@@ -76,7 +79,7 @@
       top: 0;
       bottom: 0;
       right: 0;
-      width: calc(100% + (var(--gap) * 2) + var(--pagePadding));
+      width: calc(100% + (var(--gap) * 2) + (var(--pagePadding) * #{1 / $title-scroll-scale}));
       border-radius: 0 var(--cornerRadius) var(--cornerRadius) 0;
       background-color: var(--bgColor);
       transition: inherit;
@@ -99,7 +102,7 @@
           top: 0;
           bottom: 0;
           right: calc(anchor(right) - var(--pagePadding));
-          width: calc(anchor-size(width) + (var(--gap) * 2) + var(--pagePadding));
+          width: calc(anchor-size(width) + (var(--gap) * 2) + (var(--pagePadding) * #{1 / $title-scroll-scale}));
         }
       }
     }

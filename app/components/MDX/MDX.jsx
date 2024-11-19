@@ -177,6 +177,7 @@ function Video(props) {
         loop
         muted
         playsInline
+        disablePictureInPicture
         >
         <source src={props.src} type="video/mp4"></source>
       </video>

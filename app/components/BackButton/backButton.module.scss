@@ -32,14 +32,14 @@
 
   span {
     width: calc(100% - .8rem);
-    height: var(--borderWidth);
+    height: 0;
     padding-left: .5rem;
     display: flex;
     justify-content: center;
     align-items: center;
-    border: solid calc(var(--borderWidth) / 2) var(--fgColor);
-    background-color: var(--fgColor);
-    color: var(--accentColor);
+    background-color: var(--accentColor);
+    border-radius: 0 .25rem .25rem 0;
+    color: var(--fgColor);
     text-transform: uppercase;
     white-space: nowrap;
     clip-path: polygon(0% 50%,
