@@ -1,6 +1,7 @@
 "use client";
 import { createContext, useContext, useState } from 'react';
 import { useRouter, usePathname } from "next/navigation";
+import * as Constants from '@/Constants';
 
 const GlobalContext = createContext();
 
@@ -15,12 +16,12 @@ export default function GlobalContextContainer(props) {
     setTransition(true);
     setTimeout(() => {
       setPrevRoute(pathname.startsWith('/projects') ? '/' : pathname);
-      router.push(route);
+      router.push(route, { scroll: false });
 
       setTimeout(() => {
         setTransition(false);
-      }, 500);
-    }, 500);
+      }, Constants.transitionDuration * 500);
+    }, Constants.transitionDuration * 500);
   }
 
   return (

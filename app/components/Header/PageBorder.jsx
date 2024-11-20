@@ -152,7 +152,6 @@ export default function WindowBorder(props) {
     // We add 10px so the stroke color only appears in the cutout
     const outerRect = `M -10,-10 L ${windowSize.width + 10},-10 L ${windowSize.width + 10},${windowSize.height + 10} L -10,${windowSize.height + 10} L -10,-10`;
     
-    console.log(roundedPath);
     setSvgPath(roundedPath.path + outerRect);
     document.body.style.setProperty('--pageTitleNominalDim', `${isMobile ? titleSize.width : titleSize.height}px`); // Set the associated CSS property on the body so page padding can be calculated
   }
