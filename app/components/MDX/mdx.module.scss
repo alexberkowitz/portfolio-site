@@ -4,9 +4,11 @@
   display: grid;
   grid-template-columns: 1fr minmax(0, 6rem) min(100%, 600px) minmax(0, 6rem) 1fr;
   gap: var(--gap) 0;
+  width: 100%;
   z-index: 1;
   
   > * {
+    max-width: 100%;
     grid-column: 3;
   }
 }
@@ -17,20 +19,20 @@
 /* DEFAULT ELEMENTS
 /*-------------------------------------------------------*/
 
-$corner-size: var(--cornerRadius);
 .h1 {
+  position: relative;
   grid-column: 1 / -1;
   display: grid;
   grid-template-columns: subgrid;
   margin-top: calc(var(--pagePadding) * 2);
 
   .marker {
-    position: relative;
     display: block;
-    grid-column: 1 / 2;
+    position: absolute;
+    top: 0;
+    right: calc(100% + 1rem);
     height: 100%;
-    width: calc(100% + var(--gap) - 1rem);
-    transform: translateX(calc(var(--gap) * -1));
+    width: calc(var(--gap) + var(--pageTitleNominalDim) - 2rem);
     border-radius: 0 var(--cornerRadius) var(--cornerRadius) 0;
     background-color: var(--fgColor);
 
@@ -40,8 +42,8 @@ $corner-size: var(--cornerRadius);
       position: absolute;
       left: 0;
       display: block;
-      width: $corner-size;
-      height: $corner-size;
+      width: var(--cornerRadius);
+      height: var(--cornerRadius);
       background-color: var(--fgColor);
       mask-size: 100% 100%;
       mask-repeat: no-repeat;
@@ -49,12 +51,12 @@ $corner-size: var(--cornerRadius);
 
     &:before {
       top: 100%;
-      mask-image: radial-gradient(circle #{$corner-size} at bottom 0 right 0, transparent 0, transparent #{$corner-size}, black #{$corner-size});
+      mask-image: radial-gradient(circle var(--cornerRadius) at bottom 0 right 0, transparent 0, transparent var(--cornerRadius), black var(--cornerRadius));
     }
     
     &:after {
       bottom: 100%;
-      mask-image: radial-gradient(circle #{$corner-size} at top 0 right 0, transparent 0, transparent #{$corner-size}, black #{$corner-size});
+      mask-image: radial-gradient(circle var(--cornerRadius) at top 0 right 0, transparent 0, transparent var(--cornerRadius), black var(--cornerRadius));
     }
   }
 
@@ -66,6 +68,17 @@ $corner-size: var(--cornerRadius);
     font-size: 2rem;
     font-weight: 400;
   }
+
+  @media( min-width: #{$break-mobile} ){
+    .marker {
+      position: relative;
+      grid-column: 1 / 2;
+      right: unset;
+      width: calc(100% + var(--gap) - 1rem);
+      transform: translateX(calc( var(--pagePadding) * -1));
+    }
+  }
+
 }
 
 .h2 {

@@ -57,10 +57,10 @@ $marquee-padding: calc(var(--titleSize) * 0.2);
   left: var(--pagePadding);
   right: var(--pagePadding);
   padding-bottom: var(--pagePadding);
-  border-radius: var(--pagePadding) var(--pagePadding) 0 0;
   font-size: var(--titleSize);
   color: var(--accentColor);
   overflow: hidden;
+  z-index: 11;
   --textWidth: 100; // In pixels
   --animSpeed: 100; // In pixels per second
 }
@@ -124,11 +124,6 @@ $marquee-padding: calc(var(--titleSize) * 0.2);
 // Page content gap
 main:has(.marqueeTitle) {
   padding-top: calc( var(--titleSize) + var(--pagePadding) + (#{$marquee-padding} * 2) );
-
-  @media( min-width: $break-tablet ){
-    padding-top: var(--pagePadding);
-    padding-right: calc( var(--titleSize) + var(--pagePadding) + (#{$marquee-padding} * 2) );
-  }
 }
 
 @keyframes marquee-scroll {
@@ -143,11 +138,11 @@ main:has(.marqueeTitle) {
 
 @media( min-width: $break-tablet ){
   .marqueeTitle {
+    top: var(--pagePadding);
     bottom: var(--pagePadding);
     left: unset;
     padding-bottom: 0;
     padding-left: var(--pagePadding);
-    border-radius: 0 var(--pagePadding) var(--pagePadding) 0;
     writing-mode: vertical-rl;
     text-orientation: mixed;
   }
@@ -183,5 +178,10 @@ main:has(.marqueeTitle) {
   @keyframes slide-in {
     from { transform: translateX(100%) }
     to   { transform: translateX(0%) }
+  }
+
+  main:has(.marqueeTitle) {
+    padding-top: var(--pagePadding);
+    padding-right: calc( var(--titleSize) + var(--pagePadding) + (#{$marquee-padding} * 2) );
   }
 }

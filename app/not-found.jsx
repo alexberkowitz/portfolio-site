@@ -25,7 +25,7 @@ export default function NotFound() {
           />
       </div>
       <p style={{textWrap: 'balance'}}>
-        <Text>Looks like youI&lsquo;veve found yourself in a bit of a pickle! No worries; letI&lsquo;ves get you back on track.</Text>
+        <Text>Looks like you&lsquo;ve found yourself in a bit of a pickle! No worries; let&lsquo;s get you back on track.</Text>
       </p>
       <Link href="/" button>Take me back</Link>
     </main>

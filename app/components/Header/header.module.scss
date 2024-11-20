@@ -1,0 +1,99 @@
+@import '@/styles/variables.scss';
+
+
+/*-------------------------------------------------------*/
+/* HEADER
+/*-------------------------------------------------------*/
+
+.header {
+  position: fixed;
+  top: calc(var(--pagePadding) - var(--borderWidth));
+  left: calc(var(--pagePadding) - var(--borderWidth));
+  z-index: 15;
+  isolation: isolate;
+}
+
+.title {
+  position: relative;
+  display: inline-block;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  overflow: hidden;
+  transition: all .3s ease;
+  z-index: 1;
+
+  a {
+    display: inline-block;
+    padding-inline-start: var(--gap);
+    padding-block-start: .5em;
+    padding-inline-end: 1em;
+    transform: translateX(-100%);
+    color: var(--fgColor);
+    text-decoration: none;
+    transition: transform .3s ease;
+
+    &:hover,
+    &:focus-visible {
+      color: var(--bodyColor);
+    }
+  }
+
+  h1 {
+    display: inline-block;
+    transform-origin: 50% 50%;
+    transform: rotate(180deg);
+    font-size: calc(var(--titleSize) / 2);
+    white-space: nowrap;
+  }
+  
+  &.show a {
+    transform: translateX(0%);
+  }
+
+  @media( min-width: #{$break-mobile} ){
+    writing-mode: initial;
+    text-orientation: initial;
+
+    a {
+      padding-block-start: 0;
+      padding-block-end: .5em;
+      transform: translateY(-100%);
+    }
+
+    h1 {
+      transform: none;
+    }
+
+    &.show a {
+      transform: translateY(0%);
+    }
+  }
+}
+
+
+
+/*-------------------------------------------------------*/
+/* PAGE BORDER
+/*-------------------------------------------------------*/
+
+.border {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100dvw;
+  height: 100dvh;
+  max-width: unset;
+  max-height: unset;
+  pointer-events: none;
+  z-index: 0;
+
+  path {
+    fill: var(--bgColor);
+    stroke: var(--fgColor);
+    stroke-width: var(--borderWidth);
+
+    &.animate {
+      transition: all 0.5s ease;
+    }
+  }
+}

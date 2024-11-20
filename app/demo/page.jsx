@@ -29,8 +29,8 @@ export default function Test() {
 
       <div className={styles.demoSection}>
         <h2><Text>Icons</Text></h2>
-        {/* <p><Text>There arenI&lsquo;vet many icons in use on this site, but the ones that are there are entirely custom.</Text></p> */}
-        <p><Text>Right now I only have one icon in use on the site, but if I add any more theyI&lsquo;vell go right here!</Text></p>
+        {/* <p><Text>There aren&lsquo;t many icons in use on this site, but the ones that are there are entirely custom.</Text></p> */}
+        <p><Text>Right now I only have one icon in use on the site, but if I add any more they&lsquo;ll go right here!</Text></p>
         <div style={{
           display: 'flex',
           gap: 32,

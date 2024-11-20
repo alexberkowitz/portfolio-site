@@ -29,6 +29,7 @@ html {
 
   // Misc
   --gridSize: calc(var(--borderWidth) * 8); // Size of the background grid cells
+  --pageTitleNominalDim: 2rem; // Height (desktop) or width (mobile) of the title container--set via JS
 }
 
 body {
@@ -54,6 +55,7 @@ body {
     bottom: 0;
     left: 0;
     right: 0;
+    background-color: var(--fgColor);
     background-image: linear-gradient(var(--bgColor) calc(var(--gridSize) - var(--borderWidth)), transparent 1%),
                     linear-gradient(90deg, var(--bgColor) calc(var(--gridSize) - var(--borderWidth)), transparent 1%);
     background-size: var(--gridSize) var(--gridSize), var(--gridSize) var(--gridSize);
@@ -62,20 +64,18 @@ body {
     z-index: 0;
   }
 
-  // Page border
+  // Device size flag that can be picked up by JS
   &:after {
-    content: '';
-    box-sizing: content-box;
+    content: 'mobile';
     position: fixed;
-    top: calc(var(--pagePadding) - var(--borderWidth));
-    bottom: calc(var(--pagePadding) - var(--borderWidth));
-    left: calc(var(--pagePadding) - var(--borderWidth));
-    right: calc(var(--pagePadding) - var(--borderWidth));
-    border: solid var(--borderWidth) var(--fgColor);
-    border-radius: calc(var(--pagePadding) + var(--borderWidth));
-    outline: solid calc(var(--pagePadding) * 2) var(--bgColor);
+    opacity: 0;
     pointer-events: none;
-    z-index: 10;
+  }
+
+  @media( min-width: #{$break-mobile} ) {
+    &:after {
+      content: 'desktop';
+    }
   }
 }
 
@@ -86,46 +86,14 @@ main {
   display: flex;
   flex-direction: column;
   gap: var(--gap);
-  padding: var(--pagePadding) var(--pagePadding) calc(var(--pagePadding) + 3rem) var(--pagePadding);
-  view-transition-name: page-content;
+  padding: var(--pagePadding) var(--pagePadding) var(--pagePadding) calc(var(--pagePadding) + var(--pageTitleNominalDim));
   z-index: 1;
 
-  @supports (anchor-name: --foo) {
-    anchor-name: --mainContent;
+  @media( min-width: #{$break-mobile} ){
+    padding: calc(var(--pagePadding) + var(--pageTitleNominalDim)) var(--pagePadding) calc(var(--pagePadding) + 3rem) var(--pagePadding);
   }
 }
 
-
-
-/*-------------------------------------------------------*/
-/* TRANSITIONS
-/*-------------------------------------------------------*/
-
-@keyframes fade-in {
-  from { opacity: 0; }
-}
-
-@keyframes fade-out {
-  to { opacity: 0; }
-}
-
-@keyframes slide-from-right {
-  from { transform: translateX(30px); }
-}
-
-@keyframes slide-to-left {
-  to { transform: translateX(-30px); }
-}
-
-::view-transition-old(page-content) {
-  animation: 90ms cubic-bezier(0.4, 0, 1, 1) both fade-out,
-    300ms cubic-bezier(0.4, 0, 0.2, 1) both slide-to-left;
-}
-
-::view-transition-new(page-content) {
-  animation: 210ms cubic-bezier(0, 0, 0.2, 1) 90ms both fade-in,
-    300ms cubic-bezier(0.4, 0, 0.2, 1) both slide-from-right;
-}
 
 
 /*-------------------------------------------------------*/

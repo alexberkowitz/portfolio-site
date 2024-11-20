@@ -1,23 +1,25 @@
 'use client'
 
 import { useGlobalContext } from '@/GlobalContext';
-import { useTransitionRouter } from 'next-view-transitions';
-import { usePathname } from "next/navigation";
+// import { useTransitionRouter } from 'next-view-transitions';
+// import { useRouter } from 'next/router';
+// import { usePathname } from "next/navigation";
 
 import styles from './link.module.scss';
 
 const Link = (props) => {
 
   const globalContext = useGlobalContext();
-  const router = useTransitionRouter();
-  const pathname = usePathname();
+  // const router = useRouter();
+  // const pathname = usePathname();
 
   const isExternal = !props.href.startsWith('/');
 
   const handleClick = (e) => {
     e.preventDefault();
-    globalContext.setPrevRoute(pathname.startsWith('/projects') ? '/' : pathname);
-    router.push(props.href);
+    globalContext.navigate(props.href);
+    // globalContext.setPrevRoute(pathname.startsWith('/projects') ? '/' : pathname);
+    // router.push(props.href);
   };
 
   return isExternal ? (
