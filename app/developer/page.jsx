@@ -1,11 +1,15 @@
-import PageTitle from '@/components/PageTitle/PageTitle';
 import Text from '@/components/Text/Text';
 import { ProjectsList } from '@/components/ProjectsList/ProjectsList';
+import dynamic from 'next/dynamic';
+
+const DynamicPageTitle = dynamic(() => import('@/components/PageTitle/PageTitle'), {
+  ssr: false,
+});
 
 export default function Developer() {
   return (
     <main>
-      <PageTitle marquee>Developer</PageTitle>
+      <DynamicPageTitle marquee>Developer</DynamicPageTitle>
       <p style={{padding: 'calc(var(--pagePadding) * 2) 0', marginLeft: 'var(--pagePadding)'}}>
         <Text>
           I&lsquo;ve been developing websites and apps for over a fifteen years. My passion is front-end development&mdash;I&lsquo;m one of the few developers who actually loves CSS&mdash;and I&lsquo;m well-versed in many common frameworks and libraries. Currently, I&lsquo;m working as a <Text style="accent">Senior Web UI Application Developer</Text> at <b>UScellular</b>.

@@ -1,12 +1,16 @@
-import PageTitle from '@/components/PageTitle/PageTitle';
 import Text from '@/components/Text/Text';
 import { ProjectsList } from '@/components/ProjectsList/ProjectsList';
+import dynamic from 'next/dynamic';
+
+const DynamicPageTitle = dynamic(() => import('@/components/PageTitle/PageTitle'), {
+  ssr: false,
+});
 
 export default function Designer() {
 
   return (
     <main>
-      <PageTitle marquee>Designer</PageTitle>
+      <DynamicPageTitle marquee>Designer</DynamicPageTitle>
       <p style={{padding: 'calc(var(--pagePadding) * 2) 0', marginLeft: 'var(--pagePadding)'}}>
         <Text>
           For as long as I&lsquo;ve been able to use a computer (since <Text style="emphasis">the 90s</Text>!) I&lsquo;ve been using them to design things. I started with graphic design all the way back in elementary school, and quickly picked up 3D modeling and animation soon thereafter. I now have a degree in 3D Digital Graphics from The Rochester Institute of Technology, and have held professional positions as a Motion Graphics Artist, Graphic Designer, and UI/UX Designer.
