@@ -1,12 +1,10 @@
 "use client"
 
-import { useGlobalContext } from '@/GlobalContext';
 import { useState, useEffect } from 'react'
 import { usePathname } from 'next/navigation';
 import { roundCorners } from 'svg-round-corners';
 
 export default function WindowBorder(props) {
-  const globalContext = useGlobalContext();
   const pathname = usePathname();
   const styles = props.styles;
   

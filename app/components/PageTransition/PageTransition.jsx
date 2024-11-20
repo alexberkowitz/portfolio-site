@@ -4,7 +4,7 @@ import { useGlobalContext } from '@/GlobalContext';
 
 import styles from './pageTransition.module.scss';
 
-const PageTransition = (props) => {
+const PageTransition = () => {
   const globalContext = useGlobalContext();
 
   return (
