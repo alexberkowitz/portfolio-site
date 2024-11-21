@@ -14,7 +14,7 @@ export function ProjectsList(props) {
     const videoTypes = ["mp4"];
 
     // Support videos and images
-    if( videoTypes.indexOf(source.split('.')[1]) >= 0 ){
+    if( videoTypes.indexOf(source?.split('.')[1]) >= 0 ){
       return (
         <video
           className={styles.cover}

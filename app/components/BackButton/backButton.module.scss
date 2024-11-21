@@ -11,7 +11,7 @@
   width: clamp(7rem, 20vw, 10rem);
   height: 3rem;
   background-image: linear-gradient(var(--fgColor), var(--fgColor));
-  background-size: calc(100% - 2rem) var(--borderWidth);
+  background-size: calc(100% - (2 * var(--borderWidth))) var(--borderWidth);
   background-position: center;
   background-repeat: no-repeat;
   color: var(--fgColor);
@@ -22,7 +22,7 @@
     content: '';
     position: absolute;
     top: 50%;
-    left: 1rem;
+    left: calc(var(--borderWidth) * 2);
     display: block;
     width: 1rem;
     height: 1rem;
@@ -33,7 +33,7 @@
   }
 
   span {
-    width: calc(100% - .8rem);
+    width: calc(100% + var(--borderWidth));
     height: 0;
     padding-left: .5rem;
     display: flex;

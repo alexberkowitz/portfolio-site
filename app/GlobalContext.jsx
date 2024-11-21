@@ -19,6 +19,7 @@ export default function GlobalContextContainer(props) {
       router.push(route, { scroll: false });
 
       setTimeout(() => {
+        window.scrollTo(0, 0);
         setTransition(false);
       }, Constants.transitionDuration * 500);
     }, Constants.transitionDuration * 500);

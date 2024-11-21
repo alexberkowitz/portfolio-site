@@ -41,13 +41,13 @@ $title-scroll-scale: 0.6;
         color: var(--fgColor);
 
         &:before {
-          border-radius: 0 calc(var(--cornerRadius) * #{1 / $title-scroll-scale}) calc(var(--cornerRadius) * #{1 / $title-scroll-scale}) 0;
+          border-radius: calc(var(--cornerRadius) * #{1 / $title-scroll-scale}) 0 0 calc(var(--cornerRadius) * #{1 / $title-scroll-scale});
           background-color: var(--accentColor);
         }
       }
 
       .details {
-        transform: translateX(calc(100% + var(--gap)));
+        transform: translateX(calc(-100% - var(--gap)));
       }
     }
   }
@@ -63,8 +63,8 @@ $title-scroll-scale: 0.6;
   h1 {
     position: relative;
     display: inline-block;
-    padding: calc(var(--pagePadding) / 2) calc(var(--pagePadding) / 2) calc(var(--pagePadding) / 2) 0;
-    transform-origin: 0% 0%;
+    padding: calc(var(--pagePadding) / 2) 0 calc(var(--pagePadding) / 2) calc(var(--pagePadding) / 2);
+    transform-origin: 100% 0%;
     transition: all .5s ease-in-out;
 
     span {
@@ -73,17 +73,24 @@ $title-scroll-scale: 0.6;
   }
 
   @media(min-width: $break-tablet) {
-    h1:before {
-      content: '';
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      right: 0;
-      width: calc(100% + (var(--gap) * 2) + (var(--pagePadding) * #{1 / $title-scroll-scale}));
-      border-radius: 0 var(--cornerRadius) var(--cornerRadius) 0;
-      background-color: var(--bgColor);
-      transition: inherit;
-      z-index: -1;
+    order: 2;
+
+    h1 {
+      float: right;
+      text-align: right;
+
+      &:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        width: calc(100% + (var(--gap) * 2) + (var(--pagePadding) * #{1 / $title-scroll-scale}));
+        border-radius: var(--cornerRadius) 0 0 var(--cornerRadius);
+        background-color: var(--bgColor);
+        transition: inherit;
+        z-index: -1;
+      }
     }
 
     @supports (anchor-name: --foo) { /* Shrink-wrap the background if supported */
@@ -101,7 +108,7 @@ $title-scroll-scale: 0.6;
           position: absolute;
           top: 0;
           bottom: 0;
-          right: calc(anchor(right) - var(--pagePadding));
+          left: calc(anchor(left) - var(--pagePadding));
           width: calc(anchor-size(width) + (var(--gap) * 2) + (var(--pagePadding) * #{1 / $title-scroll-scale}));
         }
       }
@@ -130,16 +137,17 @@ $title-scroll-scale: 0.6;
   }
 
   @media(min-width: $break-tablet) {
+    order: 1;
     max-width: 300px;
-    padding: calc(var(--pagePadding) / 2) 0 calc(var(--pagePadding) / 2) calc(var(--pagePadding) / 2);
-    border-radius: 0.25rem 0  0 0.25rem;
+    padding: calc(var(--pagePadding) / 2) calc(var(--pagePadding) / 2) calc(var(--pagePadding) / 2) 0;
+    border-radius: 0 0.25rem 0.25rem 0;
 
     &:after {
       content: '';
       position: absolute;
       top: 0;
       bottom: 0;
-      left: 100%;
+      right: 100%;
       width: calc(var(--pagePadding) * 2);
       background-color: inherit;
     }  

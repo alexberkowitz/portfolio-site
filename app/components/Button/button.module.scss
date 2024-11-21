@@ -1,9 +1,16 @@
 .button {
-  padding: 1rem;
+  padding: 1rem 2rem;
   border-radius: calc(var(--cornerRadius) / 2);
+  color: var(--fgColor);
+  background-color: var(--accentColor);
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 
   &:hover,
   &:focus-visible {
+    background-color: var(--fgColor);
+    color: var(--accentColor);
 
     svg {
       display: block;
@@ -14,5 +21,6 @@
 
   &.icon {
     padding: 0.5rem;
+    background-color: transparent;
   }
 }

@@ -4,6 +4,7 @@ import React from 'react';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import Link from '@/components/Link/Link';
 import Text from '@/components/Text/Text';
+import Button from '@/components/Button/Button';
 import { highlight } from 'sugar-high';
 import CodeHeader from './CodeHeader';
 
@@ -158,7 +159,7 @@ function Figure(props) {
 function Video(props) {
   if( props.youtube ){
     return (
-      <div className={styles.video} >
+      <div className={styles.video}>
         <iframe
           id="ytplayer"
           type="text/html"
@@ -173,6 +174,7 @@ function Video(props) {
   } else {
     return (
       <video
+        className={styles.video}
         autoPlay
         loop
         muted
@@ -194,7 +196,7 @@ function Video(props) {
 // Columns
 function Columns(props) {
   return (
-    <div className={styles.columns}>
+    <div className={`${styles.columns} ${props.nowrap ? styles.nowrap : ''}`}>
       {props.children}
     </div>
   )
@@ -218,6 +220,15 @@ function Center(props) {
   )
 }
 
+// Small element
+function Small(props) {
+  return (
+    <div className={styles.small}>
+      {props.children}
+    </div>
+  )
+}
+
 // Wide element
 function Wide(props) {
   return (
@@ -231,6 +242,15 @@ function Wide(props) {
 function Full(props) {
   return (
     <div className={styles.full}>
+      {props.children}
+    </div>
+  )
+}
+
+// Device container
+function Device(props) {
+  return (
+    <div className={styles.device}>
       {props.children}
     </div>
   )
@@ -254,12 +274,15 @@ const components = {
   ol: OL,
   ul: UL,
   Figure,
+  Video,
+  Button,
   Columns,
   Grid,
   Center,
+  Small,
   Wide,
   Full,
-  Video
+  Device
 }
 
 export async function CustomMDX(props) {

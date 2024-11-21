@@ -2,7 +2,7 @@
 
 import dynamic from 'next/dynamic';
 import Text from '@/components/Text/Text';
-import Link from '@/components/Link/Link';
+import Button from '@/components/Button/Button';
 
 const DynamicModelView = dynamic(() => import('@/components/ModelView/ModelView'), {
   ssr: false,
@@ -27,7 +27,7 @@ export default function NotFound() {
       <p style={{textWrap: 'balance'}}>
         <Text>Looks like you&lsquo;ve found yourself in a bit of a pickle! No worries; let&lsquo;s get you back on track.</Text>
       </p>
-      <Link href="/" button>Take me back</Link>
+      <Button href="/">Take me back</Button>
     </main>
   );
 }

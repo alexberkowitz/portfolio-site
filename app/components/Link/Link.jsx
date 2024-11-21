@@ -2,8 +2,6 @@
 
 import { useGlobalContext } from '@/GlobalContext';
 
-import styles from './link.module.scss';
-
 const Link = (props) => {
   const globalContext = useGlobalContext();
 
@@ -18,7 +16,7 @@ const Link = (props) => {
     <a
       {...props}
       href={props.href}
-      className={`${props.button ? styles.button : ''} ${props.className || ''}`}
+      className={props.className || ''}
       target="_blank"
       rel="noopener noreferrer"
       >
@@ -28,7 +26,7 @@ const Link = (props) => {
     <a
       {...props}
       onClick={handleClick}
-      className={`${props.button ? styles.button : ''} ${props.className || ''}`}
+      className={props.className || ''}
       >
       {props.children}
     </a>
