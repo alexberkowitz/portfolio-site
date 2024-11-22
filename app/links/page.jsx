@@ -1,4 +1,5 @@
 import Button from '@/components/Button/Button';
+import dynamic from 'next/dynamic';
 
 const DynamicPageTitle = dynamic(() => import('@/components/PageTitle/PageTitle'), {
   ssr: false,
