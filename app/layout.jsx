@@ -1,18 +1,11 @@
 import { MuseoModerno, Oxanium } from "next/font/google";
 import GlobalContextContainer from './GlobalContext';
-import dynamic from 'next/dynamic';
 import Header from '@/components/Header/Header';
+import DynamicBackground from '@/components/Background/DynamicBackground';
+import DynamicCursor from '@/components/Cursor/DynamicCursor';
 import BackButton from '@/components/BackButton/BackButton';
 import PageTransition from '@/components/PageTransition/PageTransition';
 import * as Constants from '@/Constants';
- 
-// These need to be imported dynamically because p5.js relies on the window object
-const DynamicBackground = dynamic(() => import('@/components/Background/Background'), {
-  ssr: false,
-});
-const DynamicCursor = dynamic(() => import('@/components/Cursor/Cursor'), {
-  ssr: false,
-});
 
 import "./styles/globals.scss";
 

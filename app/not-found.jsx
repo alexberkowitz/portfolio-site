@@ -1,18 +1,14 @@
 'use client'
 
-import dynamic from 'next/dynamic';
 import Text from '@/components/Text/Text';
 import Button from '@/components/Button/Button';
-
-const DynamicModelView = dynamic(() => import('@/components/ModelView/ModelView'), {
-  ssr: false,
-});
+import DynamicModelViewer from '@/components/ModelViewer/DynamicModelViewer';
 
 export default function NotFound() {
   return (
     <main style={{flexGrow: 1, width: '100%', height: '100%', textAlign: 'center', alignItems: 'center', justifyContent: 'center'}}>
       <div style={{height: 300, width: '100%'}}>
-        <DynamicModelView
+        <DynamicModelViewer
           text="ERROR 404"
           rotationX={0}
           rotationY={0}

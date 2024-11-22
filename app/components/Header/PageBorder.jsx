@@ -105,11 +105,11 @@ export default function WindowBorder(props) {
       ],
       [ // Title bottom left
         0 - posOffset,
-        isMobile ? titleSize.height + titleSize.width + posOffset : titleSize.height + posOffset
+        isMobile ? titleSize.height + titleSize.width - posOffset : titleSize.height - posOffset
       ],
       [ // Title bottom right
         titleSize.width - posOffset,
-        titleSize.height + posOffset
+        titleSize.height - posOffset
       ],
       [ // Title top right
         isMobile ? titleSize.width - posOffset : titleSize.width + titleSize.height - posOffset,
@@ -129,7 +129,7 @@ export default function WindowBorder(props) {
     if (!props.showTitle && !isMobile) {
       points.splice(3, 0, [
         titleSize.width - padding.top - posOffset,
-        titleSize.height
+        titleSize.height - posOffset
       ]);
     }
     

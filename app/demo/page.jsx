@@ -2,12 +2,8 @@
 
 import PageTitle from '@/components/PageTitle/PageTitle';
 import Text from '@/components/Text/Text';
-import dynamic from 'next/dynamic';
 import Icon, { icons } from '@/components/Icon/Icon';
-
-const DynamicModelView = dynamic(() => import('@/components/ModelView/ModelView'), {
-  ssr: false,
-});
+import DynamicModelViewer from '@/components/ModelViewer/DynamicModelViewer';
 
 import styles from './page.module.scss';
 
@@ -66,7 +62,7 @@ export default function Test() {
           <div>
             <h3><Text>Dithered model with mouse influence and no static rotation</Text></h3>
             <div style={{width: '100%', height: 400}}>
-              <DynamicModelView
+              <DynamicModelViewer
                 model="/media/logo.obj"
                 rotationX={0}
                 rotationY={0}
@@ -83,7 +79,7 @@ export default function Test() {
           <div>
             <h3><Text>Clean model with static rotation and subtle mouse influence</Text></h3>
             <div style={{width: '100%', height: 400}}>
-              <DynamicModelView
+              <DynamicModelViewer
                 model="/media/logo.obj"
                 rotationX={0}
                 rotationY={0}

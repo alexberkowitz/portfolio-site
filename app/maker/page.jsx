@@ -1,10 +1,6 @@
 import Text from '@/components/Text/Text';
 import { ProjectsList } from '@/components/ProjectsList/ProjectsList';
-import dynamic from 'next/dynamic';
-
-const DynamicPageTitle = dynamic(() => import('@/components/PageTitle/PageTitle'), {
-  ssr: false,
-});
+import DynamicPageTitle from '@/components/PageTitle/DynamicPageTitle';
 
 export default function Maker() {
   return (

@@ -3,13 +3,9 @@
 import Link from '@/components/Link/Link';
 import Toast from '@/components/Toast/Toast';
 import DemoButton from '@/components/DemoButton/DemoButton';
-import dynamic from 'next/dynamic';
+import DynamicModelViewer from '@/components/ModelViewer/DynamicModelViewer';
 
 import styles from './page.module.scss';
-
-const DynamicModelView = dynamic(() => import('@/components/ModelView/ModelView'), {
-  ssr: false,
-});
 
 export default function Home() {
   return (
@@ -42,7 +38,7 @@ export default function Home() {
         </ul>
 
         <div className={styles.modelView}>
-          <DynamicModelView
+          <DynamicModelViewer
             model="/media/logo.obj"
             rotationX={0}
             rotationY={180}

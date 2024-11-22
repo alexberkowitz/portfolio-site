@@ -27,7 +27,7 @@ import * as Constants from '@/Constants';
 
 import styles from "./modelView.module.scss";
 
-const ModelView = (props) => {
+const ModelViewer = (props) => {
   const renderRef = useRef();
   const [initialized, setInitialized] = useState(false);
 
@@ -233,4 +233,4 @@ const ModelView = (props) => {
   );
 }
 
-export default ModelView;
+export default ModelViewer;
