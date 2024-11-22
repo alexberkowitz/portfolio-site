@@ -1,7 +1,7 @@
 export default function manifest() {
   return {
     name: 'Alex Berkowitz',
-    short_name: 'Berkowitz',
+    short_name: 'Alex Berkowitz',
     description: 'Designer, Developer, Maker',
     start_url: '/',
     display: 'standalone',
