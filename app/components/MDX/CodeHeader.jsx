@@ -1,3 +1,10 @@
+/*-------------------------------------------------------*/
+/* CODE HEADER
+/*-------------------------------------------------------*/
+/* Header for <pre> elements that shows language
+/* and a copy button
+/*-------------------------------------------------------*/
+
 'use client'
 
 import { useState } from 'react';

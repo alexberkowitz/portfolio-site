@@ -3,7 +3,7 @@
 import PageTitle from '@/components/PageTitle/PageTitle';
 import Text from '@/components/Text/Text';
 import dynamic from 'next/dynamic';
-import Icon from '@/components/Icon/Icon';
+import Icon, { icons } from '@/components/Icon/Icon';
 import * as Constants from '@/Constants';
 
 const DynamicModelView = dynamic(() => import('@/components/ModelView/ModelView'), {
@@ -29,24 +29,26 @@ export default function Test() {
 
       <div className={styles.demoSection}>
         <h2><Text>Icons</Text></h2>
-        {/* <p><Text>There aren&lsquo;t many icons in use on this site, but the ones that are there are entirely custom.</Text></p> */}
-        <p><Text>Right now I only have one icon in use on the site, but if I add any more they&lsquo;ll go right here!</Text></p>
+        <p><Text>There aren&lsquo;t many icons in use on this site, but the ones that are present are entirely custom.</Text></p>
         <div style={{
+          alignSelf: 'flex-start',
           display: 'flex',
-          gap: 32,
-          padding: 16,
-          backgroundColor: `rgba(${Constants.accentColor[0]},${Constants.accentColor[1]},${Constants.accentColor[2]},${Constants.accentColor[3]})`,
-          borderRadius: 8
-        }}>
-          <Icon type="copy"/>
+          gap: '2rem',
+          padding: '2rem',
+          backgroundColor: 'var(--accentColor)',
+          borderRadius: 'var(--cornerRadius)'
+          }}>
+          {Object.keys(icons).map((key, index) => (
+            <Icon key={index} type={key}/>
+          ))}
         </div>
       </div>
 
       <div className={styles.demoSection}>
         <h2><Text>Cursor</Text></h2>
-        <p><Text>The cursor on my site is custom-built with p5.js. Try hovering over this text, or perhaps <a href="#">this link</a>!</Text></p>
+        <p><Text>The cursor on my site is custom-built with p5.js.<br/>Try hovering over this text, or perhaps <a href="#">this link</a>!</Text></p>
         <div style={{
-          padding: '5rem',
+          padding: '2rem',
           backgroundColor: 'var(--bodyColor)',
           borderRadius: 'var(--cornerRadius)',
           color: 'var(--accentColor)'

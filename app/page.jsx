@@ -1,6 +1,7 @@
 'use client'
 
 import Link from '@/components/Link/Link';
+import Toast from '@/components/Toast/Toast';
 import DemoButton from '@/components/DemoButton/DemoButton';
 import dynamic from 'next/dynamic';
 
@@ -54,6 +55,7 @@ export default function Home() {
             />
         </div>
       </main>
+      <Toast id="resume"><small>Want to cut to the chase? Check out my <Link href="/resume">digital résumé</Link>.</small></Toast>
       <DemoButton />
     </>
   );

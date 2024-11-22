@@ -1,4 +1,6 @@
 .button {
+  display: block;
+  flex-shrink: 0;
   padding: 1rem 2rem;
   border-radius: calc(var(--cornerRadius) / 2);
   color: var(--fgColor);
@@ -15,7 +17,7 @@
     svg {
       display: block;
       --primaryColor: var(--fgColor);
-      --secondaryColor: var(--fgColor);
+      --secondaryColor: var(--bodyColor);
     }
   }
 

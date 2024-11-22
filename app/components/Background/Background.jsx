@@ -1,3 +1,10 @@
+/*-------------------------------------------------------*/
+/* BACKGROUND
+/*-------------------------------------------------------*/
+/* Fancy page background with mouse/touch effects
+/* powered by p5.js
+/*-------------------------------------------------------*/
+
 'use client'
 
 import { useEffect, useState, useRef } from "react";

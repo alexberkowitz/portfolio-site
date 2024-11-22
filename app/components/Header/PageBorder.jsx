@@ -1,8 +1,16 @@
+/*-------------------------------------------------------*/
+/* PAGE BORDER
+/*-------------------------------------------------------*/
+/* Fancy SVG-based page border that animates
+/* to hide/show the site title
+/*-------------------------------------------------------*/
+
 "use client"
 
 import { useState, useEffect } from 'react'
 import { usePathname } from 'next/navigation';
 import { roundCorners } from 'svg-round-corners';
+import * as Constants from '@/Constants';
 
 export default function WindowBorder(props) {
   const pathname = usePathname();
@@ -73,6 +81,10 @@ export default function WindowBorder(props) {
       width: titleBounds?.width,
       height: props.showTitle ? titleBounds?.height : 0
     };
+
+    // SVGs draw their lines on center, so we need to offset by half of the border width
+    // in order to ensure the border lines up properly with other elements
+    const posOffset = Constants.pixelDensity / 2;
     
     
     // Set the SVG viewbox
@@ -85,52 +97,40 @@ export default function WindowBorder(props) {
     let points = [
       [ // Starting in the middle of the bottom helps ensure the corners round properly
         shapeSize.width / 2,
-        shapeSize.height
+        shapeSize.height + posOffset
       ],
       [ // Bottom left
-        0,
-        shapeSize.height
+        0 - posOffset,
+        shapeSize.height + posOffset
       ],
       [ // Title bottom left
-        0,
-        isMobile ? titleSize.height + titleSize.width : titleSize.height
+        0 - posOffset,
+        isMobile ? titleSize.height + titleSize.width + posOffset : titleSize.height + posOffset
       ],
       [ // Title bottom right
-        titleSize.width,
-        titleSize.height
+        titleSize.width - posOffset,
+        titleSize.height + posOffset
       ],
       [ // Title top right
-        isMobile ? titleSize.width : titleSize.width + titleSize.height,
-        0
+        isMobile ? titleSize.width - posOffset : titleSize.width + titleSize.height - posOffset,
+        0 - posOffset
       ],
       [ // Top right
-        shapeSize.width,
-        0
+        shapeSize.width + posOffset,
+        0 - posOffset
       ],
       [ // Bottom right
-        shapeSize.width,
-        shapeSize.height
+        shapeSize.width + posOffset,
+        shapeSize.height + posOffset
       ]
     ];
 
-    // Add points to the path if the title is hidden to ensure the animations work
-    if (!props.showTitle) {
-      if( isMobile ){
-        points.splice(2, 0, [
-          0,
-          titleSize.height + (titleSize.width / 2)
-        ]);
-        points.splice(5, 0, [
-          titleSize.width,
-          titleSize.height - padding.top
-        ]);
-
-      } else {
-        points.splice(3, 0, [
-          titleSize.width - padding.top,
-          titleSize.height
-        ]);
-      }
+    // There must be a consistent number of points for the animation to work
+    if (!props.showTitle && !isMobile) {
+      points.splice(3, 0, [
+        titleSize.width - padding.top - posOffset,
+        titleSize.height
+      ]);
     }
     
     // Add each point to the path string

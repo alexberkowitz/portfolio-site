@@ -1,6 +1,13 @@
+/*-------------------------------------------------------*/
+/* PAGE TITLE
+/*-------------------------------------------------------*/
+/* Can display as a sticky title or a marquee
+/*-------------------------------------------------------*/
+
 'use client'
 
 import { useRef, useState, useEffect } from 'react';
+import { showSiteTitle } from '@/components/Header/Header';
 
 import styles from './pageTitle.module.scss';
 
@@ -52,7 +59,7 @@ const PageTitle = (props) => {
     let numberOfCopies = marqueeSize / textSize + 1;
 
     return (
-      <div className={styles.marqueeTitle}>
+      <div className={styles.marqueeTitle} data-site-title-shown={showSiteTitle()}>
         <div
           className={styles.marqueeWrapper}
           ref={marqueeRef}

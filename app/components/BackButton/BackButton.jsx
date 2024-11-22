@@ -1,3 +1,9 @@
+/*-------------------------------------------------------*/
+/* BACK BUTTON
+/*-------------------------------------------------------*/
+/* Global back button that appears on (almost) all pages
+/*-------------------------------------------------------*/
+
 'use client'
 
 import Link from '@/components/Link/Link';

@@ -61,6 +61,10 @@ $marquee-padding: calc(var(--titleSize) * 0.2);
   z-index: 11;
   --textWidth: 100; // In pixels
   --animSpeed: 100; // In pixels per second
+
+  &[data-site-title-shown="true"] {
+    left: calc(var(--pagePadding) + var(--pageTitleNominalDim));
+  }
 }
 
 .marqueeWrapper {

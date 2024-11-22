@@ -51,12 +51,12 @@
 
     &:before {
       top: 100%;
-      mask-image: radial-gradient(circle var(--cornerRadius) at bottom 0 right 0, transparent 0, transparent var(--cornerRadius), black var(--cornerRadius));
+      mask-image: radial-gradient(circle var(--cornerRadius) at bottom right, transparent 0, transparent var(--cornerRadius), black var(--cornerRadius));
     }
     
     &:after {
       bottom: 100%;
-      mask-image: radial-gradient(circle var(--cornerRadius) at top 0 right 0, transparent 0, transparent var(--cornerRadius), black var(--cornerRadius));
+      mask-image: radial-gradient(circle var(--cornerRadius) at top right, transparent 0, transparent var(--cornerRadius), black var(--cornerRadius));
     }
   }
 

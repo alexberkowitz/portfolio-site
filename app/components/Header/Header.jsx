@@ -1,3 +1,9 @@
+/*-------------------------------------------------------*/
+/* HEADER
+/*-------------------------------------------------------*/
+/* Site title and page border
+/*-------------------------------------------------------*/
+
 'use client'
 
 import { useRef } from 'react';
@@ -7,17 +13,19 @@ import PageBorder from './PageBorder';
 
 import styles from "./header.module.scss";
 
+export const showSiteTitle = () => {
+  const ignoredPages = ["/"]; // Pages on this list won't show the title
+  return ignoredPages.indexOf(usePathname()) === -1;
+}
+
 const Header = () => {
   const titleRef = useRef(null);
-  const ignoredPages = ["/"]; // Pages on this list won't show the title
-  
-  const showTitle = ignoredPages.indexOf(usePathname()) === -1;
   
   return (
     <div className={styles.header}>
       <div
         ref={titleRef}
-        className={`${styles.title} ${showTitle && styles.show}`}
+        className={`${styles.title} ${showSiteTitle() && styles.show}`}
         >
         <Link href="/" >
           <h1 id="header-title">
@@ -25,7 +33,7 @@ const Header = () => {
           </h1>
         </Link>
       </div>
-      <PageBorder styles={styles} titleRef={titleRef} showTitle={showTitle}/>
+      <PageBorder styles={styles} titleRef={titleRef} showTitle={showSiteTitle()}/>
     </div>
   );
 }
