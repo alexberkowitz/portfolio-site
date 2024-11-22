@@ -13,7 +13,7 @@ import PageBorder from './PageBorder';
 
 import styles from "./header.module.scss";
 
-export const showSiteTitle = () => {
+export const ShowSiteTitle = () => {
   const ignoredPages = ["/"]; // Pages on this list won't show the title
   return ignoredPages.indexOf(usePathname()) === -1;
 }
@@ -25,7 +25,7 @@ const Header = () => {
     <div className={styles.header}>
       <div
         ref={titleRef}
-        className={`${styles.title} ${showSiteTitle() && styles.show}`}
+        className={`${styles.title} ${ShowSiteTitle() && styles.show}`}
         >
         <Link href="/" >
           <h1 id="header-title">
@@ -33,7 +33,7 @@ const Header = () => {
           </h1>
         </Link>
       </div>
-      <PageBorder styles={styles} titleRef={titleRef} showTitle={showSiteTitle()}/>
+      <PageBorder styles={styles} titleRef={titleRef} showTitle={ShowSiteTitle()}/>
     </div>
   );
 }

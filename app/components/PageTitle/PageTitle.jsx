@@ -7,7 +7,7 @@
 'use client'
 
 import { useRef, useState, useEffect } from 'react';
-import { showSiteTitle } from '@/components/Header/Header';
+import { ShowSiteTitle } from '@/components/Header/Header';
 
 import styles from './pageTitle.module.scss';
 
@@ -59,7 +59,7 @@ const PageTitle = (props) => {
     let numberOfCopies = marqueeSize / textSize + 1;
 
     return (
-      <div className={styles.marqueeTitle} data-site-title-shown={showSiteTitle()}>
+      <div className={styles.marqueeTitle} data-site-title-shown={ShowSiteTitle()}>
         <div
           className={styles.marqueeWrapper}
           ref={marqueeRef}
