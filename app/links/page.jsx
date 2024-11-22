@@ -1,12 +1,15 @@
 import Button from '@/components/Button/Button';
-import PageTitle from '@/components/PageTitle/PageTitle';
+
+const DynamicPageTitle = dynamic(() => import('@/components/PageTitle/PageTitle'), {
+  ssr: false,
+});
 
 import styles from './page.module.scss';
 
 export default function Maker() {
   return (
     <main className={styles.linksPage}>
-      <PageTitle marquee>Links</PageTitle>
+      <DynamicPageTitle marquee>Links</DynamicPageTitle>
       <ul className={styles.links}>
         <li>
           <Button href="/">My Site</Button>
