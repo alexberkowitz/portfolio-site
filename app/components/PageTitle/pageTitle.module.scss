@@ -1,7 +1,5 @@
 @import '@/styles/variables.scss';
 
-$corner-size: calc(var(--pagePadding) / 2);
-
 /*-------------------------------------------------------*/
 /* STANDARD TITLE
 /*-------------------------------------------------------*/
@@ -14,7 +12,7 @@ $corner-size: calc(var(--pagePadding) / 2);
   padding: calc(var(--pagePadding) / 2) calc(var(--pagePadding) * 1.25) calc(var(--pagePadding) / 2) var(--pagePadding);
   display: block;
   background: var(--fgColor);
-  border-radius: 0 var(--pagePadding);
+  border-radius: 0 0 0 var(--pagePadding);
   color: var(--accentColor);
   z-index: 11;
 
@@ -24,10 +22,10 @@ $corner-size: calc(var(--pagePadding) / 2);
     position: absolute;
     top: 0;
     right: 100%;
-    width: $corner-size;
-    height: $corner-size;
+    width: var(--pagePadding);
+    height: var(--pagePadding);
     background-color: var(--fgColor);
-    mask-image: radial-gradient(circle #{$corner-size} at bottom left, transparent 0, transparent #{$corner-size}, black #{$corner-size});
+    mask-image: radial-gradient(circle var(--pagePadding) at bottom left, transparent 0, transparent var(--pagePadding), black var(--pagePadding));
     mask-size: 100% 100%;
     mask-repeat: no-repeat;
   }

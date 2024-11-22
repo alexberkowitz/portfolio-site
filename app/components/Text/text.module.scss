@@ -9,9 +9,10 @@
   box-decoration-break: clone;
   -webkit-box-decoration-break: clone;
   text-wrap: pretty;
-  padding: .25rem;
-  margin: -.25rem;
+  padding: .4rem;
+  margin: -.4rem;
   border-radius: calc(var(--cornerRadius) / 2);
+  line-height: 1.75;
 }
 
 // For some elements, we only enable pointer events on the wrapper

@@ -1,0 +1,230 @@
+@import '@/styles/variables.scss';
+
+/*-------------------------------------------------------*/
+/* LAYOUT
+/*-------------------------------------------------------*/
+$break: 1200px;
+
+.columns {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+  justify-content: center;
+  align-items: stretch;
+  width: min(max-content, 100%);
+  margin: 0 auto;
+
+  .column {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+
+    section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+  }
+
+  @media( min-width: #{$break} ){
+    flex-direction: row;
+
+    .column {
+      width: unset;
+      flex-grow: initial;
+
+      section {
+        align-items: flex-start;
+      }
+    }
+  }
+}
+
+
+
+/*-------------------------------------------------------*/
+/* SKILLS
+/*-------------------------------------------------------*/
+.skills {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: flex-start;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+
+  li {
+    flex: 1 0 auto;
+    padding: .5rem 1.25rem .45rem 1.25rem;
+    text-align: center;
+    background-color: var(--accentColor);
+    border-radius: 100px;
+
+    &.tool {
+      color: var(--fgColor);
+    }
+  }
+
+  @media( min-width: #{$break} ){
+    width: 450px;
+  }
+}
+
+.skillFilter {
+  align-self: stretch;
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  gap: .5rem;
+  padding: .5rem;
+  margin: 0 -.5rem;
+  background-color: var(--bgColor);
+  border-radius: var(--cornerRadius);
+
+  label {
+    display: block;
+    margin-bottom: .5rem;
+    white-space: nowrap;
+  }
+
+  .buttons {
+    flex-grow: 1;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+
+    button {
+      flex-grow: 1;
+      padding: .25rem 1rem;
+      border: solid var(--borderWidth) var(--accentColor);
+      z-index: 1;
+
+      &:first-child {
+        border-top-left-radius: 100px;
+        border-bottom-left-radius: 100px;
+      }
+
+      &:last-child {
+        border-top-right-radius: 100px;
+        border-bottom-right-radius: 100px;
+      }
+
+      &:not(:first-child) {
+        margin-left: calc(var(--borderWidth) * -1);
+      }
+
+      &:hover,
+      &:focus-visible {
+        background-color: var(--accentColor);
+        z-index: 2;
+      }
+
+      &.active {
+        color: var(--fgColor);
+        font-weight: 600;
+      }
+    }
+  }
+}
+
+
+
+/*-------------------------------------------------------*/
+/* EXPERIENCE
+/*-------------------------------------------------------*/
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+
+  li {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    padding-left: 3rem;
+
+    &:not(:last-child):before {
+      content: '';
+      display: block;
+      position: absolute;
+      top: 1.5rem;
+      bottom: -5rem;
+      left: calc(1.5rem - var(--borderWidth)/2);
+      width: var(--borderWidth);
+      background-color: var(--fgColor);
+      z-index: 3;
+    }
+
+    &:after {
+      content: '';
+      display: block;
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      width: 1rem;
+      height: 1rem;
+      background-color: var(--fgColor);
+      border-radius: 50%;
+      z-index: 3;
+    }
+
+    .title {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      margin-left: -3rem;
+      border-radius: 1.5rem;
+      z-index: 1;
+    }
+
+    .company {
+      display: flex;
+      align-items: center;
+      min-height: 3rem;
+      padding: .5rem 2rem .3rem 3rem;
+      border-radius: inherit;
+      background-color: var(--accentColor);
+      z-index: 2;
+    }
+
+    .date {
+      display: block;
+      padding: 3.5rem 1.5rem .5rem 1.5rem;
+      margin: -3rem 0 0 3rem;
+      border-radius: inherit;
+      background-color: var(--fgColor);
+      color: var(--accentColor);
+      font-size: .75rem;
+      font-weight: 400;
+      text-transform: uppercase;
+      z-index: 1;
+    }
+
+    .role {
+      font-weight: 600;
+    }
+
+    @media( min-width: #{$break-mobile} ){
+      .title {
+        flex-direction: row;
+        align-items: center;
+        gap: 1rem;
+        padding-right: 2rem;
+        background-color: var(--fgColor);
+      }
+
+      .date {
+        display: contents;
+      }
+    }
+  }
+}

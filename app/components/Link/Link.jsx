@@ -19,6 +19,7 @@ const Link = (props) => {
       className={props.className || ''}
       target="_blank"
       rel="noopener noreferrer"
+      tabIndex="0"
       >
       {props.children}
     </a>
@@ -27,6 +28,7 @@ const Link = (props) => {
       {...props}
       onClick={handleClick}
       className={props.className || ''}
+      tabIndex="0"
       >
       {props.children}
     </a>
