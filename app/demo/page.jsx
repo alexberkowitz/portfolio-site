@@ -4,7 +4,6 @@ import PageTitle from '@/components/PageTitle/PageTitle';
 import Text from '@/components/Text/Text';
 import dynamic from 'next/dynamic';
 import Icon, { icons } from '@/components/Icon/Icon';
-import * as Constants from '@/Constants';
 
 const DynamicModelView = dynamic(() => import('@/components/ModelView/ModelView'), {
   ssr: false,
