@@ -5,8 +5,8 @@ export default function manifest() {
     description: 'Designer, Developer, Maker',
     start_url: '/',
     display: 'standalone',
-    background_color: '#fff',
-    theme_color: '#fff',
+    background_color: '#ff2b06',
+    theme_color: '#ff2b06',
     icons: [
       {
         src: '/favicon.ico',
