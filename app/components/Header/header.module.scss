@@ -1,5 +1,6 @@
 @import '@/styles/variables.scss';
 
+$transition:  all var(--titleDuration) ease-in-out;
 
 /*-------------------------------------------------------*/
 /* HEADER
@@ -7,30 +8,44 @@
 
 .header {
   position: fixed;
-  top: calc(var(--pagePadding) - var(--borderWidth));
-  left: calc(var(--pagePadding) - var(--borderWidth));
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100dvw;
+  height: 100dvh;
   z-index: 15;
+  pointer-events: none;
   isolation: isolate;
+
+  @media( min-width: #{$break-mobile} ){
+    bottom: unset;
+    right: unset;
+    top: calc(var(--pagePadding) - var(--borderWidth));
+    left: calc(var(--pagePadding) - var(--borderWidth));
+  }
 }
 
 .title {
-  position: relative;
+  position: absolute;
+  bottom: var(--pagePadding);
+  right: var(--pagePadding);
   display: inline-block;
   writing-mode: vertical-rl;
   text-orientation: mixed;
   overflow: hidden;
-  transition: all .3s ease;
   z-index: 1;
+  pointer-events: all;
 
   a {
     display: inline-block;
-    padding-inline-start: var(--gap);
-    padding-block-start: .5em;
+    padding-inline-start: 1em;
     padding-inline-end: 1em;
-    transform: translateX(-100%);
+    padding-block-end: .5em;
+    transform: translateX(100%);
     color: var(--fgColor);
     text-decoration: none;
-    transition: transform .3s ease;
+    transition: $transition;
 
     &:hover,
     &:focus-visible {
@@ -51,10 +66,15 @@
   }
 
   @media( min-width: #{$break-mobile} ){
+    bottom: unset;
+    right: unset;
+    top: 0;
+    left: 0;
     writing-mode: initial;
     text-orientation: initial;
 
     a {
+      padding-inline-start: var(--gap);
       padding-block-start: 0;
       padding-block-end: .5em;
       transform: translateY(-100%);
@@ -84,7 +104,6 @@
   height: 100dvh;
   max-width: unset;
   max-height: unset;
-  pointer-events: none;
   z-index: 0;
 
   path {
@@ -93,7 +112,7 @@
     stroke-width: var(--borderWidth);
 
     &.animate {
-      transition: all 0.5s ease;
+      transition: $transition;
     }
   }
 }

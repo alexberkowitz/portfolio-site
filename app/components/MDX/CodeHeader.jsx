@@ -44,7 +44,7 @@ const CodeHeader = (props) => {
       <div
         className={styles.codeHeader}
         style={{
-          '--animDuration': `${successAnimDuration}s`
+          '--duration': `${successAnimDuration}s`
         }}
         >
         <p>{props.language}</p>

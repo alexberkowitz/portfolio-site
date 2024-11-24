@@ -22,7 +22,7 @@ $title-scroll-scale: 0.6;
   
   @media(min-width: $break-tablet) {
     position: sticky;
-    top: calc(var(--pagePadding) * 2);
+    top: calc(var(--pagePadding) * 2 + var(--pageTitleNominalDim));
     flex-direction: row;
     align-items: flex-start;
     justify-content: space-between;
@@ -32,12 +32,12 @@ $title-scroll-scale: 0.6;
     border: none;
     animation: trigger steps(1) both;
     animation-timeline: scroll();
-    animation-range: 0px 5rem;
+    animation-range: 0px 1px;
     z-index: 2;
 
     @container style(--animate: true) {
       .title h1 {
-        transform: scale($title-scroll-scale);
+        transform: scale($title-scroll-scale) translateY(calc(var(--pageTitleNominalDim) * -1));
         color: var(--fgColor);
 
         &:before {

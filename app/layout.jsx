@@ -3,6 +3,7 @@ import GlobalContextContainer from './GlobalContext';
 import Header from '@/components/Header/Header';
 import DynamicBackground from '@/components/Background/DynamicBackground';
 import DynamicCursor from '@/components/Cursor/DynamicCursor';
+import DynamicMarquee from '@/components/Marquee/DynamicMarquee';
 import BackButton from '@/components/BackButton/BackButton';
 import PageTransition from '@/components/PageTransition/PageTransition';
 import * as Constants from '@/Constants';
@@ -33,19 +34,28 @@ export const viewport = {
 }
 
 export default function RootLayout({ children }) {
+  // Setting CSS variables allow us to easily keep JS and CSS in-sync.
+  // It also makes consistency between components easier.
+  // The trade-off is that components are less isolated--copying them
+  // to another project would require some decoupling. But the
+  // benefits are worth it IMO.
+  const variables = {
+    '--bgColor': `rgb(${Constants.bgColor[0]}, ${Constants.bgColor[1]}, ${Constants.bgColor[2]})`,
+    '--fgColor': `rgb(${Constants.fgColor[0]}, ${Constants.fgColor[1]}, ${Constants.fgColor[2]})`,
+    '--bodyColor': `rgb(${Constants.bodyColor[0]}, ${Constants.bodyColor[1]}, ${Constants.bodyColor[2]})`,
+    '--accentColor': `rgb(${Constants.accentColor[0]}, ${Constants.accentColor[1]}, ${Constants.accentColor[2]})`,
+    '--borderWidth': `${Constants.pixelDensity}px`,
+    '--transitionDuration': `${Constants.transitionDuration / 2}s`,
+    '--titleDuration': `${Constants.titleDuration}s`
+  };
+
   return (
     <GlobalContextContainer>
-        <html lang="en" style={{
-            '--bgColor': `rgb(${Constants.bgColor[0]}, ${Constants.bgColor[1]}, ${Constants.bgColor[2]})`,
-            '--fgColor': `rgb(${Constants.fgColor[0]}, ${Constants.fgColor[1]}, ${Constants.fgColor[2]})`,
-            '--bodyColor': `rgb(${Constants.bodyColor[0]}, ${Constants.bodyColor[1]}, ${Constants.bodyColor[2]})`,
-            '--accentColor': `rgb(${Constants.accentColor[0]}, ${Constants.accentColor[1]}, ${Constants.accentColor[2]})`,
-            '--borderWidth': `${Constants.pixelDensity}px`,
-            '--transitionDuration': `${Constants.transitionDuration / 2}s`
-          }}>
+        <html lang="en" style={variables}>
           <body className={`${museoModerno.variable} ${oxanium.variable}`}>
             <DynamicBackground />
             <Header />
+            <DynamicMarquee />
             {children}
             <BackButton />
             <PageTransition />

@@ -38,7 +38,7 @@ export default function WindowBorder(props) {
     drawSVG(); // Update the border
     setTimeout(() => { // Disable animated transitions
       setPathChanging(false);
-    }, 1000);
+    }, Constants.titleDuration * 1000);
   }, [pathname]);
   
   
@@ -94,7 +94,36 @@ export default function WindowBorder(props) {
     let newSVGPath = "";
     
     // The intent is to allow for relative positioning, so now we can use the width & height to offset from the right and bottom edges
-    let points = [
+    let points = isMobile ? [
+      [ // Starting in the middle of the bottom helps ensure the corners round properly
+        shapeSize.width / 2,
+        shapeSize.height + posOffset
+      ],
+      [ // Bottom left
+        0 - posOffset,
+        shapeSize.height + posOffset
+      ],
+      [ // Top left
+        0 - posOffset,
+        0 - posOffset
+      ],
+      [ // Top right
+        shapeSize.width + posOffset,
+        0 - posOffset
+      ],
+      [ // Logo top right
+        shapeSize.width + posOffset,
+        shapeSize.height - titleSize.height - titleSize.width + posOffset
+      ],
+      [ // Logo top left
+        shapeSize.width - titleSize.width + posOffset,
+        shapeSize.height - titleSize.height + posOffset
+      ],
+      [ // Logo bottom left
+        shapeSize.width - titleSize.width + posOffset,
+        shapeSize.height + posOffset
+      ]
+    ] : [
       [ // Starting in the middle of the bottom helps ensure the corners round properly
         shapeSize.width / 2,
         shapeSize.height + posOffset
@@ -105,14 +134,14 @@ export default function WindowBorder(props) {
       ],
       [ // Title bottom left
         0 - posOffset,
-        isMobile ? titleSize.height + titleSize.width - posOffset : titleSize.height - posOffset
+        titleSize.height - posOffset
       ],
       [ // Title bottom right
         titleSize.width - posOffset,
         titleSize.height - posOffset
       ],
       [ // Title top right
-        isMobile ? titleSize.width - posOffset : titleSize.width + titleSize.height - posOffset,
+        titleSize.width + titleSize.height - posOffset,
         0 - posOffset
       ],
       [ // Top right

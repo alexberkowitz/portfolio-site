@@ -4,7 +4,7 @@ export default function manifest() {
     short_name: 'Alex Berkowitz',
     description: 'Designer, Developer, Maker',
     start_url: '/',
-    display: 'standalone',
+    // display: 'standalone',
     background_color: '#dbd8ce',
     theme_color: '#dbd8ce',
     icons: [

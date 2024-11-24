@@ -1,0 +1,148 @@
+@import '@/styles/variables.scss';
+
+/*-------------------------------------------------------*/
+/* MARQUEE
+/*-------------------------------------------------------*/
+
+$marquee-padding: calc(var(--titleSize) * 0.2);
+
+.marqueeTitle {
+  position: fixed;
+  top: var(--pagePadding);
+  left: var(--pagePadding);
+  right: var(--pagePadding);
+  padding-bottom: var(--pagePadding);
+  font-size: var(--titleSize);
+  color: var(--accentColor);
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 12;
+  --textWidth: 100; // In pixels
+  --animSpeed: 100; // In pixels per second
+}
+
+.marqueeWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  transform: translateY(-100%);
+  transition: transform var(--titleDuration) ease-in-out;
+  background-color: var(--fgColor);
+  pointer-events: all;
+
+  &:before,
+  &:after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    width: var(--pagePadding);
+    height: var(--pagePadding);
+    background-color: var(--fgColor);
+    mask-size: 100% 100%;
+    mask-repeat: no-repeat;
+  }
+
+  &:before {
+    left: 0;
+    mask-image: radial-gradient(circle var(--pagePadding) at bottom right, transparent 0, transparent var(--pagePadding), black var(--pagePadding));
+  }
+
+  &:after {
+    right: 0;
+    mask-image: radial-gradient(circle var(--pagePadding) at bottom left, transparent 0, transparent var(--pagePadding), black var(--pagePadding));
+  }
+
+  &.show {
+    transform: translateY(0%);
+  }
+
+  &.fade h1 {
+    opacity: 0;
+  }
+
+  h1 {
+    padding-block-start: $marquee-padding;
+    padding-block-end: $marquee-padding;
+    transition: opacity calc(var(--titleDuration) / 2) linear;
+  }
+}
+
+.marqueeContent {
+  display: inline-flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: .5em;
+  animation: marquee-scroll calc( var(--textWidth) / var(--animSpeed) * 1s ) linear infinite;
+
+  h1 {
+    margin: 0;
+    white-space: nowrap;
+  }
+}
+
+.marqueeCopies {
+  width: 0;
+  flex-grow: 0;
+  display: flex;
+  flex-direction: row;
+  gap: inherit;
+}
+
+// Page content gap
+body:has(.leaveRoom) main {
+  padding-top: calc( var(--titleSize) + var(--pagePadding) + (#{$marquee-padding} * 2) );
+}
+
+@keyframes marquee-scroll {
+  from { transform: translateX(0%) }
+  to   { transform: translateX(-100%) }
+}
+
+@media( min-width: $break-tablet ){
+  .marqueeTitle {
+    top: var(--pagePadding);
+    bottom: var(--pagePadding);
+    left: unset;
+    padding-bottom: 0;
+    padding-left: var(--pagePadding);
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+  }
+
+  .marqueeWrapper {
+    transform: translateX(100%);
+
+    &:before {
+      top: 0;
+      right: 100%;
+      left: unset;
+      mask-image: radial-gradient(circle var(--pagePadding) at bottom left, transparent 0, transparent var(--pagePadding), black var(--pagePadding));
+    }
+
+    &:after {
+      top: unset;
+      bottom: 0;
+      right: 100%;
+      mask-image: radial-gradient(circle var(--pagePadding) at top left, transparent 0, transparent var(--pagePadding), black var(--pagePadding));
+    }
+
+    &.show {
+      transform: translateX(0%);
+    }
+  }
+
+  .marqueeCopies {
+    width: unset;
+    height: 0;
+  }
+
+  @keyframes marquee-scroll {
+    from { transform: translateY(0%) }
+    to   { transform: translateY(-100%) }
+  }
+
+  body:has(.leaveRoom) main {
+    padding-top: var(--pagePadding);
+    padding-right: calc( var(--titleSize) + var(--pagePadding) + (#{$marquee-padding} * 2) );
+  }
+}

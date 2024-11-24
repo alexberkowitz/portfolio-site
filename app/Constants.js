@@ -7,8 +7,14 @@ export const bodyColor = [0, 0, 0, 255];
 export const accentColor = [255, 255, 255, 255];
 
 /*-------------------------------------------------------*/
-/* DRAWING SETTINGS
+/* DRAWING
 /*-------------------------------------------------------*/
 export const frameRate = 30;
-export const transitionDuration = 1; // Page transition, in seconds
 export const pixelDensity = 2;
+
+/*-------------------------------------------------------*/
+/* TRANSITIONS 
+/*-------------------------------------------------------*/
+// All in seconds
+export const transitionDuration = 1; // Page transition
+export const titleDuration = .6; // Title animation

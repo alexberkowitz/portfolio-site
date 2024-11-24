@@ -1,5 +1,5 @@
 import Button from '@/components/Button/Button';
-import DynamicPageTitle from '@/components/PageTitle/DynamicPageTitle';
+import DynamicPageTitle from '@/components/Marquee/DynamicMarquee';
 
 import styles from './page.module.scss';
 
