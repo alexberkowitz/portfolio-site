@@ -111,15 +111,15 @@ export default function WindowBorder(props) {
         shapeSize.width + posOffset,
         0 - posOffset
       ],
-      [ // Logo top right
+      [ // Title top right
         shapeSize.width + posOffset,
         shapeSize.height - titleSize.height - titleSize.width + posOffset
       ],
-      [ // Logo top left
+      [ // Title top left
         shapeSize.width - titleSize.width + posOffset,
         shapeSize.height - titleSize.height + posOffset
       ],
-      [ // Logo bottom left
+      [ // Title bottom left
         shapeSize.width - titleSize.width + posOffset,
         shapeSize.height + posOffset
       ]
@@ -155,11 +155,19 @@ export default function WindowBorder(props) {
     ];
 
     // There must be a consistent number of points for the animation to work
-    if (!props.showTitle && !isMobile) {
-      points.splice(3, 0, [
-        titleSize.width - padding.top - posOffset,
-        titleSize.height - posOffset
-      ]);
+    if (!props.showTitle) {
+      if( isMobile ){
+        points.splice(6, 0, [
+          shapeSize.width - titleSize.width + posOffset,
+          shapeSize.height - titleSize.height + padding.top + posOffset
+        ]);
+
+      } else {
+        points.splice(3, 0, [
+          titleSize.width - padding.top - posOffset,
+          titleSize.height - posOffset
+        ]);
+      }
     }
     
     // Add each point to the path string
