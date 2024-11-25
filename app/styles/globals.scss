@@ -40,7 +40,10 @@ body {
   display: flex;
   flex-direction: column;
   gap: var(--pagePadding);
-  padding: var(--pagePadding);
+  padding: calc(var(--pagePadding) + env(safe-area-inset-top)),
+           calc(var(--pagePadding) + env(safe-area-inset-right)),
+           calc(var(--pagePadding) + env(safe-area-inset-bottom)),
+           calc(var(--pagePadding) + env(safe-area-inset-left));
   overflow-x: hidden;
   overflow-y: auto;
   background-color: var(--bgColor);
