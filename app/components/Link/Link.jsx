@@ -32,6 +32,7 @@ const Link = (props) => {
       {...props}
       onClick={handleClick}
       className={props.className || ''}
+      ref={props.linkRef}
       tabIndex="0"
       >
       {props.children}

@@ -4,7 +4,6 @@ import Header from '@/components/Header/Header';
 import DynamicBackground from '@/components/Background/DynamicBackground';
 import DynamicCursor from '@/components/Cursor/DynamicCursor';
 import DynamicMarquee from '@/components/Marquee/DynamicMarquee';
-import BackButton from '@/components/BackButton/BackButton';
 import PageTransition from '@/components/PageTransition/PageTransition';
 import * as Constants from '@/Constants';
 
@@ -57,7 +56,6 @@ export default function RootLayout({ children }) {
             <Header />
             <DynamicMarquee />
             {children}
-            <BackButton />
             <PageTransition />
             <DynamicCursor />
           </body>

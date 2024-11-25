@@ -73,7 +73,7 @@ export default function WindowBorder(props) {
     };
     
     // Calculate the dimensions of the title
-    const titleBounds = props.titleRef.current?.getBoundingClientRect()
+    const titleBounds = props.titleRef.current?.getBoundingClientRect();
     const titleSize = isMobile ? {
       width: props.showTitle ? titleBounds?.width : 0,
       height: titleBounds?.height
@@ -81,10 +81,22 @@ export default function WindowBorder(props) {
       width: titleBounds?.width,
       height: props.showTitle ? titleBounds?.height : 0
     };
+    
+    // Calculate the dimensions of the back button
+    const backButtonBounds = props.backButtonRef.current?.getBoundingClientRect();
+    const backButtonSize = {
+      width: backButtonBounds?.width,
+      height: props.showBackButton ? backButtonBounds?.height * 1.5 : 0
+    };
 
     // SVGs draw their lines on center, so we need to offset by half of the border width
     // in order to ensure the border lines up properly with other elements
     const posOffset = Constants.pixelDensity / 2;
+
+    // Just like in the CSS, we can get the corner radius as equal to the page padding.
+    // Technically it would be better to calculate this from the CSS but honestly
+    // it's such a small change to make if I ever decouple those values.
+    const cornerRadius = padding.top;
     
     
     // Set the SVG viewbox
@@ -99,9 +111,21 @@ export default function WindowBorder(props) {
         shapeSize.width / 2,
         shapeSize.height + posOffset
       ],
-      [ // Bottom left
-        0 - posOffset,
+      ...(props.showTitle ? [] : [[ // (Extra animation point)
+        backButtonSize.width + backButtonSize.height + cornerRadius - posOffset,
         shapeSize.height + posOffset
+      ]]),
+      [ // Back button bottom right
+        backButtonSize.width + backButtonSize.height - posOffset,
+        shapeSize.height + posOffset
+      ],
+      [ // Back button top right left
+        backButtonSize.width - posOffset,
+        shapeSize.height - backButtonSize.height + posOffset
+      ],
+      [ // Back button top left
+        0 - posOffset,
+        shapeSize.height - backButtonSize.height + posOffset
       ],
       [ // Top left
         0 - posOffset,
@@ -111,6 +135,10 @@ export default function WindowBorder(props) {
         shapeSize.width + posOffset,
         0 - posOffset
       ],
+      ...(props.showTitle ? [] : [[ // (Extra animation point)
+        shapeSize.width + posOffset,
+        shapeSize.height - titleSize.height - titleSize.width - cornerRadius + posOffset
+      ]]),
       [ // Title top right
         shapeSize.width + posOffset,
         shapeSize.height - titleSize.height - titleSize.width + posOffset
@@ -128,14 +156,26 @@ export default function WindowBorder(props) {
         shapeSize.width / 2,
         shapeSize.height + posOffset
       ],
-      [ // Bottom left
-        0 - posOffset,
+      ...(props.showTitle ? [] : [[ // (Extra animation point)
+        backButtonSize.width + backButtonSize.height + cornerRadius - posOffset,
         shapeSize.height + posOffset
+      ]]),
+      [ // Back button bottom right
+        backButtonSize.width + backButtonSize.height - posOffset,
+        shapeSize.height + posOffset
+      ],
+      [ // Back button top right
+        backButtonSize.width - posOffset,
+        shapeSize.height - backButtonSize.height + posOffset
+      ],
+      [ // Back button top left
+        0 - posOffset,
+        shapeSize.height - backButtonSize.height + posOffset
       ],
       [ // Title bottom left
         0 - posOffset,
         titleSize.height - posOffset
-      ],
+      ],   
       [ // Title bottom right
         titleSize.width - posOffset,
         titleSize.height - posOffset
@@ -144,6 +184,10 @@ export default function WindowBorder(props) {
         titleSize.width + titleSize.height - posOffset,
         0 - posOffset
       ],
+      ...(props.showTitle ? [] : [[ // (Extra animation point)
+        titleSize.width + titleSize.height + cornerRadius - posOffset,
+        0 - posOffset
+      ]]),
       [ // Top right
         shapeSize.width + posOffset,
         0 - posOffset
@@ -153,22 +197,6 @@ export default function WindowBorder(props) {
         shapeSize.height + posOffset
       ]
     ];
-
-    // There must be a consistent number of points for the animation to work
-    if (!props.showTitle) {
-      if( isMobile ){
-        points.splice(6, 0, [
-          shapeSize.width - titleSize.width + posOffset,
-          shapeSize.height - titleSize.height + padding.top + posOffset
-        ]);
-
-      } else {
-        points.splice(3, 0, [
-          titleSize.width - padding.top - posOffset,
-          titleSize.height - posOffset
-        ]);
-      }
-    }
     
     // Add each point to the path string
     for( let i = 0; i < points.length; i++ ) {

@@ -87,7 +87,6 @@ main {
   flex-direction: column;
   gap: var(--gap);
   padding: var(--pagePadding);
-  overflow: hidden;
   z-index: 1;
 
   @media( min-width: #{$break-mobile} ){
