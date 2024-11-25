@@ -37,13 +37,14 @@ body {
   max-width: 100%;
   min-width: 100%;
   min-height: 100%;
+  max-height: 100%;
   position: relative;
   display: flex;
   flex-direction: column;
   gap: var(--pagePadding);
   padding: var(--pagePadding);
-  overflow-x: hidden;
-  overflow-y: auto;
+  overflow: hidden;
+  // overflow-y: auto;
   background-color: var(--bgColor);
   color: var(--bodyColor);
   font-family: var(--font-oxanium);
@@ -84,6 +85,7 @@ main {
   box-sizing: border-box;
   position: relative;
   width: 100%;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
   gap: var(--gap);

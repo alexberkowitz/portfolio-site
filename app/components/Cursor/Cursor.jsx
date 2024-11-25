@@ -60,6 +60,15 @@ const Cursor = () => {
       crosshairGap: 2,
       beamWidth: 0
     },
+    scroll: {
+      name: 'scroll',
+      targetBoxSize: 4,
+      targetBoxCorner: 16,
+      crosshairWidth: 0,
+      crosshairHeight: 18,
+      crosshairGap: 0,
+      beamWidth: 3
+    },
   }
 
   const prevCursor = useRef({...cursorTypes.default}); // Previous cursor state
@@ -102,6 +111,12 @@ const Cursor = () => {
     if( target.closest('a') !== null ||
         target.closest('button') !== null ){
       detectedCursorType = 'interactive';
+    }
+
+    // Check for the scrollbar
+    if( target.closest('#scrollbar-thumb') ||
+        target.closest('.is-scroll') ){
+      detectedCursorType = 'scroll'
     }
 
     // Set the cursor type from the definitions object

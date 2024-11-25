@@ -5,6 +5,7 @@ import DynamicBackground from '@/components/Background/DynamicBackground';
 import DynamicCursor from '@/components/Cursor/DynamicCursor';
 import DynamicMarquee from '@/components/Marquee/DynamicMarquee';
 import PageTransition from '@/components/PageTransition/PageTransition';
+import ScrollBar from '@/components/ScrollBar/ScrollBar';
 import * as Constants from '@/Constants';
 
 import "./styles/globals.scss";
@@ -29,7 +30,10 @@ export const metadata = {
 // Viewport
 export const viewport = {
   width: "device-width",
-  initialScale: 1
+  initialScale: 1,
+  minimumScale: 1,
+  maximumScale: 1,
+  targetDensityDpi: 'device-dpi'
 }
 
 export default function RootLayout({ children }) {
@@ -55,7 +59,9 @@ export default function RootLayout({ children }) {
             <DynamicBackground />
             <Header />
             <DynamicMarquee />
-            {children}
+            <ScrollBar>
+              {children}
+            </ScrollBar>
             <PageTransition />
             <DynamicCursor />
           </body>
