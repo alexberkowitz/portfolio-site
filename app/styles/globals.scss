@@ -30,6 +30,7 @@ html {
   // Misc
   --gridSize: calc(var(--borderWidth) * 8); // Size of the background grid cells
   --pageTitleNominalDim: 2rem; // Height (desktop) or width (mobile) of the title container--set via JS
+  --backButtonNominalDim: 2rem; // Height of the back button--set via JS
 }
 
 body {
@@ -86,11 +87,11 @@ main {
   display: flex;
   flex-direction: column;
   gap: var(--gap);
-  padding: var(--pagePadding);
+  padding: var(--pagePadding) var(--pagePadding) calc(var(--pagePadding) + var(--backButtonNominalDim)) var(--pagePadding);
   z-index: 1;
 
   @media( min-width: #{$break-mobile} ){
-    padding: calc(var(--pagePadding) + var(--pageTitleNominalDim)) var(--pagePadding) calc(var(--pagePadding) + 3rem) var(--pagePadding);
+    padding: calc(var(--pagePadding) + var(--pageTitleNominalDim)) var(--pagePadding) calc(var(--pagePadding) + var(--backButtonNominalDim)) var(--pagePadding);
   }
 }
 

@@ -216,7 +216,10 @@ export default function WindowBorder(props) {
     const outerRect = `M -10,-10 L ${windowSize.width + 10},-10 L ${windowSize.width + 10},${windowSize.height + 10} L -10,${windowSize.height + 10} L -10,-10`;
     
     setSvgPath(roundedPath.path + outerRect);
-    document.body.style.setProperty('--pageTitleNominalDim', `${isMobile ? titleSize.width : titleSize.height}px`); // Set the associated CSS property on the body so page padding can be calculated
+
+    // Set the associated CSS properties on the body so page padding can be calculated
+    document.body.style.setProperty('--pageTitleNominalDim', `${isMobile ? titleSize.width : titleSize.height}px`);
+    document.body.style.setProperty('--backButtonNominalDim', `${backButtonSize.height}px`);
   }
   
   return (
