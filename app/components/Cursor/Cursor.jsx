@@ -247,10 +247,10 @@ const Cursor = () => {
 
     // Apply the shapes multiple time to ensure contrast against all backgrounds
     [
-      {
-        weight: Constants.pixelDensity * 2,
-        color: [Constants.bgColor[0], Constants.bgColor[1], Constants.bgColor[2], 255 * .5]
-      },
+      // {
+      //   weight: Constants.pixelDensity * 2,
+      //   color: [Constants.bgColor[0], Constants.bgColor[1], Constants.bgColor[2], 255 * .5]
+      // },
       {
         weight: Constants.pixelDensity,
         color: Constants.bodyColor

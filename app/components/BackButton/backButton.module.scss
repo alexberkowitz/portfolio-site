@@ -28,6 +28,7 @@
     background-size: calc(100% - (2 * var(--borderWidth))) var(--borderWidth);
     background-position: center;
     background-repeat: no-repeat;
+    text-decoration: none;
     z-index: 2;
 
     // Arrow head
@@ -54,9 +55,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: var(--accentColor);
-    border-radius: 0 .25rem .25rem 0;
-    color: var(--fgColor);
+    background-color: var(--fgColor);
+    // border-radius: 0 .25rem .25rem 0;
+    border-radius: 0 100px 100px 0;
+    color: var(--accentColor);
     text-transform: uppercase;
     white-space: nowrap;
     clip-path: polygon(0% 50%,
@@ -67,6 +69,7 @@
                        0% 50%);
     overflow: hidden;
     transition: height .3s ease;
+    z-index: 2;
   }
 
   &:hover,

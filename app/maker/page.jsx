@@ -1,16 +1,14 @@
 import Text from '@/components/Text/Text';
-import Link from '@/components/Link/Link';
 import { ProjectsList } from '@/components/ProjectsList/ProjectsList';
 
 export default function Maker() {
   return (
     <main>
-      <p style={{padding: 'calc(var(--pagePadding) * 2) 0', marginLeft: 'var(--pagePadding)'}}>
+      <p style={{padding: 'calc(var(--pagePadding) * 2) 0', alignSelf: 'center'}}>
         <Text>
-          Fusce semper semper felis eget mattis. In sed lectus eu purus elementum vulputate eget sed mauris. Aenean dapibus luctus aliquam. Nunc rutrum lobortis dui sed tempus. Praesent porta quam vitae massa elementum, sit amet malesuada mi rutrum. Donec at posuere nisl. Curabitur diam augue, ornare sit amet erat vitae, suscipit faucibus tortor. 
+          For all of the love that I hold for digital content creation, I also really love making real, physical products. I have an extensive history as an amateur maker & product designer. I've designed products for companies, such as the Mercury Knife for Kizer, as well as for myself. I'm well-versed in CAD/CAM, 3D printing, CNC machining, and a whole slew of other manufacturing processes ranging from DIY to industrial. 
         </Text>
       </p>
-      <Link href="/designer">To Designer</Link>
       <ProjectsList type="maker"/>
     </main>
   );
