@@ -54,10 +54,10 @@ export default function WindowBorder(props) {
     // Calculate the padding from the body styles
     const bodyStyles = getComputedStyle(document.body);
     const padding = {
-      top: parseInt(bodyStyles.paddingTop),
-      bottom: parseInt(bodyStyles.paddingBottom),
-      left: parseInt(bodyStyles.paddingLeft),
-      right: parseInt(bodyStyles.paddingRight)
+      top: parseFloat(bodyStyles.paddingTop),
+      bottom: parseFloat(bodyStyles.paddingBottom),
+      left: parseFloat(bodyStyles.paddingLeft),
+      right: parseFloat(bodyStyles.paddingRight)
     };
     
     // Get the window dimensions
@@ -201,8 +201,9 @@ export default function WindowBorder(props) {
     // Add each point to the path string
     for( let i = 0; i < points.length; i++ ) {
       const command = i == 0 ? 'M' : 'L';
-      const newPoint = points[i];
+      const newPoint = [ Math.round(points[i][0]), Math.round(points[i][1]) ];
       newSVGPath += `${command} ${newPoint[0] + padding.left},${newPoint[1] + padding.top} `;
+      console.log(newPoint);
     }
     
     // Close the path using the first point

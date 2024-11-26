@@ -22,7 +22,7 @@ $title-scroll-scale: 0.6;
   
   @media(min-width: $break-tablet) {
     position: sticky;
-    top: calc(var(--pagePadding) * 2 + var(--pageTitleNominalDim));
+    top: calc(var(--pagePadding) + var(--pageTitleNominalDim));
     flex-direction: row;
     align-items: flex-start;
     justify-content: space-between;
@@ -63,6 +63,7 @@ $title-scroll-scale: 0.6;
   h1 {
     position: relative;
     display: inline-block;
+    margin: 0;
     padding: calc(var(--pagePadding) / 2) 0 calc(var(--pagePadding) / 2) calc(var(--pagePadding) / 2);
     transform-origin: 100% 0%;
     transition: all .5s ease-in-out;

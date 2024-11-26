@@ -8,22 +8,13 @@ $transition:  all var(--titleDuration) ease-in-out;
 
 .header {
   position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  width: 100dvw;
-  height: 100dvh;
+  top: var(--pagePadding);
+  bottom: var(--pagePadding);
+  left: var(--pagePadding);
+  right: var(--pagePadding);
   z-index: 15;
   pointer-events: none;
   isolation: isolate;
-
-  @media( min-width: #{$break-mobile} ){
-    bottom: unset;
-    right: unset;
-    top: calc(var(--pagePadding) - var(--borderWidth));
-    left: calc(var(--pagePadding) - var(--borderWidth));
-  }
 }
 
 .title {
@@ -99,9 +90,9 @@ $transition:  all var(--titleDuration) ease-in-out;
 .border {
   position: fixed;
   top: 0;
+  bottom: 0;
   left: 0;
-  width: 100dvw;
-  height: 100dvh;
+  right: 0;
   max-width: unset;
   max-height: unset;
   z-index: 0;

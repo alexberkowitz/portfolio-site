@@ -56,7 +56,7 @@ export default function Project({ params }) {
   }
 
   return (
-    <main>
+    <main className={styles.projectPage}>
 
       <div className={styles.info}>
         <div className={styles.title}>
@@ -79,7 +79,7 @@ export default function Project({ params }) {
         </dl>
       </div>
 
-      <article className={styles.projectPage}>
+      <article>
         <CustomMDX source={project.content} />
       </article>
       
