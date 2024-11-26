@@ -1,0 +1,14 @@
+// Applies combination hover/focus-visible effects
+// Hover effects are put into a media query to avoid
+// issues on touchscreen devices.
+@mixin hover {
+  &:focus-visible {
+    @content;
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      @content;
+    }
+  }
+}

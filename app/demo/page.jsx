@@ -3,6 +3,8 @@
 import PageTitle from '@/components/PageTitle/PageTitle';
 import Text from '@/components/Text/Text';
 import Icon, { icons } from '@/components/Icon/Icon';
+import Link from '@/components/Link/Link';
+import Button from '@/components/Button/Button';
 import DynamicModelViewer from '@/components/ModelViewer/DynamicModelViewer';
 
 import styles from './page.module.scss';
@@ -14,7 +16,7 @@ export default function Test() {
       <PageTitle>Demos</PageTitle>
       <p>
         <Text>
-          YouI&lsquo;veve found my super-secret demo page! This is where I test the reusable components found throughout the site. Feel free to play around!
+          YouI&lsquo;veve found my &ldquo;super secret&rdquo; demo page! This is where I test the reusable components found throughout the site. Feel free to play around!
         </Text>
         <br/><br/>
         <Text>
@@ -40,16 +42,26 @@ export default function Test() {
       </div>
 
       <div className={styles.demoSection}>
+        <h2><Text>Text</Text></h2>
+        <p><Text>
+          A custom {"<Text>"} component is used throughout the site. At a basic level, it provides a background color to ensure legibility against the site BG.
+          <br/><br/>
+          But the wrapper can also be used for special effects such as <Text style="emphasis">emphasis</Text> and <Text style="accent">accented backgrounds</Text>.
+        </Text></p>
+      </div>
+
+      <div className={styles.demoSection}>
+        <h2><Text>Buttons and Links</Text></h2>
+        <p><Text>All navigation links on the site use a custom {"<Link>"} component. This component has no default styling, and hooks into a global <Text style="accent">navigate()</Text> hook to enable transitions.</Text></p>
+        <div style={{display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '1rem'}}>
+          <Link href="#"><Text>Here&lsquo;s a link</Text></Link>
+          <Button>And here&lsquo;s a button</Button>
+        </div>
+      </div>
+
+      <div className={styles.demoSection}>
         <h2><Text>Cursor</Text></h2>
         <p><Text>The cursor on my site is custom-built with p5.js.<br/>Try hovering over this text, or perhaps <a href="#">this link</a>!</Text></p>
-        <div style={{
-          padding: '2rem',
-          backgroundColor: 'var(--bodyColor)',
-          borderRadius: 'var(--cornerRadius)',
-          color: 'var(--accentColor)'
-        }}>
-          <p>Here&lsquo;s some text on a dark background. It also has <a href="#" >a link</a>.</p>
-        </div>
       </div>
 
       <div className={styles.demoSection}>

@@ -1,4 +1,5 @@
 @import '@/styles/variables.scss';
+@import '@/styles/mixins.scss';
 
 $transition:  all var(--titleDuration) ease-in-out;
 
@@ -38,8 +39,7 @@ $transition:  all var(--titleDuration) ease-in-out;
     text-decoration: none;
     transition: $transition;
 
-    &:hover,
-    &:focus-visible {
+    @include hover {
       color: var(--bodyColor);
     }
   }

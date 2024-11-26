@@ -1,4 +1,5 @@
 @import '@/styles/variables.scss';
+@import '@/styles/mixins.scss';
 
 .projectsList {
   display: grid;
@@ -46,21 +47,20 @@
       background-color: var(--bgColor);
       overflow: hidden;
 
-      @media(hover: hover) {
-        &:hover,
-        &:focus-visible {
-          outline: solid var(--borderWidth) var(--fgColor);
+      @include hover {
+        outline: solid var(--borderWidth) var(--fgColor);
 
-          .cover {
-            filter: grayscale(0%);
-          }
-
-          .info {
-            transform: translateY(0%);
-            transition-timing-function: cubic-bezier(0,.5,.5,1);
-          }
+        .cover {
+          filter: grayscale(0%);
         }
-        
+
+        .info {
+          transform: translateY(0%);
+          transition-timing-function: cubic-bezier(0,.5,.5,1);
+        }
+      }
+
+      @media(hover: hover) {  
         .info {
           transform: translateY(calc(100% + .5rem));
         }

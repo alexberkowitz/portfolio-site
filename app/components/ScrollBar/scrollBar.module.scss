@@ -1,3 +1,5 @@
+@import '@/styles/mixins.scss';
+
 $scrollbar-width: 1rem;
 
 .scrollbar {
@@ -37,8 +39,10 @@ $scrollbar-width: 1rem;
     transition: width .3s ease-in-out;
   }
 
-  &:hover:after,
-  &:active:after {
-    width: 100%;
+  @include hover {
+    &:after,
+    &:after {
+      width: 100%;
+    }
   }
 }

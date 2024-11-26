@@ -1,3 +1,5 @@
+@import '@/styles/mixins.scss';
+
 .button {
   display: block;
   flex-shrink: 0;
@@ -9,8 +11,7 @@
   text-transform: uppercase;
   letter-spacing: 1px;
 
-  &:hover,
-  &:focus-visible {
+  @include hover {
     background-color: var(--fgColor);
     color: var(--accentColor);
 
