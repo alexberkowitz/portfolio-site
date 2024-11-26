@@ -13,6 +13,7 @@ html {
   background-color: var(--bgColor);
 
   // Colors
+  // These are overridden by the colors in constants.js at runtime
   --bgColor: rgb(219, 216, 206);
   --fgColor: red;
   --bodyColor: black;
@@ -23,14 +24,14 @@ html {
   --pagePadding: clamp(1rem, 3vw, 2rem); // Dynamic
 
   // Sizing
-  --borderWidth: 2px; // Equal to 1 pixel of the dither effects
+  --borderWidth: 2px; // Equal to 1 pixel of the dither effects, overridden by pixelDensity in constants.js at runtime
   --cornerRadius: .5rem; // General-use corner radius value for consistency
   --titleSize: clamp(2.5rem, 5vw, 4rem); // Size of primary titles
 
   // Misc
   --gridSize: calc(var(--borderWidth) * 8); // Size of the background grid cells
-  --pageTitleNominalDim: 2rem; // Height (desktop) or width (mobile) of the title container--set via JS
-  --backButtonNominalDim: 2rem; // Height of the back button--set via JS
+  --pageTitleHeight: 2rem; // Height (desktop) or width (mobile) of the title container--set dynamically via JS
+  --backButtonHeight: 2rem; // Height of the back button--set dynamically via JS
 }
 
 body {
@@ -88,12 +89,8 @@ main {
   display: flex;
   flex-direction: column;
   gap: var(--gap);
-  padding: var(--pagePadding) var(--pagePadding) calc(var(--pagePadding) + var(--backButtonNominalDim)) var(--pagePadding);
+  padding: calc(var(--pagePadding) + var(--pageTitleHeight)) var(--pagePadding) calc(var(--pagePadding) + var(--backButtonHeight)) var(--pagePadding);
   z-index: 1;
-
-  @media( min-width: #{$break-mobile} ){
-    padding: calc(var(--pagePadding) + var(--pageTitleNominalDim)) var(--pagePadding) calc(var(--pagePadding) + var(--backButtonNominalDim)) var(--pagePadding);
-  }
 }
 
 

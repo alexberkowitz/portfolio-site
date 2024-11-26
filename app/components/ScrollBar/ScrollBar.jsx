@@ -16,8 +16,8 @@ const ScrollBar = (props) => {
     <Scrollbar
       noDefaultStyles
       noScrollX
-      onScrollStart={() => { document.body.classList.add('is-scroll') }}
-      onScrollStop={() => { document.body.classList.remove('is-scroll') }}
+      onScrollStart={() => { document.body.classList.add('scrolling') }}
+      onScrollStop={() => { document.body.classList.remove('scrolling') }}
       renderer={(props) => {
         const { elementRef, ...restProps } = props;
         return <div {...restProps} ref={elementRef} className={styles.scrollbar} />;

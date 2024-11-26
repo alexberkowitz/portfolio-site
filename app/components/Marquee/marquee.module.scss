@@ -8,7 +8,7 @@ $marquee-padding: calc(var(--titleSize) * 0.2);
 
 .marqueeTitle {
   position: fixed;
-  top: var(--pagePadding);
+  top: calc(var(--pagePadding) + var(--pageTitleHeight));
   left: var(--pagePadding);
   right: var(--pagePadding);
   padding-bottom: var(--pagePadding);
@@ -19,6 +19,10 @@ $marquee-padding: calc(var(--titleSize) * 0.2);
   z-index: 12;
   --textWidth: 100; // In pixels
   --animSpeed: 100; // In pixels per second
+
+  @media( min-width: #{$break-mobile} ){
+    top: var(--pagePadding)
+  }
 }
 
 .marqueeWrapper {

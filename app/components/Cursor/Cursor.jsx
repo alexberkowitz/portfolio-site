@@ -115,7 +115,7 @@ const Cursor = () => {
 
     // Check for the scrollbar
     if( target.closest('#scrollbar-thumb') ||
-        target.closest('.is-scroll') ){
+        target.closest('.scrolling') ){
       detectedCursorType = 'scroll'
     }
 

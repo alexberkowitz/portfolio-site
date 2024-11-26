@@ -74,10 +74,14 @@ export default function WindowBorder(props) {
     
     // Calculate the dimensions of the title
     const titleBounds = props.titleRef.current?.getBoundingClientRect();
-    const titleSize = isMobile ? {
-      width: props.showTitle ? titleBounds?.width : 0,
-      height: titleBounds?.height
-    } : {
+    // const titleSize = isMobile ? {
+    //   width: props.showTitle ? titleBounds?.width : 0,
+    //   height: titleBounds?.height
+    // } : {
+    //   width: titleBounds?.width,
+    //   height: props.showTitle ? titleBounds?.height : 0
+    // };
+    const titleSize = {
       width: titleBounds?.width,
       height: props.showTitle ? titleBounds?.height : 0
     };
@@ -106,6 +110,7 @@ export default function WindowBorder(props) {
     let newSVGPath = "";
     
     // The intent is to allow for relative positioning, so now we can use the width & height to offset from the right and bottom edges
+    // 
     let points = isMobile ? [
       [ // Starting in the middle of the bottom helps ensure the corners round properly
         shapeSize.width / 2,
@@ -119,7 +124,7 @@ export default function WindowBorder(props) {
         backButtonSize.width + backButtonSize.height - posOffset,
         shapeSize.height + posOffset
       ],
-      [ // Back button top right left
+      [ // Back button top right
         backButtonSize.width - posOffset,
         shapeSize.height - backButtonSize.height + posOffset
       ],
@@ -127,28 +132,16 @@ export default function WindowBorder(props) {
         0 - posOffset,
         shapeSize.height - backButtonSize.height + posOffset
       ],
-      [ // Top left
-        0 - posOffset,
-        0 - posOffset
-      ],
-      [ // Top right
-        shapeSize.width + posOffset,
-        0 - posOffset
-      ],
-      ...(props.showTitle ? [] : [[ // (Extra animation point)
-        shapeSize.width + posOffset,
-        shapeSize.height - titleSize.height - titleSize.width - cornerRadius + posOffset
-      ]]),
-      [ // Title top right
-        shapeSize.width + posOffset,
-        shapeSize.height - titleSize.height - titleSize.width + posOffset
-      ],
-      [ // Title top left
-        shapeSize.width - titleSize.width + posOffset,
-        shapeSize.height - titleSize.height + posOffset
-      ],
       [ // Title bottom left
-        shapeSize.width - titleSize.width + posOffset,
+        0 - posOffset,
+        titleSize.height - posOffset
+      ],   
+      [ // Title bottom right
+        titleSize.width - posOffset,
+        titleSize.height - posOffset
+      ],
+      [ // Bottom right
+        shapeSize.width + posOffset,
         shapeSize.height + posOffset
       ]
     ] : [
@@ -219,8 +212,8 @@ export default function WindowBorder(props) {
     setSvgPath(roundedPath.path + outerRect);
 
     // Set the associated CSS properties on the body so page padding can be calculated
-    document.body.style.setProperty('--pageTitleNominalDim', `${isMobile ? titleSize.width : titleSize.height}px`);
-    document.body.style.setProperty('--backButtonNominalDim', `${backButtonSize.height}px`);
+    document.body.style.setProperty('--pageTitleHeight', `${titleSize.height}px`);
+    document.body.style.setProperty('--backButtonHeight', `${backButtonSize.height}px`);
   }
   
   return (

@@ -20,11 +20,11 @@ $transition:  all var(--titleDuration) ease-in-out;
 
 .title {
   position: absolute;
-  bottom: var(--pagePadding);
-  right: var(--pagePadding);
-  display: inline-block;
-  writing-mode: vertical-rl;
-  text-orientation: mixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
   overflow: hidden;
   z-index: 1;
   pointer-events: all;
@@ -34,7 +34,7 @@ $transition:  all var(--titleDuration) ease-in-out;
     padding-inline-start: 1em;
     padding-inline-end: 1em;
     padding-block-end: .5em;
-    transform: translateX(100%);
+    transform: translateY(100%);
     color: var(--fgColor);
     text-decoration: none;
     transition: $transition;
@@ -47,37 +47,17 @@ $transition:  all var(--titleDuration) ease-in-out;
   h1 {
     display: inline-block;
     transform-origin: 50% 50%;
-    transform: rotate(180deg);
     font-size: calc(var(--titleSize) / 2);
     white-space: nowrap;
   }
   
   &.show a {
-    transform: translateX(0%);
+    transform: translateY(0%);
   }
 
   @media( min-width: #{$break-mobile} ){
-    bottom: unset;
-    right: unset;
-    top: 0;
-    left: 0;
-    writing-mode: initial;
-    text-orientation: initial;
-
-    a {
-      padding-inline-start: var(--gap);
-      padding-block-start: 0;
-      padding-block-end: .5em;
-      transform: translateY(-100%);
-    }
-
-    h1 {
-      transform: none;
-    }
-
-    &.show a {
-      transform: translateY(0%);
-    }
+    display: inline-block;
+    width: unset;
   }
 }
 

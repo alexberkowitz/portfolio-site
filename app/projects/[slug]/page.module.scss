@@ -22,7 +22,7 @@ $title-scroll-scale: 0.6;
   
   @media(min-width: $break-tablet) {
     position: sticky;
-    top: calc(var(--pagePadding) + var(--pageTitleNominalDim));
+    top: calc(var(--pagePadding) + var(--pageTitleHeight));
     flex-direction: row;
     align-items: flex-start;
     justify-content: space-between;
@@ -37,7 +37,7 @@ $title-scroll-scale: 0.6;
 
     @container style(--animate: true) {
       .title h1 {
-        transform: scale($title-scroll-scale) translateY(calc(var(--pageTitleNominalDim) * -1));
+        transform: scale($title-scroll-scale) translateY(calc(var(--pageTitleHeight) * -1));
         color: var(--fgColor);
 
         &:before {
