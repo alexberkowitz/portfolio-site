@@ -66,7 +66,7 @@ export default function Test() {
 
       <div className={styles.demoSection}>
         <h2><Text>Projects</Text></h2>
-        <p><Text>Project case study pages are written using Markdown and rendered with MDX. They have their own custom components and layouts that differ from other pages. To test those pages, a test project was created that is only accessible by direct link. If you're interested, you can <Link href="/projects/test">check out the test project</Link>.</Text></p>
+        <p><Text>Project case study pages are written using Markdown and rendered with MDX. They have their own custom components and layouts that differ from other pages. To test those pages, a test project was created that is only accessible by direct link. If you&lsquo;re interested, you can <Link href="/projects/test">check out the test project</Link>.</Text></p>
       </div>
 
       <div className={styles.demoSection}>

@@ -20,24 +20,24 @@ const ScrollBar = (props) => {
       onScrollStop={() => { document.body.classList.remove('scrolling') }}
       renderer={(props) => {
         const { elementRef, key, ...restProps } = props;
-        return <div {...restProps} ref={elementRef} className={styles.scrollbar} />;
+        return <div key={key} {...restProps} ref={elementRef} className={styles.scrollbar} />;
       }}
       wrapperProps={{
         renderer: (props) => {
           const { elementRef, key, ...restProps } = props;
-          return <div key="wrapper" {...restProps} ref={elementRef} className={styles.scrollbarWrapper} />;
+          return <div key={key} {...restProps} ref={elementRef} className={styles.scrollbarWrapper} />;
         },
       }}
       trackYProps={{
         renderer: (props) => {
           const { elementRef, key, ...restProps } = props;
-          return <div key="trackY" {...restProps} ref={elementRef} className={styles.trackY} />;
+          return <div key={key} {...restProps} ref={elementRef} className={styles.trackY} />;
         },
       }}
       thumbYProps={{
         renderer: (props) => {
           const { elementRef, key, ...restProps } = props;
-          return <div key="thumbY" id="scrollbar-thumb" {...restProps} ref={elementRef} className={styles.thumbY} />;
+          return <div key={key} id="scrollbar-thumb" {...restProps} ref={elementRef} className={styles.thumbY} />;
         },
       }}
       >
