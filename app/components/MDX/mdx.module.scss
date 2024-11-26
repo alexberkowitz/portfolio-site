@@ -105,9 +105,15 @@
     z-index: -1;
   }
 
+  p {
+    max-width: unset;
+    margin: 0 auto;
+  }
+
   cite {
+    display: block;
     margin-top: 1rem;
-    float: right;
+    text-align: right;
     color: var(--fgColor);
     text-transform: uppercase;
 

@@ -12,7 +12,7 @@ $title-scroll-scale: 0.6;
   flex-direction: column;
   align-items: stretch;
   gap: var(--gap);
-  padding: calc(var(--pagePadding) / 2) var(--pagePadding);
+  padding: calc(var(--pagePadding) / 2);
   background-color: var(--bgColor);
   pointer-events: none;
   
@@ -58,13 +58,12 @@ $title-scroll-scale: 0.6;
   display: inline-block;
   width: 100%;
   margin: 0;
-  text-wrap: unset !important;
+  font-size: calc(var(--titleSize) * .75);
   
   h1 {
     position: relative;
     display: inline-block;
     margin: 0;
-    padding: calc(var(--pagePadding) / 2) 0 calc(var(--pagePadding) / 2) calc(var(--pagePadding) / 2);
     transform-origin: 100% 0%;
     transition: all .5s ease-in-out;
 
@@ -78,7 +77,9 @@ $title-scroll-scale: 0.6;
 
     h1 {
       float: right;
+      padding: calc(var(--pagePadding) / 2) 0 calc(var(--pagePadding) / 2) calc(var(--pagePadding) / 2);
       text-align: right;
+      font-size: var(--titleSize);
 
       &:before {
         content: '';

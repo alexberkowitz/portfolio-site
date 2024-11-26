@@ -20,7 +20,7 @@ export default function Test() {
         </Text>
         <br/><br/>
         <Text>
-          Btw, you can find the source code for this site <a href="https://github.com/alexberkowitz/portfolio-site" target="_blank">here</a>.
+          Btw, you can find the source code for this site <Link href="https://github.com/alexberkowitz/portfolio-site" target="_blank">here</Link>.
         </Text>
       </p>
 
@@ -61,7 +61,12 @@ export default function Test() {
 
       <div className={styles.demoSection}>
         <h2><Text>Cursor</Text></h2>
-        <p><Text>The cursor on my site is custom-built with p5.js.<br/>Try hovering over this text, or perhaps <a href="#">this link</a>!</Text></p>
+        <p><Text>The cursor on my site is custom-built with p5.js.<br/>Try hovering over this text, or perhaps <Link href="#">this link</Link>!</Text></p>
+      </div>
+
+      <div className={styles.demoSection}>
+        <h2><Text>Projects</Text></h2>
+        <p><Text>Project case study pages are written using Markdown and rendered with MDX. They have their own custom components and layouts that differ from other pages. To test those pages, a test project was created that is only accessible by direct link. If you're interested, you can <Link href="/projects/test">check out the test project</Link>.</Text></p>
       </div>
 
       <div className={styles.demoSection}>
