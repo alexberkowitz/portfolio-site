@@ -196,7 +196,6 @@ export default function WindowBorder(props) {
       const command = i == 0 ? 'M' : 'L';
       const newPoint = [ Math.round(points[i][0]), Math.round(points[i][1]) ];
       newSVGPath += `${command} ${newPoint[0] + padding.left},${newPoint[1] + padding.top} `;
-      console.log(newPoint);
     }
     
     // Close the path using the first point

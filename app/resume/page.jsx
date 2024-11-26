@@ -51,9 +51,9 @@ export default function Resume() {
       <div className={styles.columns}>
 
         <div className={styles.column}>
-          <section>
+          <section id={styles.experience}>
             <h2 className={styles.sectionTitle}>
-              <Text>Experience</Text>
+              Experience
             </h2>
 
             <ul className={styles.timeline}>
@@ -100,32 +100,12 @@ export default function Resume() {
         </div>
 
         <div className={styles.column}>
-          <section>
+          <section id={styles.skills}>
             <h2 className={styles.sectionTitle}>
-              <Text>Education</Text>
-            </h2>
-            <div>
-              <p>
-                <b><Text>Rochester Institute of Techonlogy</Text></b>
-              </p>
-              <p>
-                <small><Text>Graduated 2015 - Cum Laude</Text></small>
-              </p>
-              <p>
-                <Text>Bachelor of Fine Arts, 3D Digital Graphics</Text>
-              </p>
-              <p>
-                <small><Text>Minor in American Sign Language & Deaf Culture</Text></small>
-              </p>
-            </div>
-          </section>
-
-          <section>
-            <h2 className={styles.sectionTitle}>
-              <Text>Skills & Tools</Text>
+              Skills
             </h2>
             <div className={styles.skillFilter}>
-              <label>Filter:</label>
+              <label><Text>Filter:</Text></label>
               <div className={styles.buttons}>
                 <button
                   onClick={() => filterSkills('all')}
@@ -153,7 +133,7 @@ export default function Resume() {
                 </button>
               </div>
             </div>
-            <ul className={styles.skills}>
+            <ul className={styles.skillsList}>
               {selectedSkills.map((skill, index) => (
                 <li
                   key={index}
@@ -163,7 +143,9 @@ export default function Resume() {
                 </li>
               ))}
             </ul>
-            <ul className={styles.skills}>
+
+            <h3 style={{alignSelf: 'stretch', marginTop: '2rem', textAlign: 'center'}}>Tools</h3>
+            <ul className={styles.skillsList}>
               {selectedTools.map((tool, index) => (
                 <li
                   key={index}
@@ -173,6 +155,26 @@ export default function Resume() {
                 </li>
               ))}
             </ul>
+          </section>
+
+          <section id={styles.education}>
+            <h2 className={styles.sectionTitle}>
+              Education
+            </h2>
+            <div>
+              <p>
+                <b><Text>Rochester Institute of Techonlogy</Text></b>
+              </p>
+              <p>
+                <small><Text>Graduated 2015 - Cum Laude</Text></small>
+              </p>
+              <p>
+                <Text>Bachelor of Fine Arts, 3D Digital Graphics</Text>
+              </p>
+              <p>
+                <small><Text>Minor in American Sign Language & Deaf Culture</Text></small>
+              </p>
+            </div>
           </section>
         </div>
 

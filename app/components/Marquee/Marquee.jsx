@@ -25,7 +25,7 @@ const Marquee = () => {
   const marqueeRef = useRef(null);
   const textRef = useRef(null);
 
-  const ignoredPages = ["/", "/projects/*", "/demo"]; // Pages on this list won't show the marquee
+  const ignoredPages = ["/", "/projects/*", "/demo", "/resume"]; // Pages on this list won't show the marquee
 
 
   // Set the marquee parameters on load
