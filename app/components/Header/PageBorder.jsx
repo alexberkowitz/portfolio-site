@@ -29,6 +29,7 @@ export default function WindowBorder(props) {
     return () => {
       window.removeEventListener("resize", drawSVG);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   
   // Update the path on route change
@@ -39,6 +40,7 @@ export default function WindowBorder(props) {
     setTimeout(() => { // Disable animated transitions
       setPathChanging(false);
     }, Constants.titleDuration * 1000);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
   
   

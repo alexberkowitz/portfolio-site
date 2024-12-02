@@ -28,6 +28,7 @@ const Toast = (props) => {
         }, 2000);
       }
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Close the toast on page change

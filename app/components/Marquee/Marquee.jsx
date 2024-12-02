@@ -40,12 +40,14 @@ const Marquee = () => {
         window.removeEventListener("resize", getMarqueeSize);
       }
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
 
   // Update the marquee text when the global title value changes
   useEffect(() => {
     updateText();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
 

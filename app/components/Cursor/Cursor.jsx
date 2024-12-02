@@ -210,6 +210,7 @@ const Cursor = () => {
     return () => {
       removeFunction();
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Drawing setup

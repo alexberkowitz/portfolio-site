@@ -54,6 +54,7 @@ const ModelViewer = (props) => {
       removeFunction();
       window.removeEventListener("resize", resizeHandler);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
 
