@@ -170,7 +170,7 @@ function Video(props) {
           width="1280"
           height="720"
           src={`https://www.youtube.com/embed/${props.id}?rel=0&loop=1`}
-          frameborder="0"
+          style={{ border: 'none', aspectRatio: '16 / 9' }}
           >
         </iframe>
       </div>

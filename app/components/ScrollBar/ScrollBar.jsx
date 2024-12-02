@@ -28,6 +28,12 @@ const ScrollBar = (props) => {
           return <div key={key} {...restProps} ref={elementRef} className={styles.scrollbarWrapper} />;
         },
       }}
+      scrollerProps={{
+        renderer: (props) => {
+          const { elementRef, key, ...restProps } = props;
+          return <div key={key} {...restProps} ref={elementRef} id="scroll-container" className={styles.scroller} />;
+        },
+      }}
       trackYProps={{
         renderer: (props) => {
           const { elementRef, key, ...restProps } = props;
