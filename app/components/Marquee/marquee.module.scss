@@ -17,6 +17,7 @@ $marquee-padding: calc(var(--titleSize) * 0.2);
   overflow: hidden;
   pointer-events: none;
   z-index: 12;
+  transition: top var(--titleDuration) ease-in-out;
   --textWidth: 100; // In pixels
   --animSpeed: 100; // In pixels per second
 

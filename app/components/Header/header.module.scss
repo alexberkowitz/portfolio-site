@@ -33,7 +33,7 @@ $transition:  all var(--titleDuration) ease-in-out;
     padding-inline-start: 1em;
     padding-inline-end: 1em;
     padding-block-end: .5em;
-    transform: translateY(100%);
+    transform: translateY(-100%);
     color: var(--fgColor);
     text-decoration: none;
     transition: $transition;

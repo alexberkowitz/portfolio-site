@@ -74,13 +74,6 @@ export default function WindowBorder(props) {
     
     // Calculate the dimensions of the title
     const titleBounds = props.titleRef.current?.getBoundingClientRect();
-    // const titleSize = isMobile ? {
-    //   width: props.showTitle ? titleBounds?.width : 0,
-    //   height: titleBounds?.height
-    // } : {
-    //   width: titleBounds?.width,
-    //   height: props.showTitle ? titleBounds?.height : 0
-    // };
     const titleSize = {
       width: titleBounds?.width,
       height: props.showTitle ? titleBounds?.height : 0
