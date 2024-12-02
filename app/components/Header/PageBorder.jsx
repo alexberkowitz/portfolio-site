@@ -9,7 +9,7 @@
 
 import { useState, useEffect } from 'react'
 import { usePathname } from 'next/navigation';
-import { roundCorners } from 'svg-round-corners';
+import { roundCorners } from '@/utils/roundPathCorners';
 import * as Constants from '@/Constants';
 
 export default function WindowBorder(props) {
@@ -96,114 +96,122 @@ export default function WindowBorder(props) {
     // Technically it would be better to calculate this from the CSS but honestly
     // it's such a small change to make if I ever decouple those values.
     const cornerRadius = padding.top;
+    const minorCornerRadius = 10;
     
     
     // Set the SVG viewbox
     setViewbox(`0 0 ${windowSize.width} ${windowSize.height}`);
     
-    // Build the inner path
-    let newSVGPath = "";
-    
     // The intent is to allow for relative positioning, so now we can use the width & height to offset from the right and bottom edges
+    // First two values are X and Y coords, third is radius
     // 
     let points = isMobile ? [
       [ // Starting in the middle of the bottom helps ensure the corners round properly
         shapeSize.width / 2,
-        shapeSize.height + posOffset
+        shapeSize.height + posOffset,
+        cornerRadius
       ],
-      ...(props.showTitle ? [] : [[ // (Extra animation point)
-        backButtonSize.width + backButtonSize.height + cornerRadius - posOffset,
-        shapeSize.height + posOffset
-      ]]),
       [ // Back button bottom right
         backButtonSize.width + backButtonSize.height - posOffset,
-        shapeSize.height + posOffset
+        shapeSize.height + posOffset,
+        minorCornerRadius
       ],
       [ // Back button top right
         backButtonSize.width - posOffset,
-        shapeSize.height - backButtonSize.height + posOffset
+        shapeSize.height - backButtonSize.height + posOffset,
+        minorCornerRadius
       ],
       [ // Back button top left
         0 - posOffset,
-        shapeSize.height - backButtonSize.height + posOffset
+        shapeSize.height - backButtonSize.height + posOffset,
+        minorCornerRadius
       ],
       [ // Title bottom left
         0 - posOffset,
-        titleSize.height - posOffset
+        titleSize.height - posOffset,
+        cornerRadius
       ],   
       [ // Title bottom right
         titleSize.width - posOffset,
-        titleSize.height - posOffset
+        titleSize.height - posOffset,
+        cornerRadius
       ],
       [ // Bottom right
         shapeSize.width + posOffset,
-        shapeSize.height + posOffset
+        shapeSize.height + posOffset,
+        cornerRadius
       ]
     ] : [
       [ // Starting in the middle of the bottom helps ensure the corners round properly
         shapeSize.width / 2,
-        shapeSize.height + posOffset
+        shapeSize.height + posOffset,
+        0
       ],
-      ...(props.showTitle ? [] : [[ // (Extra animation point)
-        backButtonSize.width + backButtonSize.height + cornerRadius - posOffset,
-        shapeSize.height + posOffset
-      ]]),
       [ // Back button bottom right
         backButtonSize.width + backButtonSize.height - posOffset,
-        shapeSize.height + posOffset
+        shapeSize.height + posOffset,
+        minorCornerRadius
       ],
       [ // Back button top right
         backButtonSize.width - posOffset,
-        shapeSize.height - backButtonSize.height + posOffset
+        shapeSize.height - backButtonSize.height + posOffset,
+        minorCornerRadius
       ],
       [ // Back button top left
         0 - posOffset,
-        shapeSize.height - backButtonSize.height + posOffset
+        shapeSize.height - backButtonSize.height + posOffset,
+        minorCornerRadius
       ],
       [ // Title bottom left
         0 - posOffset,
-        titleSize.height - posOffset
+        titleSize.height - posOffset,
+        minorCornerRadius
       ],   
       [ // Title bottom right
         titleSize.width - posOffset,
-        titleSize.height - posOffset
+        titleSize.height - posOffset,
+        minorCornerRadius
       ],
       [ // Title top right
         titleSize.width + titleSize.height - posOffset,
-        0 - posOffset
+        0 - posOffset,
+        minorCornerRadius
       ],
-      ...(props.showTitle ? [] : [[ // (Extra animation point)
-        titleSize.width + titleSize.height + cornerRadius - posOffset,
-        0 - posOffset
-      ]]),
       [ // Top right
         shapeSize.width + posOffset,
-        0 - posOffset
+        0 - posOffset,
+        cornerRadius
       ],
       [ // Bottom right
         shapeSize.width + posOffset,
-        shapeSize.height + posOffset
+        shapeSize.height + posOffset,
+        cornerRadius
       ]
     ];
+
+    // Build the inner path and radius lists
+    let newSVGPath = "";
+    let radii = [];
     
     // Add each point to the path string
     for( let i = 0; i < points.length; i++ ) {
       const command = i == 0 ? 'M' : 'L';
-      const newPoint = [ Math.round(points[i][0]), Math.round(points[i][1]) ];
-      newSVGPath += `${command} ${newPoint[0] + padding.left},${newPoint[1] + padding.top} `;
+      newSVGPath += `${command} ${Math.round(points[i][0]) + padding.left},${Math.round(points[i][1]) + padding.top} `;
+      radii.push(points[i][2]);
     }
     
     // Close the path using the first point
-    newSVGPath += `Z ${points[0][0] + padding.left},${points[0][1] + padding.top} `;
+    newSVGPath += `Z ${points[0][0] + padding.left},${points[0][1] + padding.top}`;
+    radii.push(points[0][2]);
     
     // Apply the rounded corners
-    const roundedPath = roundCorners(newSVGPath, padding.top, false);
+    const roundedPath = roundCorners(newSVGPath, radii, false);
     
     // Add outer rectangle after rounding corners
     // We add 10px so the stroke color only appears in the cutout
     const outerRect = `M -10,-10 L ${windowSize.width + 10},-10 L ${windowSize.width + 10},${windowSize.height + 10} L -10,${windowSize.height + 10} L -10,-10`;
     
-    setSvgPath(roundedPath.path + outerRect);
+    setSvgPath(outerRect + roundedPath);
 
     // Set the associated CSS properties on the body so page padding can be calculated
     document.body.style.setProperty('--pageTitleHeight', `${titleSize.height}px`);

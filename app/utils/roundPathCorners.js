@@ -25,14 +25,15 @@
  * @param pathString The SVG input path
  * @param radius The amount to round the corners, either a value in the SVG 
  *               coordinate space, or, if useFractionalRadius is true, a value
- *               from 0 to 1.
+ *               from 0 to 1. Script has been modified to optionally accept
+ *               an array of radii.
  * @param useFractionalRadius If true, the curve radius is expressed as a
  *               fraction of the distance between the point being curved and
  *               the previous and next points.
  * @returns A new SVG path string with the rounding
  */
 
-export function roundPathCorners(pathString, radius, useFractionalRadius) {
+export function roundCorners(pathString, radius, useFractionalRadius) {
   function moveTowardsLength(movingPoint, targetPoint, amount) {
     var width = (targetPoint.x - movingPoint.x);
     var height = (targetPoint.y - movingPoint.y);
@@ -130,8 +131,8 @@ export function roundPathCorners(pathString, radius, useFractionalRadius) {
           curveStart = moveTowardsFractional(curPoint, prevCmd.origPoint || prevPoint, radius);
           curveEnd = moveTowardsFractional(curPoint, nextCmd.origPoint || nextPoint, radius);
         } else {
-          curveStart = moveTowardsLength(curPoint, prevPoint, radius);
-          curveEnd = moveTowardsLength(curPoint, nextPoint, radius);
+          curveStart = moveTowardsLength(curPoint, prevPoint, typeof radius == 'string' ? radius : radius[cmdIndex]);
+          curveEnd = moveTowardsLength(curPoint, nextPoint, typeof radius == 'string' ? radius : radius[cmdIndex]);
         }
         
         // Adjust the current command and add it

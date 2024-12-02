@@ -39,14 +39,22 @@ export function ProjectsList(props) {
     <ul className={styles.projectsList}>
       {allProjects
         .sort((a, b) => { return a.metadata.title < b.metadata.title ? -1 : 1 }) // Alphabetical sorting
-        .map((project) => (
-          <li key={project.slug} style={{
-            '--colSpan': project.metadata.width,
-            '--rowSpan': project.metadata.height,
-          }}>
-            <Link
-              href={`/projects/${project.slug}`}
-              >
+        .map((project) => project.metadata.comingSoon ? (
+          <li key={project.slug}>
+            <Link href="#">
+              {coverImage(project.metadata.cover, project.metadata.title)}
+              <p className={styles.comingSoon}>Coming Soon</p>
+            </Link>
+          </li>
+        ) : (
+          <li
+            key={project.slug}
+            style={{
+              '--colSpan': project.metadata.width,
+              '--rowSpan': project.metadata.height,
+            }}
+            >
+            <Link href={`/projects/${project.slug}`}>
               {coverImage(project.metadata.cover, project.metadata.title)}
               <div className={styles.info}>
                 <p className={styles.type}>{project.metadata.type}</p>
