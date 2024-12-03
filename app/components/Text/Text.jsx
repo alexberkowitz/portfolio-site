@@ -14,8 +14,8 @@
 import styles from './text.module.scss';
 
 const Text = (props) => {
-  const { type, ...rest } = props;
-  return <span className={!!props.type ? styles[props.type] : styles.textWrapper} {...rest}>{props.children}</span>;
+  const { type, children, ...rest } = props;
+  return <span className={!!props.type ? styles[type] : styles.textWrapper} {...rest}>{children}</span>;
 }
 
 export default Text;

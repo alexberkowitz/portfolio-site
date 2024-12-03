@@ -22,6 +22,7 @@ export default function GlobalContextContainer(props) {
     if( !includesAny(pathname, incompleteRoutes) ){
       setTransition(false);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const navigate = (route) => {

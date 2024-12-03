@@ -65,6 +65,7 @@ const ModelViewer = (props) => {
     if( props.callback && callbackInitiated ){
       props.callback();
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [callbackInitiated]);
 
 
