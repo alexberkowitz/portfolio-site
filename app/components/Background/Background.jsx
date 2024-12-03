@@ -1,9 +1,10 @@
 /*-------------------------------------------------------*/
 /* BACKGROUND
 /*-------------------------------------------------------*/
-/* Fancy page background with mouse/touch effects
-/* powered by p5.js
-/*-------------------------------------------------------*/
+/**
+ * Fancy page background with mouse/touch effects
+ * powered by p5.js
+ */
 
 'use client'
 

@@ -46,13 +46,13 @@ export default function Test() {
         <p><Text>
           A custom {"<Text>"} component is used throughout the site. At a basic level, it provides a background color to ensure legibility against the site BG.
           <br/><br/>
-          But the wrapper can also be used for special effects such as <Text style="emphasis">emphasis</Text> and <Text style="accent">accented backgrounds</Text>.
+          But the wrapper can also be used for special effects such as <Text type="emphasis">emphasis</Text> and <Text type="accent">accented backgrounds</Text>.
         </Text></p>
       </div>
 
       <div className={styles.demoSection}>
         <h2><Text>Buttons and Links</Text></h2>
-        <p><Text>All navigation links on the site use a custom {"<Link>"} component. This component has no default styling, and hooks into a global <Text style="accent">navigate()</Text> hook to enable transitions.</Text></p>
+        <p><Text>All navigation links on the site use a custom {"<Link>"} component. This component has no default styling, and hooks into a global <Text type="accent">navigate()</Text> hook to enable transitions.</Text></p>
         <div style={{display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '1rem'}}>
           <Link href="#"><Text>Here&lsquo;s a link</Text></Link>
           <Button>And here&lsquo;s a button</Button>

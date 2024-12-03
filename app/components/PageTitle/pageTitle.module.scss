@@ -38,9 +38,17 @@
   @media( min-width: #{$break-mobile} ){
     top: var(--pagePadding);
   }
+
+  @media print {
+    display: none;
+  }
 }
 
 // Page content gap
 main:has(.pageTitle) {
-  padding-top: calc( var(--titleSize) + (var(--pagePadding) * 2) );
+  padding-top: calc( var(--titleSize) + (var(--pagePadding) * 2) + var(--pageTitleHeight) );
+
+  @media( min-width: #{$break-mobile} ){
+    padding-top: calc( var(--titleSize) + (var(--pagePadding) * 2) );
+  }
 }

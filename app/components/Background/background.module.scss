@@ -13,4 +13,8 @@
     left: 0;
     max-width: unset;
   }
+
+  @media print {
+    display: none;
+  }
 }

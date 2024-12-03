@@ -4,6 +4,7 @@ import { useState } from 'react';
 import PageTitle from '@/components/PageTitle/PageTitle';
 import Text from '@/components/Text/Text';
 import Link from '@/components/Link/Link';
+import Button from '@/components/Button/Button';
 
 import { skills, tools } from './skills.js';
 
@@ -42,15 +43,32 @@ export default function Resume() {
   return (
     <main className={styles.resumePage}>
       <PageTitle>Résumé</PageTitle>
-      <p style={{paddingBottom: 'var(--pagePadding)', marginLeft: 'var(--pagePadding)'}}>
-        <Text>
-          Welcome to my digital résumé! If you&lsquo;d prefer a PDF version, <Link href="#">click here</Link>.
+
+      <div tabIndex="-1" className={styles.resumeHeader}>
+        <div>
+          <h1>Alex Berkowitz</h1>
+          <b>Designer, Developer, Maker</b>
+        </div>
+        <p>
+          alex@alexberkowitz.com
+          <br/>
+          alexberkowitz.com
+          <br/>
+          (847) 280-1479
+        </p>
+      </div>
+
+      <p className={styles.intro} style={{paddingBottom: 'var(--pagePadding)', marginLeft: 'var(--pagePadding)'}}>
+        <Text style={{ textWrap: 'balance' }}>
+          Welcome to my digital résumé! Here you can find a general overview of my working expdrience and skillset. You can find even more details on my <Link href="https://www.linkedin.com/in/alexberkowitz">LinkedIn page</Link>.
+          <br/>
+          <small>(psst: if you prefer a PDF version, this page is <Button onClick={() => window.print()} type="link">print-ready</Button>!</small>
         </Text>
       </p>
 
       <div className={styles.columns}>
 
-        <div className={styles.column}>
+        <div className={styles.column} id={styles.experience}>
           <section id={styles.experience}>
             <h2 className={styles.sectionTitle}>
               Experience
@@ -101,60 +119,64 @@ export default function Resume() {
 
         <div className={styles.column}>
           <section id={styles.skills}>
-            <h2 className={styles.sectionTitle}>
-              Skills
-            </h2>
-            <div className={styles.skillFilter}>
-              <label><Text>Filter:</Text></label>
-              <div className={styles.buttons}>
-                <button
-                  onClick={() => filterSkills('all')}
-                  className={skillFilter === 'all' ? styles.active : ''}
-                  >
-                  All
-                </button>
-                <button
-                  onClick={() => filterSkills('designer')}
-                  className={skillFilter === 'designer' ? styles.active : ''}
-                  >
-                  Designer
-                </button>
-                <button
-                  onClick={() => filterSkills('developer')}
-                  className={skillFilter === 'developer' ? styles.active : ''}
-                  >
-                  Developer
-                </button>
-                <button
-                  onClick={() => filterSkills('maker')}
-                  className={skillFilter === 'maker' ? styles.active : ''}
-                  >
-                  Maker
-                </button>
+            <div className={styles.printWrapper}>
+              <h2 className={styles.sectionTitle}>
+                Skills
+              </h2>
+              <div className={styles.skillFilter}>
+                <label><Text>Filter:</Text></label>
+                <div className={styles.buttons}>
+                  <button
+                    onClick={() => filterSkills('all')}
+                    className={skillFilter === 'all' ? styles.active : ''}
+                    >
+                    All
+                  </button>
+                  <button
+                    onClick={() => filterSkills('designer')}
+                    className={skillFilter === 'designer' ? styles.active : ''}
+                    >
+                    Designer
+                  </button>
+                  <button
+                    onClick={() => filterSkills('developer')}
+                    className={skillFilter === 'developer' ? styles.active : ''}
+                    >
+                    Developer
+                  </button>
+                  <button
+                    onClick={() => filterSkills('maker')}
+                    className={skillFilter === 'maker' ? styles.active : ''}
+                    >
+                    Maker
+                  </button>
+                </div>
               </div>
+              <ul className={styles.skillsList}>
+                {selectedSkills.map((skill, index) => (
+                  <li
+                    key={index}
+                    className={styles.skill}
+                    >
+                    {skill.title}
+                  </li>
+                ))}
+              </ul>
             </div>
-            <ul className={styles.skillsList}>
-              {selectedSkills.map((skill, index) => (
-                <li
-                  key={index}
-                  className={styles.skill}
-                  >
-                  {skill.title}
-                </li>
-              ))}
-            </ul>
 
-            <h3 style={{alignSelf: 'stretch', marginTop: '2rem', textAlign: 'center'}}>Tools</h3>
-            <ul className={styles.skillsList}>
-              {selectedTools.map((tool, index) => (
-                <li
-                  key={index}
-                  className={styles.tool}
-                  >
-                  {tool.title}
-                </li>
-              ))}
-            </ul>
+            <div className={styles.printWrapper}>
+              <h3 className={styles.sectionSubtitle}>Tools</h3>
+              <ul className={styles.skillsList}>
+                {selectedTools.map((tool, index) => (
+                  <li
+                    key={index}
+                    className={styles.tool}
+                    >
+                    {tool.title}
+                  </li>
+                ))}
+              </ul>
+            </div>
           </section>
 
           <section id={styles.education}>

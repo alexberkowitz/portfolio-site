@@ -1,9 +1,10 @@
 /*-------------------------------------------------------*/
 /* PROJECTS LIST
 /*-------------------------------------------------------*/
-/* Projects logic based on
-/* https://github.com/vercel/examples/tree/main/solutions/blog/app/blog
-/*-------------------------------------------------------*/
+/**
+ * Projects logic based on
+ * https://github.com/vercel/examples/tree/main/solutions/blog/app/blog
+ */
 
 import Link from '@/components/Link/Link';
 import { getProjects } from '@/utils/projects';

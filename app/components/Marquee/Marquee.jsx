@@ -1,8 +1,11 @@
 /*-------------------------------------------------------*/
 /* MARQUEE
 /*-------------------------------------------------------*/
-/* Scrolling page title element
-/*-------------------------------------------------------*/
+/**
+ * Global page title element with scrolling effect
+ * 
+ * Pulls page title from path name (same as Next.js)
+ */
 
 'use client'
 

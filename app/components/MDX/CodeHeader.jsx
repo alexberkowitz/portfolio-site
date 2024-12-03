@@ -1,9 +1,10 @@
 /*-------------------------------------------------------*/
 /* CODE HEADER
 /*-------------------------------------------------------*/
-/* Header for <pre> elements that shows language
-/* and a copy button
-/*-------------------------------------------------------*/
+/**
+ * Header for <pre> elements that shows
+ * language and a copy button
+ */
 
 'use client'
 
@@ -31,7 +32,7 @@ const CodeHeader = (props) => {
       <Button
         className={`${styles.copyButton} ${success ? styles.success : ''}`}
         onClick={(e) => copyText(e)}
-        icon={true}
+        type="icon"
         aria-label="Copy"
         >
         <Icon type="copy" />

@@ -1,9 +1,10 @@
 /*-------------------------------------------------------*/
 /* PAGE BORDER
 /*-------------------------------------------------------*/
-/* Fancy SVG-based page border that animates
-/* to hide/show the site title
-/*-------------------------------------------------------*/
+/**
+ * Fancy SVG-based page border that animates
+ * to hide/show site title and back button
+ */
 
 "use client"
 
@@ -106,8 +107,8 @@ export default function WindowBorder(props) {
     // First two values are X and Y coords, third is radius
     // 
     let points = isMobile ? [
-      [ // Starting in the middle of the bottom helps ensure the corners round properly
-        shapeSize.width / 2,
+      [ // Starting along the bottom edge helps ensure the corners round properly
+        shapeSize.width - (2 * cornerRadius),
         shapeSize.height + posOffset,
         cornerRadius
       ],
@@ -142,8 +143,8 @@ export default function WindowBorder(props) {
         cornerRadius
       ]
     ] : [
-      [ // Starting in the middle of the bottom helps ensure the corners round properly
-        shapeSize.width / 2,
+      [ // Starting along the bottom edge helps ensure the corners round properly
+        shapeSize.width - (2 * cornerRadius),
         shapeSize.height + posOffset,
         0
       ],

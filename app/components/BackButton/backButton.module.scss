@@ -18,7 +18,7 @@
 
   a {
     position: relative;
-    width: clamp(7rem, 20vw, 10rem);
+    width: clamp(5rem, 20vw, 10rem);
     height: 1.5rem;
     display: flex;
     align-items: center;
@@ -77,5 +77,9 @@
         padding-top: .2rem;
       }
     }
+  }
+
+  @media print {
+    display: none;
   }
 }

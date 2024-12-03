@@ -64,6 +64,7 @@ body {
     background-size: var(--gridSize) var(--gridSize), var(--gridSize) var(--gridSize);
     background-position: top calc(var(--gridSize) / 2 - var(--borderWidth)) left calc(var(--gridSize) / 2 - var(--borderWidth));
     background-attachment: fixed;
+    image-rendering: pixelated;
     z-index: 0;
   }
 
@@ -101,4 +102,33 @@ main {
 
 canvas {
   image-rendering: pixelated;
+}
+
+
+
+/*-------------------------------------------------------*/
+/* PRINT
+/*-------------------------------------------------------*/
+
+@media print {
+  body {
+    max-height: unset !important;
+    overflow: visible !important;
+    padding: .25in !important;
+    --gap: .25in !important;
+    --borderWidth: .02in !important;
+
+    &:before {
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+  }
+
+  main {
+    padding: 0 !important;
+  }
+}
+@page {
+  size: auto; 
+  margin: 0mm;
 }

@@ -21,9 +21,19 @@
       --secondaryColor: var(--bodyColor);
     }
   }
+}
 
-  &.icon {
-    padding: 0.5rem;
-    background-color: transparent;
+.icon {
+  @extend .button;
+  padding: 0.5rem;
+  background-color: transparent;
+}
+
+.link {
+  display: inline;
+  text-decoration: underline;
+
+  @include hover {
+    color: var(--fgColor);
   }
 }

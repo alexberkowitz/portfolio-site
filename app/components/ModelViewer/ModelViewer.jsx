@@ -1,22 +1,24 @@
 /*-------------------------------------------------------*/
 /* 3D MODEL VIEWER
 /*-------------------------------------------------------*/
-/* Displays a 3D model
-/*---
-/* PROPS:
-/*
-/* model: (url) Path of the 3D model
-/* texture: (url) Path of a texture file
-/* rotationX: (number) Base X rotation value
-/* rotationY: (number) Base Y rotation value
-/* rotationZ: (number) Base Z rotation value
-/* rotationSpeed: (number) Static rotation speed around Y axis in degrees per second
-/* xInfluence: (number) Max cursor influence on X rotation in degrees
-/* yInfluence: (number) Max cursor influence on Y rotation in degrees
-/* scale: (number) Scaling factor
-/* text: (string) Text to display if no model is provided
-/* dither: (boolean) Whether or not to display the model in a dithered style
-/*-------------------------------------------------------*/
+/**
+ * Displays a 3D model
+ *
+ * 
+ * PROPS:
+ *
+ * model: (url) Path of the 3D model
+ * texture: (url) Path of a texture file
+ * rotationX: (number) Base X rotation value
+ * rotationY: (number) Base Y rotation value
+ * rotationZ: (number) Base Z rotation value
+ * rotationSpeed: (number) Static rotation speed around Y axis in degrees per second
+ * xInfluence: (number) Max cursor influence on X rotation in degrees
+ * yInfluence: (number) Max cursor influence on Y rotation in degrees
+ * scale: (number) Scaling factor
+ * text: (string) Text to display if no model is provided
+ * dither: (boolean) Whether or not to display the model in a dithered style
+ */
 
 'use client'
 

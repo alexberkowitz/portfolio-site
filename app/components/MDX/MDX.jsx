@@ -1,8 +1,9 @@
 /*-------------------------------------------------------*/
 /* MDX ELEMENT DISPLAY
 /*-------------------------------------------------------*/
-/* Based on https://github.com/vercel/examples/tree/main/solutions/blog
-/*-------------------------------------------------------*/
+/**
+ * Based on https://github.com/vercel/examples/tree/main/solutions/blog
+ */
 
 import React from 'react';
 import { MDXRemote } from 'next-mdx-remote/rsc';

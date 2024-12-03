@@ -24,6 +24,10 @@ $marquee-padding: calc(var(--titleSize) * 0.2);
   @media( min-width: #{$break-mobile} ){
     top: var(--pagePadding)
   }
+
+  @media print {
+    display: none;
+  }
 }
 
 .marqueeWrapper {

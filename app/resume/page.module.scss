@@ -30,6 +30,8 @@ $break-custom: 1200px;
       padding: .5rem;
       background-color: var(--bgColor);
       border-radius: var(--cornerRadius);
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
     }
   }
 
@@ -52,6 +54,12 @@ $break-custom: 1200px;
       }
     }
   }
+}
+
+.sectionSubtitle {
+  align-self: stretch;
+  margin-top: 2rem;
+  text-align: center;
 }
 
 
@@ -181,7 +189,7 @@ $break-custom: 1200px;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  gap: 1rem;
+  gap: .5rem;
   align-items: flex-start;
   justify-content: center;
   margin: 0;
@@ -189,7 +197,6 @@ $break-custom: 1200px;
   list-style-type: none;
 
   li {
-    // flex: 1 0 auto;
     padding: .5rem 1.25rem .45rem 1.25rem;
     font-size: .75rem;
     text-align: center;
@@ -198,12 +205,6 @@ $break-custom: 1200px;
 
     &.tool {
       color: var(--fgColor);
-    }
-  }
-
-  @media( min-width: #{$break-mobile} ){
-    li {
-      font-size: 1rem;
     }
   }
 }
@@ -304,4 +305,102 @@ $break-custom: 1200px;
 /*-------------------------------------------------------*/
 #education {
   text-align: center;
+}
+
+
+
+/*-------------------------------------------------------*/
+/* PRINT
+/*-------------------------------------------------------*/
+.resumeHeader {
+  display: none;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: .5rem;
+  background-color: var(--bgColor);
+  -webkit-print-color-adjust: exact !important;
+  print-color-adjust: exact !important;
+
+  h1 {
+    margin-bottom: 1rem;
+    color: var(--fgColor);
+    font-weight: 200;
+  }
+
+  b {
+    font-weight: 500;
+    text-transform: uppercase;
+  }
+
+  > p {
+    text-align: right !important;
+  }
+}
+
+.printWrapper {
+  display: contents;
+}
+
+@media print {
+  .resumePage * {
+    align-items: flex-start !important;
+    text-align: left !important;
+  }
+
+  .columns,
+  .columns section {
+    align-self: stretch;
+    align-items: stretch !important;
+  }
+
+  .sectionSubtitle {
+    margin-top: 0;
+  }
+
+  .resumeHeader {
+    display: flex;
+  }
+
+  .printWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: inherit;
+  }
+
+  .title,
+  .company {
+    align-items: center !important;
+  }
+
+  .intro,
+  .skillFilter {
+    display: none;
+  }
+
+  #skills {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+
+    .printWrapper:first-child {
+      flex-basis: 60%;
+    }
+
+    .printWrapper:last-child {
+      flex-basis: 40%;
+    }
+  }
+
+  .skillsList {
+    justify-content: flex-start;
+    break-inside: avoid;
+
+    li {
+      padding: .25rem .75rem .225rem .75rem;
+    }
+  }
+
+  #education {
+    align-self: center;
+  }
 }

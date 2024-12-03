@@ -16,6 +16,10 @@ $transition:  all var(--titleDuration) ease-in-out;
   z-index: 15;
   pointer-events: none;
   isolation: isolate;
+
+  @media print {
+    display: none;
+  }
 }
 
 .title {
