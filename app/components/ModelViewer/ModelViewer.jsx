@@ -32,6 +32,7 @@ import styles from "./modelView.module.scss";
 const ModelViewer = (props) => {
   const renderRef = useRef();
   const [initialized, setInitialized] = useState(false);
+  const [callbackInitiated, setCallbackInitiated] = useState(false);
 
   let removeFunction; // Storage for the p.remove() function so we can call it from useEffect
 
@@ -58,6 +59,13 @@ const ModelViewer = (props) => {
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // Optional callback after model loads
+  useEffect(() => {
+    if( props.callback && callbackInitiated ){
+      props.callback();
+    }
+  }, [callbackInitiated]);
 
 
   
@@ -120,6 +128,8 @@ const ModelViewer = (props) => {
         if( props.dither ){
           dither(p, Constants.fgColor, Constants.bgColor, true);
         }
+
+        setCallbackInitiated(true);
       }
     });
   }
@@ -154,8 +164,20 @@ const ModelViewer = (props) => {
       y: ((p.mouseX / p.width) - 0.5) * maxRotationY
     }
     context.rotateX(rotationAmount.x + props.rotationX);
-    context.rotateY(baseAngle + rotationAmount.y + props.rotationY);
+    context.rotateY(rotationAmount.y + props.rotationY);
     context.rotateZ(props.rotationZ);
+
+    switch( props.rotationAxis?.toLowerCase() || 'y' ){
+      case 'x':
+        context.rotateX(baseAngle + rotationAmount.x + props.rotationX);
+        break;
+      case 'y':
+        context.rotateY(baseAngle + rotationAmount.y + props.rotationY);
+        break;
+      case 'z':
+        context.rotateZ(baseAngle + props.rotationZ);
+        break;
+    }
     
     // Apply texture
     if( !!texture ){
@@ -166,7 +188,21 @@ const ModelViewer = (props) => {
 
     // Display mesh
     if( !!mesh ){
-      context.scale(props.scale);
+      // Scale the mesh to fix the canvas
+      const meshBounds = mesh.calculateBoundingBox().max;
+      const meshScaleFactors = [ // Calculate scaling factors based on the container size
+        context.width / meshBounds.x / Constants.pixelDensity, // X
+        context.width / meshBounds.y / Constants.pixelDensity, // Y
+        context.height / meshBounds.z / Constants.pixelDensity // Z
+      ];
+      context.scale(context.min(meshScaleFactors));
+
+      // Additional scaling if defined
+      if( props.scale ){
+        context.scale(props.scale);
+      }
+
+      // Render the mesh
       context.model(mesh);
 
     // Display text

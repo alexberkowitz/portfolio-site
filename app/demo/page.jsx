@@ -52,7 +52,7 @@ export default function Test() {
 
       <div className={styles.demoSection}>
         <h2><Text>Buttons and Links</Text></h2>
-        <p><Text>All navigation links on the site use a custom {"<Link>"} component. This component has no default styling, and hooks into a global <Text type="accent">navigate()</Text> hook to enable transitions.</Text></p>
+        <p><Text>All navigation links on the site use a custom {"<Link>"} component. This component has no default styling, and hooks into a global <Text type="accent">navigate()</Text> function to enable transitions.</Text></p>
         <div style={{display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '1rem'}}>
           <Link href="#"><Text>Here&lsquo;s a link</Text></Link>
           <Button>And here&lsquo;s a button</Button>
@@ -77,8 +77,8 @@ export default function Test() {
           gap: 32
         }}>
           <div>
-            <h3><Text>Dithered model with mouse influence and no static rotation</Text></h3>
-            <div style={{width: '100%', height: 400}}>
+            <h3><Text>Dithered model with heavy mouse influence and no static rotation</Text></h3>
+            <div style={{width: 400, height: 400}}>
               <DynamicModelViewer
                 model="/media/logo.obj"
                 rotationX={0}
@@ -87,7 +87,7 @@ export default function Test() {
                 rotationSpeed={0}
                 xInfluence={90}
                 yInfluence={90}
-                scale={1}
+                scale={.75}
                 dither={true}
                 />
             </div>
@@ -95,7 +95,7 @@ export default function Test() {
 
           <div>
             <h3><Text>Clean model with static rotation and subtle mouse influence</Text></h3>
-            <div style={{width: '100%', height: 400}}>
+            <div style={{width: 400, height: 400}}>
               <DynamicModelViewer
                 model="/media/logo.obj"
                 rotationX={0}
@@ -104,7 +104,7 @@ export default function Test() {
                 rotationSpeed={30}
                 xInfluence={10}
                 yInfluence={0}
-                scale={1}
+                scale={.75}
                 dither={false}
                 />
             </div>

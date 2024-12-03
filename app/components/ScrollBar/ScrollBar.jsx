@@ -7,10 +7,12 @@
 'use client'
 
 import { Scrollbar } from 'react-scrollbars-custom';
+import { useGlobalContext } from '@/GlobalContext';
 
 import styles from './scrollBar.module.scss';
 
 const ScrollBar = (props) => {
+  const globalContext = useGlobalContext();
 
   return (
     <Scrollbar
@@ -20,7 +22,7 @@ const ScrollBar = (props) => {
       onScrollStop={() => { document.body.classList.remove('scrolling') }}
       renderer={(props) => {
         const { elementRef, key, ...restProps } = props;
-        return <div key={key} {...restProps} ref={elementRef} className={styles.scrollbar} />;
+        return <div key={key} {...restProps} ref={elementRef} className={styles.scrollbar} data-hide={globalContext.transition} />;
       }}
       wrapperProps={{
         renderer: (props) => {

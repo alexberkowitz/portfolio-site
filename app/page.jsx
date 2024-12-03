@@ -1,5 +1,6 @@
 'use client'
 
+import { useGlobalContext } from '@/GlobalContext';
 import Link from '@/components/Link/Link';
 import Toast from '@/components/Toast/Toast';
 import DemoButton from '@/components/DemoButton/DemoButton';
@@ -8,6 +9,8 @@ import DynamicModelViewer from '@/components/ModelViewer/DynamicModelViewer';
 import styles from './page.module.scss';
 
 export default function Home() {
+  const globalContext = useGlobalContext();
+
   return (
     <>
       <main className={styles.homePage}>
@@ -39,15 +42,17 @@ export default function Home() {
 
         <div className={styles.modelView}>
           <DynamicModelViewer
-            model="/media/logo.obj"
-            rotationX={0}
-            rotationY={180}
-            rotationZ={180}
-            rotationSpeed={15}
+            model="/media/head.obj"
+            rotationX={90}
+            rotationY={0}
+            rotationZ={0}
+            rotationSpeed={-35}
+            rotationAxis="z"
             xInfluence={90}
-            yInfluence={90}
-            scale={3}
+            yInfluence={0}
+            scale={.75}
             dither={true}
+            callback={() => {globalContext.setTransition(false); console.log('done');}}
             />
         </div>
       </main>

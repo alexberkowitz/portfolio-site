@@ -6,6 +6,10 @@ $scrollbar-width: 1rem;
   display: block;
   width: 100%;
   min-height: calc(100dvh - (2 * var(--pagePadding)));
+
+  &[data-hide="true"] .trackY {
+    opacity: 0;
+  }
 }
 
 .scrollbarWrapper {
@@ -21,6 +25,7 @@ $scrollbar-width: 1rem;
   left: calc(100% + (var(--borderWidth) / 2) + ((var(--pagePadding) - #{$scrollbar-width}) / 2));
   width: $scrollbar-width;
   background-color: transparent;
+  transition: opacity var(--transitionDuration) ease;
   z-index: 20;
 }
 
