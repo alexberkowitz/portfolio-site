@@ -12,7 +12,8 @@ $scrollbar-width: 1rem;
   }
 }
 
-.scrollbarWrapper {
+.wrapper,
+.content {
   position: relative;
   width: 100%;
   height: 100%;

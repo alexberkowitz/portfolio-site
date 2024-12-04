@@ -15,8 +15,6 @@ export default function Home() {
   return (
     <>
       <main className={styles.homePage}>
-        {/* <h1 className={styles.title}>Alex<br/>Berkowitz</h1> */}
-        
         <ul className={styles.links}>
           <li className={styles.designer}>
             <Link
@@ -51,7 +49,7 @@ export default function Home() {
 
         <div className={styles.heroImage}>
           <div className={styles.circleText}>
-            <CircleText text="Alex Berkowitz Alex Berkowitz Alex Berkowitz" />
+            <CircleText text="Alex Berkowitz Alex Berkowitz Alex Berkowitz Alex Berkowitz" border="true" />
           </div>
           <div className={styles.modelViewer}>
             <DynamicModelViewer
@@ -61,11 +59,11 @@ export default function Home() {
               rotationZ={0}
               rotationSpeed={-35}
               rotationAxis="z"
-              xInfluence={90}
+              xInfluence={15}
               yInfluence={0}
               scale={.75}
               dither={true}
-              callback={() => {globalContext.setTransition(false); console.log('done');}}
+              callback={() => {globalContext.setTransition(false)}}
               />
           </div>
         </div>

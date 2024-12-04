@@ -40,6 +40,9 @@
   list-style-type: none;
 
   a {
+    font-weight: 400;
+    color: var(--fgColor);
+
     @include hover {
       color: var(--accentColor);
     }
@@ -58,13 +61,14 @@
   left: var(--pagePadding);
   right: var(--pagePadding);
   z-index: -1;
+  container-type: size;
 
   .modelViewer {
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 80%;
-    height: 80%;
+    width: 80cqmin;
+    height: 80cqmin;
     transform: translate(-50%, -50%);
     z-index: 1;
   }

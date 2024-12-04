@@ -27,7 +27,13 @@ const ScrollBar = (props) => {
       wrapperProps={{
         renderer: (props) => {
           const { elementRef, key, ...restProps } = props;
-          return <div key={key} {...restProps} ref={elementRef} className={styles.scrollbarWrapper} />;
+          return <div key={key} {...restProps} ref={elementRef} className={styles.wrapper} />;
+        },
+      }}
+      contentProps={{
+        renderer: (props) => {
+          const { elementRef, key, ...restProps } = props;
+          return <div key={key} {...restProps} ref={elementRef} className={styles.content} />;
         },
       }}
       scrollerProps={{

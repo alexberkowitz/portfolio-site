@@ -22,16 +22,35 @@
   span {
     display: block;
     position: absolute;
-    top: 0;
+    top: -.125em;
+    bottom: 50%;
     left: 50%;
-    height: 50%;
     font-size: 1em;
+    font-weight: 800;
     text-transform: uppercase;
     text-align: center;
     color: var(--fgColor);
     transform-origin: 50% 100%;
     transform: translateX(-50%) rotate(calc((360deg / var(--charCount)) * var(--i)));
     --i: 0;
+  }
+
+  &[data-border="true"] {
+    &:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      border-radius: 50%;
+      border: solid 1.25em var(--fgColor);
+      z-index: -1;
+    }
+
+    span {
+      color: var(--accentColor);
+    }
   }
 }
 

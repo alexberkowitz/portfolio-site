@@ -1,4 +1,4 @@
-import { MuseoModerno, Oxanium, Doto } from "next/font/google";
+import { MuseoModerno, Oxanium } from "next/font/google";
 import localFont from 'next/font/local';
 import GlobalContextContainer from './GlobalContext';
 import Header from '@/components/Header/Header';
@@ -27,6 +27,11 @@ const doto = localFont({
     {
       path: 'fonts/doto/Doto-Regular.ttf',
       weight: '400',
+      style: 'normal',
+    },
+    {
+      path: 'fonts/doto/Doto-Black.ttf',
+      weight: '800',
       style: 'normal',
     },
   ],

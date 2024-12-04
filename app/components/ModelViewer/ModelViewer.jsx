@@ -24,7 +24,7 @@
 
 import { useEffect, useState, useRef } from "react";
 import p5 from 'p5';
-import { dither } from '@/utils/drawing';
+import { roundToPixel, dither } from '@/utils/drawing';
 import * as Constants from '@/Constants';
 
 import styles from "./modelView.module.scss";
@@ -33,6 +33,7 @@ const ModelViewer = (props) => {
   const renderRef = useRef();
   const [initialized, setInitialized] = useState(false);
   const [callbackInitiated, setCallbackInitiated] = useState(false);
+  const [canvasDimensions, setCanvasDimensions] = useState({w: 0, h: 0});
 
   let removeFunction; // Storage for the p.remove() function so we can call it from useEffect
 
@@ -90,10 +91,11 @@ const ModelViewer = (props) => {
       }
 
       p.setup = () => {
-        const canvasDimensions = renderRef.current.getBoundingClientRect();
+        const canvasBoundingRect = renderRef.current.getBoundingClientRect();
+        setCanvasDimensions({w: canvasBoundingRect.width, h: canvasBoundingRect.height});
         let canvas = p.createCanvas(
-          canvasDimensions.width,
-          canvasDimensions.height,
+          roundToPixel(canvasBoundingRect.width, 'floor'),
+          roundToPixel(canvasBoundingRect.height, 'floor'),
           p.P2D
         );
 
@@ -255,8 +257,9 @@ const ModelViewer = (props) => {
   /* UTILITY FUNCTIONS
   /*-------------------------------------------------------*/
   const setCanvasBounds = (p, buffers) => {
-    const canvasDimensions = renderRef.current.getBoundingClientRect();
-    p.resizeCanvas(canvasDimensions.width, canvasDimensions.height);
+    const canvasBoundingRect = renderRef?.current?.getBoundingClientRect();
+    setCanvasDimensions({w: canvasBoundingRect.width, h: canvasBoundingRect.height});
+    p.resizeCanvas(canvasBoundingRect.width, canvasBoundingRect.height);
 
     buffers.forEach((buffer) => {
       buffer.resizeCanvas(p.width, p.height);
@@ -269,7 +272,15 @@ const ModelViewer = (props) => {
   /* RENDER
   /*-------------------------------------------------------*/
   return (
-    <div className={styles.modelView} ref={renderRef} title={props.text || ''}></div>
+    <div
+      className={styles.modelView}
+      ref={renderRef}
+      title={props.text || ''}
+      style={{
+        '--w': `${roundToPixel(canvasDimensions.w)}px`,
+        '--h': `${roundToPixel(canvasDimensions.h)}px`
+      }}
+      ></div>
   );
 }
 

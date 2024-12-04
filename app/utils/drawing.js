@@ -5,14 +5,16 @@ import * as Constants from '@/Constants';
 
 // Round a number to the nearest multiple of the pixel density
 export const roundToPixel = (value, method) => {
+  const pixelDensity = Constants.pixelDensity;
+
   if( method === 'ceil' ){
-    return Math.ceil(value / Constants.pixelDensity) * Constants.pixelDensity;
+    return Math.ceil(value / pixelDensity) * pixelDensity;
 
   } else if( method === 'floor' ){
-    return Math.floor(value / Constants.pixelDensity) * Constants.pixelDensity;
+    return Math.floor(value / pixelDensity) * pixelDensity;
 
   } else {
-    return Math.round(value / Constants.pixelDensity) * Constants.pixelDensity;
+    return Math.round(value / pixelDensity) * pixelDensity;
   }
 }
 

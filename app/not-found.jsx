@@ -7,7 +7,7 @@ import DynamicModelViewer from '@/components/ModelViewer/DynamicModelViewer';
 export default function NotFound() {
   return (
     <main style={{flexGrow: 1, width: '100%', height: '100%', textAlign: 'center', alignItems: 'center', justifyContent: 'center'}}>
-      <div style={{height: 300, width: '100%'}}>
+      <div style={{height: 400, width: '100%'}}>
         <DynamicModelViewer
           text="ERROR 404"
           rotationX={0}
@@ -16,7 +16,7 @@ export default function NotFound() {
           rotationSpeed={0}
           xInfluence={45}
           yInfluence={45}
-          scale={20}
+          scale={15}
           dither={true}
           />
       </div>

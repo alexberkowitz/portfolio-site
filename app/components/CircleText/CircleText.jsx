@@ -17,6 +17,7 @@ const CircleText = (props) => {
     <div className={styles.circleText} {...props}>
       <p
         className={styles.textContainer}
+        data-border={props.border}
         style={{
           '--charCount': text.length
         }}
