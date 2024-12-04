@@ -5,6 +5,7 @@ import Text from '@/components/Text/Text';
 import Icon, { icons } from '@/components/Icon/Icon';
 import Link from '@/components/Link/Link';
 import Button from '@/components/Button/Button';
+import CircleText from '@/components/CircleText/CircleText';
 import DynamicModelViewer from '@/components/ModelViewer/DynamicModelViewer';
 
 import styles from './page.module.scss';
@@ -23,6 +24,24 @@ export default function Test() {
           Btw, you can find the source code for this site <Link href="https://github.com/alexberkowitz/portfolio-site" target="_blank">here</Link>.
         </Text>
       </p>
+
+      <div className={styles.demoSection}>
+        <h2><Text>Circle text</Text></h2>
+        <div style={{
+          display: 'flex',
+          gap: '2rem'
+        }}>
+          <div style={{flexGrow: 1, aspectRatio: '1 / 1'}}>
+            <CircleText text="lorem ipsum dolor sit amet" />
+          </div>
+          <div style={{flexGrow: 1, aspectRatio: '1 / 1'}}>
+            <CircleText text="lorem ipsum" />
+          </div>
+          <div style={{flexGrow: 1, aspectRatio: '1 / 1'}}>
+            <CircleText text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed congue est luctus lacinia euismod." />
+          </div>
+        </div>
+      </div>
 
       <div className={styles.demoSection}>
         <h2><Text>Icons</Text></h2>
@@ -68,6 +87,8 @@ export default function Test() {
         <h2><Text>Projects</Text></h2>
         <p><Text>Project case study pages are written using Markdown and rendered with MDX. They have their own custom components and layouts that differ from other pages. To test those pages, a test project was created that is only accessible by direct link. If you&lsquo;re interested, you can <Link href="/projects/test">check out the test project</Link>.</Text></p>
       </div>
+
+      
 
       <div className={styles.demoSection}>
         <h2><Text>3D Model Viewer</Text></h2>

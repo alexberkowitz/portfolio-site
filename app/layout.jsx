@@ -1,4 +1,5 @@
-import { MuseoModerno, Oxanium } from "next/font/google";
+import { MuseoModerno, Oxanium, Doto } from "next/font/google";
+import localFont from 'next/font/local';
 import GlobalContextContainer from './GlobalContext';
 import Header from '@/components/Header/Header';
 import DynamicBackground from '@/components/Background/DynamicBackground';
@@ -19,6 +20,17 @@ const museoModerno = MuseoModerno({
 const oxanium = Oxanium({
   subsets: ["latin"],
   variable: '--font-oxanium'
+});
+
+const doto = localFont({
+  src: [
+    {
+      path: 'fonts/doto/Doto-Regular.ttf',
+      weight: '400',
+      style: 'normal',
+    },
+  ],
+  variable: '--font-doto'
 });
 
 // Metadata
@@ -55,7 +67,7 @@ export default function RootLayout({ children }) {
   return (
     <GlobalContextContainer>
         <html lang="en" style={variables}>
-          <body className={`${museoModerno.variable} ${oxanium.variable}`}>
+          <body className={`${museoModerno.variable} ${oxanium.variable} ${doto.variable}`}>
             <DynamicBackground />
             <Header />
             <DynamicMarquee />

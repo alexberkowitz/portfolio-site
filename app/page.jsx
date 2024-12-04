@@ -5,6 +5,7 @@ import Link from '@/components/Link/Link';
 import Toast from '@/components/Toast/Toast';
 import DemoButton from '@/components/DemoButton/DemoButton';
 import DynamicModelViewer from '@/components/ModelViewer/DynamicModelViewer';
+import CircleText from '@/components/CircleText/CircleText';
 
 import styles from './page.module.scss';
 
@@ -14,7 +15,7 @@ export default function Home() {
   return (
     <>
       <main className={styles.homePage}>
-        <h1 className={styles.title}>Alex<br/>Berkowitz</h1>
+        {/* <h1 className={styles.title}>Alex<br/>Berkowitz</h1> */}
         
         <ul className={styles.links}>
           <li className={styles.designer}>
@@ -31,6 +32,7 @@ export default function Home() {
               Developer
             </Link>
           </li>
+          <div className={styles.spacer}></div>
           <li className={styles.maker}>
             <Link
               href='/maker'
@@ -38,22 +40,34 @@ export default function Home() {
               Maker
             </Link>
           </li>
+          <li className={styles.person}>
+            <Link
+              href='/about'
+              >
+              Person
+            </Link>
+          </li>
         </ul>
 
-        <div className={styles.modelView}>
-          <DynamicModelViewer
-            model="/media/head.obj"
-            rotationX={90}
-            rotationY={0}
-            rotationZ={0}
-            rotationSpeed={-35}
-            rotationAxis="z"
-            xInfluence={90}
-            yInfluence={0}
-            scale={.75}
-            dither={true}
-            callback={() => {globalContext.setTransition(false); console.log('done');}}
-            />
+        <div className={styles.heroImage}>
+          <div className={styles.circleText}>
+            <CircleText text="Alex Berkowitz Alex Berkowitz Alex Berkowitz" />
+          </div>
+          <div className={styles.modelViewer}>
+            <DynamicModelViewer
+              model="/media/head.obj"
+              rotationX={90}
+              rotationY={0}
+              rotationZ={0}
+              rotationSpeed={-35}
+              rotationAxis="z"
+              xInfluence={90}
+              yInfluence={0}
+              scale={.75}
+              dither={true}
+              callback={() => {globalContext.setTransition(false); console.log('done');}}
+              />
+          </div>
         </div>
       </main>
       <Toast id="resume"><small>Want to cut to the chase? Check out my <Link href="/resume">digital résumé</Link>.</small></Toast>

@@ -12,7 +12,6 @@
   flex-direction: column;
   align-items: center;
   gap: var(--pagePadding);
-  padding: var(--gap);
   
   a {
     padding: .5rem;
@@ -22,63 +21,107 @@
     font-size: 1.5em;
     font-weight: 300;
   }
+}
+
+.title {
+  font-size: var(--titleSize);
+  text-align: center;
+}
+
+.links {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  width: 100%;
+  height: 100%;
+  margin: auto 0;
+  padding: 0;
+  list-style-type: none;
+
+  a {
+    @include hover {
+      color: var(--accentColor);
+    }
+  }
+}
+
+.spacer {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+}
+
+.heroImage {
+  position: absolute;
+  top: var(--pagePadding);
+  bottom: var(--pagePadding);
+  left: var(--pagePadding);
+  right: var(--pagePadding);
+  z-index: -1;
+
+  .modelViewer {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 80%;
+    height: 80%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+  }
+
+  .circleText {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 0;
+  }
+}
+
+@media( min-width: $break-mobile ){
 
   .title {
-    font-size: var(--titleSize);
-    text-align: center;
+    align-self: flex-start;
+    text-align: left;
   }
 
   .links {
-    display: flex;
-    flex-direction: column;
-    gap: 6rem;
-    align-items: center;
-    margin: auto 0;
-    padding: 0;
-    list-style-type: none;
-
-    a {
-      @include hover {
-        color: var(--accentColor);
-      }
-    }
+    display: contents;
   }
 
-  .modelView {
-    position: fixed;
+  .designer {
+    position: absolute;
     top: var(--pagePadding);
+    left: var(--pagePadding);
+  }
+
+  .developer {
+    position: absolute;
+    top: var(--pagePadding);
+    right: var(--pagePadding);
+  }
+
+  .maker {
+    position: absolute;
     bottom: var(--pagePadding);
     left: var(--pagePadding);
-    right: var(--pagePadding);
-    z-index: -1;
   }
 
-  @media( min-width: $break-mobile ){
-    .title {
-      align-self: flex-start;
-      text-align: left;
-    }
+  .person {
+    position: absolute;
+    bottom: var(--pagePadding);
+    right: var(--pagePadding);
+  }
 
-    .links {
-      display: contents;
-    }
+  .spacer {
+    display: none;
+  }
 
-    .designer {
-      position: absolute;
-      bottom: var(--pagePadding);
-      left: var(--pagePadding);
-    }
-
-    .developer {
-      position: absolute;
-      bottom: var(--pagePadding);
-      right: var(--pagePadding);
-    }
-
-    .maker {
-      position: absolute;
-      top: var(--pagePadding);
-      right: var(--pagePadding);
-    }
+  .heroImage {
+    top: calc(var(--pagePadding) * 3);
+    bottom: calc(var(--pagePadding) * 3);
+    left: calc(var(--pagePadding) * 3);
+    right: calc(var(--pagePadding) * 3);
   }
 }
