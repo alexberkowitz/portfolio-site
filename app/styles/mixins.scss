@@ -12,3 +12,16 @@
     }
   }
 }
+
+// Pure CSS halftone effects
+// From https://frontendmasters.com/blog/pure-css-halftone-effect-in-3-declarations/
+@mixin hafltone(
+  $pattern: radial-gradient(closest-side, #888, #fff) 0 / 1em 1em space,
+  $map: linear-gradient(90deg, #888, #fff)
+) {
+  background: var(--pattern), var(--map);
+  background-blend-mode: multiply;
+  filter: contrast(80);
+  --pattern: #{$pattern};
+  --map: #{$map};
+}

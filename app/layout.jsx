@@ -32,10 +32,21 @@ const doto = localFont({
     {
       path: 'fonts/doto/Doto-Black.ttf',
       weight: '800',
-      style: 'normal',
+      style: 'black',
     },
   ],
   variable: '--font-doto'
+});
+
+const dotoRounded = localFont({
+  src: [
+    {
+      path: 'fonts/doto/Doto_Rounded-Regular.ttf',
+      weight: '400',
+      style: 'normal',
+    },
+  ],
+  variable: '--font-doto-rounded'
 });
 
 // Metadata
@@ -72,7 +83,7 @@ export default function RootLayout({ children }) {
   return (
     <GlobalContextContainer>
         <html lang="en" style={variables}>
-          <body className={`${museoModerno.variable} ${oxanium.variable} ${doto.variable}`}>
+          <body className={`${museoModerno.variable} ${oxanium.variable} ${doto.variable} ${dotoRounded.variable}`}>
             <DynamicBackground />
             <Header />
             <DynamicMarquee />

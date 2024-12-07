@@ -14,19 +14,20 @@
   @include hover {
     background-color: var(--fgColor);
     color: var(--accentColor);
+  }
+}
 
+.icon {
+  padding: 0.5rem;
+  background-color: transparent;
+
+  @include hover {
     svg {
       display: block;
       --primaryColor: var(--fgColor);
       --secondaryColor: var(--bodyColor);
     }
   }
-}
-
-.icon {
-  @extend .button;
-  padding: 0.5rem;
-  background-color: transparent;
 }
 
 .link {

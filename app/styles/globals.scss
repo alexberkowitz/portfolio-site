@@ -47,6 +47,7 @@ body {
   overflow: hidden;
   background-color: var(--bgColor);
   color: var(--bodyColor);
+  accent-color: var(--fgColor);
   font-family: var(--font-oxanium);
   transition: padding var(--titleDuration) ease-in-out;
 

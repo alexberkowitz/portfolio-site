@@ -1,16 +1,30 @@
+@import '@/styles/variables.scss';
+@import '@/styles/mixins.scss';
+
 .pageTransition {
   position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-color: var(--bgColor);
-  opacity: 0;
-  transition: opacity var(--transitionDuration) ease;
+  top: var(--pagePadding);
+  bottom: var(--pagePadding);
+  left: var(--pagePadding);
+  right: var(--pagePadding);
+  display: grid;
+  grid-template-columns: repeat(var(--colCount), 1fr);
+  grid-template-rows: repeat(var(--rowCount), 1fr);
+  transition: --wavePos var(--transitionDuration) $ease-out;
   pointer-events: none;
   z-index: 11;
+  --colCount: 1;
+  --rowCount: 1;
+  --pixelDuration: calc(var(--transitionDuration) / var(--colCount));
 
-  &.active {
+  .pixel {
+    background-color: var(--fgColor);
+    opacity: 0;
+    transition: opacity var(--pixelDuration) calc(var(--index) * var(--pixelDuration) / 2) ease;
+  }
+
+  &.active .pixel {
     opacity: 1;
+    // transition-timing-function: $ease-in;
   }
 }

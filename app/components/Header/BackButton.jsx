@@ -10,10 +10,9 @@ import Link from '@/components/Link/Link';
 import { useGlobalContext } from '@/GlobalContext';
 import { usePathname } from 'next/navigation';
 
-import styles from "./backButton.module.scss";
-
 const BackButton = (props) => {
   const globalContext = useGlobalContext();
+  const styles = props.styles;
   const ignoredPages = ["/", "/links"]; // Pages on this list won't show the back button
   
   const showBackButton = ignoredPages.indexOf(usePathname()) === -1;

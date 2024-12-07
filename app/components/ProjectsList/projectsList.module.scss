@@ -59,7 +59,7 @@
 
         .info {
           transform: translateY(0%);
-          transition-timing-function: cubic-bezier(0,.5,.5,1);
+          transition-timing-function: $ease-in;
         }
       }
 
@@ -102,7 +102,7 @@
   border-radius: calc(var(--cornerRadius) / 2);
   pointer-events: none;
   z-index: 3;
-  transition: all .3s cubic-bezier(.5,0,1,.5);
+  transition: all .3s $ease-out;
   
   .title {
     display: block;

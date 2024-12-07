@@ -40,7 +40,7 @@ export default function Home() {
           </li>
           <li className={styles.person}>
             <Link
-              href='/about'
+              href='/person'
               >
               Person
             </Link>

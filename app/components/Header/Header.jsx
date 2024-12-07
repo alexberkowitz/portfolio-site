@@ -10,7 +10,7 @@
 import { useRef } from 'react';
 import { usePathname } from 'next/navigation';
 import Link from '@/components/Link/Link';
-import BackButton from '@/components/BackButton/BackButton';
+import BackButton from './BackButton';
 import PageBorder from './PageBorder';
 import { includesAny } from '@/utils/utils';
 
@@ -35,7 +35,7 @@ const Header = () => {
           </h1>
         </Link>
       </div>
-      <BackButton buttonRef={backButtonRef}/>
+      <BackButton styles={styles} buttonRef={backButtonRef}/>
       <PageBorder
         styles={styles}
         titleRef={titleRef}

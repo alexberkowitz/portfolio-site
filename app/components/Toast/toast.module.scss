@@ -1,3 +1,5 @@
+@import '@/styles/variables.scss';
+
 .toastContainer {
   position: fixed;
   bottom: calc(1rem - var(--borderWidth));
@@ -22,11 +24,11 @@
   border: solid var(--borderWidth) var(--fgColor);
   border-radius: var(--cornerRadius);
   pointer-events: all;
-  transition: transform .3s cubic-bezier(.5,0,1,.5);
+  transition: transform .3s $ease-out;
 
   &.open {
     transform: translateY(0%);
-    transition-timing-function: cubic-bezier(0,.5,.5,1);
+    transition-timing-function: $ease-in;
   }
 }
 

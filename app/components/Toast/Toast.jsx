@@ -54,7 +54,7 @@ const Toast = (props) => {
         </div>
         <Button
           onClick={closeToast}
-          icon
+          type="icon"
           >
             <Icon type="close"/>
           </Button>
