@@ -106,8 +106,8 @@ export default function Test() {
                 rotationY={0}
                 rotationZ={0}
                 rotationSpeed={0}
-                xInfluence={90}
-                yInfluence={90}
+                xInfluence={10}
+                yInfluence={10}
                 scale={.75}
                 dither={true}
                 />
@@ -123,7 +123,7 @@ export default function Test() {
                 rotationY={0}
                 rotationZ={0}
                 rotationSpeed={30}
-                xInfluence={10}
+                xInfluence={1}
                 yInfluence={0}
                 scale={.75}
                 dither={false}

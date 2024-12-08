@@ -34,6 +34,8 @@ const ModelViewer = (props) => {
   const [initialized, setInitialized] = useState(false);
   const [callbackInitiated, setCallbackInitiated] = useState(false);
   const [canvasDimensions, setCanvasDimensions] = useState({w: 0, h: 0});
+  const rotationOffset = useRef({x: 0, y: 0});
+  const prevTouch = useRef(null); // Needed to calculate touch interactions
 
   let removeFunction; // Storage for the p.remove() function so we can call it from useEffect
 
@@ -49,6 +51,9 @@ const ModelViewer = (props) => {
   useEffect(() => {
     if( !initialized ){
       setInitialized(true);
+      document.addEventListener("mousemove", mouseMoveHandler);
+      document.addEventListener("touchmove", mouseMoveHandler);
+      document.addEventListener("touchend", () => prevTouch.current = null);
       
       drawP5(); // Start the drawing
     }
@@ -56,6 +61,9 @@ const ModelViewer = (props) => {
     // Clean up before unmounting
     return () => {
       removeFunction();
+      document.removeEventListener("momusemove", mouseMoveHandler);
+      document.removeEventListener("touchmove", mouseMoveHandler);
+      document.removeEventListener("touchend", () => prevTouch.current = null);
       window.removeEventListener("resize", resizeHandler);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -143,7 +151,7 @@ const ModelViewer = (props) => {
   /* 3D SCENE RENDER
   /*-------------------------------------------------------*/
   let baseAngle = 0;
-  const renderScene = (context, p) => {
+  const renderScene = (context) => {
     context.frameRate(Constants.frameRate);
     context.clear();
 
@@ -152,35 +160,16 @@ const ModelViewer = (props) => {
     const units = (value) => {
       return Math.min(context.width, context.height) * value / 100; // Percentages for ease ( e.g. 50% = units(50) )
     }
-
     
     // Draw the shape.
     context.angleMode(context.DEGREES);
     context.fill(64);
     context.noStroke();
-    
-    context.push();
-    const maxRotationX = props.xInfluence || 0; // Degrees in either direction
-    const maxRotationY = props.yInfluence || 0; // Degrees in either direction
-    const rotationAmount = {
-      x: ((p.mouseY / p.height) - 0.5) * maxRotationX * -1,
-      y: ((p.mouseX / p.width) - 0.5) * maxRotationY
-    }
-    context.rotateX(rotationAmount.x + props.rotationX);
-    context.rotateY(rotationAmount.y + props.rotationY);
-    context.rotateZ(props.rotationZ);
 
-    switch( props.rotationAxis?.toLowerCase() || 'y' ){
-      case 'x':
-        context.rotateX(baseAngle + rotationAmount.x + props.rotationX);
-        break;
-      case 'y':
-        context.rotateY(baseAngle + rotationAmount.y + props.rotationY);
-        break;
-      case 'z':
-        context.rotateZ(baseAngle + props.rotationZ);
-        break;
-    }
+    context.push(); // Start isolation
+
+    context.rotateX(rotationOffset.current.x);
+    context.rotateY(rotationOffset.current.y + baseAngle);
     
     // Apply texture
     if( !!texture ){
@@ -223,7 +212,8 @@ const ModelViewer = (props) => {
         context.text(props.text || "Something went wrong!", 0, 0);
       }
     }
-    context.pop();
+
+    context.pop(); // End isolation
 
     // Increment the angle to enable rotation
     const rotationSpeed = props.rotationSpeed || 0;
@@ -264,6 +254,30 @@ const ModelViewer = (props) => {
     buffers.forEach((buffer) => {
       buffer.resizeCanvas(p.width, p.height);
     });
+  }
+
+  const mouseMoveHandler = (e) => {
+    let xMovement = e.movementX || 0;
+    let yMovement = e.movementY || 0;
+    let divisionFactor = 70; // This is basically just a magic number since input speed can vary
+    
+    if( e.touches?.length > 0 ){
+      const previousTouch = prevTouch.current || {x: e.touches[0].clientX, y: e.touches[0].clientY};
+      xMovement = e.touches[0].clientX - previousTouch.x;
+      yMovement = e.touches[0].clientY - previousTouch.y;
+      divisionFactor = 30;
+      prevTouch.current = {
+        x: e.touches[0].clientX,
+        y: e.touches[0].clientY
+      }
+    }
+
+    if( !!xMovement && !!yMovement ){
+      rotationOffset.current = {
+        x: rotationOffset.current.x - (yMovement * props.xInfluence / divisionFactor),
+        y: rotationOffset.current.y + (xMovement * props.yInfluence / divisionFactor)
+      };
+    }
   }
   
 
