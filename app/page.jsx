@@ -54,10 +54,11 @@ export default function Home() {
           <div className={styles.modelViewer}>
             <DynamicModelViewer
               model="/media/head.obj"
-              rotationX={0}
+              rotationX={90}
               rotationY={0}
               rotationZ={0}
               rotationSpeed={-35}
+              rotationAxis="z"
               xInfluence={5}
               yInfluence={5}
               scale={.75}

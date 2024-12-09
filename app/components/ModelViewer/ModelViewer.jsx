@@ -34,7 +34,7 @@ const ModelViewer = (props) => {
   const [initialized, setInitialized] = useState(false);
   const [callbackInitiated, setCallbackInitiated] = useState(false);
   const [canvasDimensions, setCanvasDimensions] = useState({w: 0, h: 0});
-  const rotationOffset = useRef({x: 0, y: 0});
+  const rotationOffset = useRef({x: 0, y: 0, z: 0});
   const prevTouch = useRef(null); // Needed to calculate touch interactions
 
   let removeFunction; // Storage for the p.remove() function so we can call it from useEffect
@@ -150,7 +150,6 @@ const ModelViewer = (props) => {
   /*-------------------------------------------------------*/
   /* 3D SCENE RENDER
   /*-------------------------------------------------------*/
-  let baseAngle = 0;
   const renderScene = (context) => {
     context.frameRate(Constants.frameRate);
     context.clear();
@@ -167,9 +166,6 @@ const ModelViewer = (props) => {
     context.noStroke();
 
     context.push(); // Start isolation
-
-    context.rotateX(rotationOffset.current.x);
-    context.rotateY(rotationOffset.current.y + baseAngle);
     
     // Apply texture
     if( !!texture ){
@@ -188,6 +184,11 @@ const ModelViewer = (props) => {
         context.height / meshBounds.z / Constants.pixelDensity // Z
       ];
       context.scale(context.min(meshScaleFactors));
+
+      // Rotate the mesh
+      context.rotateX(rotationOffset.current.x + props.rotationX);
+      context.rotateY(rotationOffset.current.y + props.rotationY);
+      context.rotateZ(rotationOffset.current.z + props.rotationZ);
 
       // Additional scaling if defined
       if( props.scale ){
@@ -217,7 +218,11 @@ const ModelViewer = (props) => {
 
     // Increment the angle to enable rotation
     const rotationSpeed = props.rotationSpeed || 0;
-    baseAngle += rotationSpeed / Constants.frameRate;
+    rotationOffset.current = {
+      x: rotationOffset.current.x + (props.rotationAxis === "x" ? rotationSpeed / Constants.frameRate : 0),
+      y: rotationOffset.current.y + (props.rotationAxis === "y" ? rotationSpeed / Constants.frameRate : 0),
+      z: rotationOffset.current.z + (props.rotationAxis === "z" ? rotationSpeed / Constants.frameRate : 0)
+    }
 
 
     // Lighting
@@ -275,7 +280,8 @@ const ModelViewer = (props) => {
     if( !!xMovement && !!yMovement ){
       rotationOffset.current = {
         x: rotationOffset.current.x - (yMovement * props.xInfluence / divisionFactor),
-        y: rotationOffset.current.y + (xMovement * props.yInfluence / divisionFactor)
+        y: rotationOffset.current.y + (xMovement * props.yInfluence / divisionFactor),
+        z: rotationOffset.current.z
       };
     }
   }
