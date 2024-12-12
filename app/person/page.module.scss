@@ -1,0 +1,30 @@
+
+.title {
+  max-width: 20ch;
+  margin: 6rem 0 3rem 0;
+  font-size: calc(var(--titleSize) * 1.5);
+  font-family: var(--font-doto);
+  font-weight: 600;
+  color: var(--fgColor);
+  -webkit-text-stroke: 1px currentColor;
+}
+
+.bio {
+  align-self: flex-end;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 1rem;
+  margin-right: 6rem;
+  background-color: var(--bgColor);
+  border-radius: var(--cornerRadius);
+}
+
+.links {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}

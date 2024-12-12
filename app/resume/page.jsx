@@ -60,9 +60,9 @@ export default function Resume() {
 
       <p className={styles.intro} style={{paddingBottom: 'var(--pagePadding)', marginLeft: 'var(--pagePadding)'}}>
         <Text style={{ textWrap: 'balance' }}>
-          Welcome to my digital résumé! Here you can find a general overview of my working expdrience and skillset. You can find even more details on my <Link href="https://www.linkedin.com/in/alexberkowitz">LinkedIn page</Link>.
-          <br/>
-          <small>(psst: if you prefer a PDF version, this page is <Button onClick={() => window.print()} type="link">print-ready</Button>!</small>
+          Welcome to my digital résumé! Here you can find a general overview of my working experience and skillset.
+          <br/><br/>
+          You can find even more details on my <Link href="https://www.linkedin.com/in/alexberkowitz">LinkedIn page</Link>.
         </Text>
       </p>
 
@@ -126,30 +126,30 @@ export default function Resume() {
               <div className={styles.skillFilter}>
                 <label><Text>Filter:</Text></label>
                 <div className={styles.buttons}>
-                  <button
+                  <Button
                     onClick={() => filterSkills('all')}
                     className={skillFilter === 'all' ? styles.active : ''}
                     >
                     All
-                  </button>
-                  <button
+                  </Button>
+                  <Button
                     onClick={() => filterSkills('designer')}
                     className={skillFilter === 'designer' ? styles.active : ''}
                     >
                     Designer
-                  </button>
-                  <button
+                  </Button>
+                  <Button
                     onClick={() => filterSkills('developer')}
                     className={skillFilter === 'developer' ? styles.active : ''}
                     >
                     Developer
-                  </button>
-                  <button
+                  </Button>
+                  <Button
                     onClick={() => filterSkills('maker')}
                     className={skillFilter === 'maker' ? styles.active : ''}
                     >
                     Maker
-                  </button>
+                  </Button>
                 </div>
               </div>
               <ul className={styles.skillsList}>

@@ -45,19 +45,18 @@ $marquee-padding: calc(var(--titleSize) * 0.2);
     top: 100%;
     width: var(--pagePadding);
     height: var(--pagePadding);
-    background-color: var(--fgColor);
     mask-size: 100% 100%;
     mask-repeat: no-repeat;
   }
 
   &:before {
     left: 0;
-    mask-image: radial-gradient(circle var(--pagePadding) at bottom right, transparent 0, transparent var(--pagePadding), black var(--pagePadding));
+    background-image: radial-gradient(circle var(--pagePadding) at bottom right, transparent 0, transparent var(--pagePadding), var(--fgColor) var(--pagePadding));
   }
 
   &:after {
     right: 0;
-    mask-image: radial-gradient(circle var(--pagePadding) at bottom left, transparent 0, transparent var(--pagePadding), black var(--pagePadding));
+    background-image: radial-gradient(circle var(--pagePadding) at bottom left, transparent 0, transparent var(--pagePadding), var(--fgColor) var(--pagePadding));
   }
 
   &.show {
@@ -125,14 +124,14 @@ body:has(.leaveRoom) main {
       top: 0;
       right: 100%;
       left: unset;
-      mask-image: radial-gradient(circle var(--pagePadding) at bottom left, transparent 0, transparent var(--pagePadding), black var(--pagePadding));
+      background-image: radial-gradient(circle var(--pagePadding) at bottom left, transparent 0, transparent var(--pagePadding), var(--fgColor) var(--pagePadding));
     }
 
     &:after {
       top: unset;
       bottom: 0;
       right: 100%;
-      mask-image: radial-gradient(circle var(--pagePadding) at top left, transparent 0, transparent var(--pagePadding), black var(--pagePadding));
+      background-image: radial-gradient(circle var(--pagePadding) at top left, transparent 0, transparent var(--pagePadding), var(--fgColor) var(--pagePadding));
     }
 
     &.show {

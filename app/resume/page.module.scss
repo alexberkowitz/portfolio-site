@@ -6,6 +6,10 @@
 /*-------------------------------------------------------*/
 $break-custom: 1200px;
 
+.resumePage {
+  min-height: unset;
+}
+
 .columns {
   display: flex;
   flex-direction: column;
@@ -242,6 +246,8 @@ $break-custom: 1200px;
       flex-grow: 1;
       padding: .25rem .5rem;
       background-color: var(--bgColor);
+      border-radius: 0;
+      color: var(--bodyColor);
       font-size: inherit;
       z-index: 1;
 

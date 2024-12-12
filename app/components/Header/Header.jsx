@@ -19,9 +19,10 @@ import styles from "./header.module.scss";
 const Header = () => {
   const titleRef = useRef(null);
   const backButtonRef = useRef(null);
-  const ignoredPages = ["/"]; // Pages on this list won't show the title
-  const showSiteTitle =  !includesAny(usePathname(), ignoredPages);
-  const showBackButton =  !includesAny(usePathname(), ignoredPages);
+  const titleIgnoredPages = ["/"]; // Pages on this list won't show the title
+  const backButtonIgnoredPages = ["/", "/links"]; // Pages on this list won't show the back button
+  const showSiteTitle =  !includesAny(usePathname(), titleIgnoredPages);
+  const showBackButton =  !includesAny(usePathname(), backButtonIgnoredPages);
   
   return (
     <div className={styles.header}>
@@ -35,7 +36,11 @@ const Header = () => {
           </h1>
         </Link>
       </div>
-      <BackButton styles={styles} buttonRef={backButtonRef}/>
+      <BackButton
+        styles={styles}
+        buttonRef={backButtonRef}
+        show={showBackButton}
+        />
       <PageBorder
         styles={styles}
         titleRef={titleRef}

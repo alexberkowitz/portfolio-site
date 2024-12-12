@@ -35,15 +35,15 @@ const PageTransition = () => {
       className={`${styles.pageTransition} ${globalContext.transition ? styles.active : ''}`}
       ref={elemRef}
       >
-      {Array.from({ length: rowCount * colCount }, (_, index) => (
+      {Array.from({ length: rowCount }, (_, y) => Array.from({ length: colCount }, (_, x) => (
         <div
-          key={index}
+          key={x * y}
           className={styles.pixel}
           style={{
-            '--index': index % colCount + Math.floor(index / rowCount)
+            '--index': x + y,
           }}
           ></div>
-      ))}
+      )))}
     </div>
   );
 }

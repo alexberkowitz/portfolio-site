@@ -16,5 +16,5 @@ export const pixelDensity = 2;
 /* TRANSITIONS 
 /*-------------------------------------------------------*/
 // All in seconds
-export const transitionDuration = 1.5; // Page transition
+export const transitionDuration = 2; // Page transition
 export const titleDuration = .6; // Title animation

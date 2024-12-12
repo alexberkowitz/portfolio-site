@@ -10,6 +10,8 @@
   display: grid;
   grid-template-columns: repeat(var(--colCount), 1fr);
   grid-template-rows: repeat(var(--rowCount), 1fr);
+  border-radius: var(--pagePadding);
+  overflow: hidden;
   transition: --wavePos var(--transitionDuration) $ease-out;
   pointer-events: none;
   z-index: 11;
@@ -18,6 +20,9 @@
   --pixelDuration: calc(var(--transitionDuration) / var(--colCount));
 
   .pixel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background-color: var(--fgColor);
     opacity: 0;
     transition: opacity var(--pixelDuration) calc(var(--index) * var(--pixelDuration) / 2) ease;
