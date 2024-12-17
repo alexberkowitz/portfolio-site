@@ -13,7 +13,7 @@ const Link = (props) => {
 
   const handleClick = (e) => {
     e.preventDefault();
-    globalContext.navigate(props.href);
+    globalContext.navigate(e, props.href);
   };
 
   return isExternal ? (

@@ -25,7 +25,8 @@
     justify-content: center;
     background-color: var(--fgColor);
     opacity: 0;
-    transition: opacity var(--pixelDuration) calc(var(--index) * var(--pixelDuration) / 2) ease;
+    // transition: opacity var(--pixelDuration) calc(var(--delayMultiplier) * var(--pixelDuration) / 2) ease;
+    transition: opacity var(--pixelDuration) calc(var(--transitionDuration) / 2 * var(--delayMultiplier)) ease;
   }
 
   &.active .pixel {

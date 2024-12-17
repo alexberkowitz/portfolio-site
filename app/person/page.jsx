@@ -6,8 +6,9 @@ import styles from './page.module.scss';
 export default function Person() {
   return (
     <main className={styles.personPage}>
-      <h1 className={styles.title}>Hi, I&rsquo;m Alex.</h1>
+      <div></div>
       <div className={styles.bio}>
+        <h1 className={styles.title}>Hi, I&rsquo;m Alex.</h1>
         <p>
           I&rsquo;m a designer, developer, & maker from Chicago. I love designing interfaces, slinging code, building brands, and creating things of all types. No matter the medium, every project I work on is designed with intent and crafted with care.
         </p>
@@ -20,15 +21,6 @@ export default function Person() {
         <p>
           For more info on my work experience and skillset, check out my <Link href="/resume">digital résumé</Link>. If you&rsquo;d like to talk about my work, or if you have a project you&rsquo;d like to discuss, feel free to <Link href="mailto:alex@alexberkowitz.com">get in touch</Link>.
         </p>
-
-        <ul className={styles.links}>
-          <li>
-            <Link href="https://www.linkedin.com/in/alexberkowitz">Instagram</Link>
-          </li>
-          <li>
-            <Link href="https://www.linkedin.com/in/alexberkowitz">LinkedIn</Link>
-          </li>
-        </ul>
       </div>
     </main>
   );
