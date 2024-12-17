@@ -24,11 +24,11 @@ export default function WindowBorder(props) {
   // Draw the initial path, and re-draw on window resize
   useEffect(() => {
     drawSVG();
-    window.addEventListener("resize", drawSVG);
+    window.addEventListener("resize", updateSVG);
 
     // Clean up before unmounting
     return () => {
-      window.removeEventListener("resize", drawSVG);
+      window.removeEventListener("resize", updateSVG);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -43,6 +43,15 @@ export default function WindowBorder(props) {
     }, Constants.titleDuration * 1000);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
+
+
+
+  // Small function to run the SVG updater twice which
+  // is sometimes needed when resizing across breakpoints
+  const updateSVG = () => {
+    drawSVG();
+    setTimeout(() => drawSVG(), 1000);
+  }
   
   
   
