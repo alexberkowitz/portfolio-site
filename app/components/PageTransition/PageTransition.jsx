@@ -86,7 +86,8 @@ const PageTransition = () => {
           key={x * y + x}
           className={styles.pixel}
           style={{
-            '--delayMultiplier': getSquareDistance(x, y),
+            // Reversing the delay values on the out-transition results in a "growing then shrinking" effect
+            '--delayMultiplier': active ? getSquareDistance(x, y) : 1 - getSquareDistance(x, y),
           }}
           ></div>
       )))}
