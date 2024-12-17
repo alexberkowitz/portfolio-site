@@ -47,7 +47,7 @@
       height: 100%;
       transform-origin: 50% 50%;
       border-radius: var(--cornerRadius);
-      background-color: var(--bgColor);
+      background-color: var(--accentColor);
       overflow: hidden;
 
       @include hover {
