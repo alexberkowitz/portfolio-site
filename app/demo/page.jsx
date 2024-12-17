@@ -17,31 +17,13 @@ export default function Test() {
       <PageTitle>Demos</PageTitle>
       <p>
         <Text>
-          YouI&rsquo;veve found my &ldquo;super secret&rdquo; demo page! This is where I test the reusable components found throughout the site. Feel free to play around!
+          You&rsquo;ve found my &ldquo;super secret&rdquo; demo page! This is where I test the reusable components found throughout the site. Feel free to play around!
         </Text>
         <br/><br/>
         <Text>
           Btw, you can find the source code for this site <Link href="https://github.com/alexberkowitz/portfolio-site" target="_blank">here</Link>.
         </Text>
       </p>
-
-      <div className={styles.demoSection}>
-        <h2><Text>Circle text</Text></h2>
-        <div style={{
-          display: 'flex',
-          gap: '2rem'
-        }}>
-          <div style={{flexGrow: 1, aspectRatio: '1 / 1'}}>
-            <CircleText text="lorem ipsum dolor sit amet" />
-          </div>
-          <div style={{flexGrow: 1, aspectRatio: '1 / 1'}}>
-            <CircleText text="lorem ipsum" />
-          </div>
-          <div style={{flexGrow: 1, aspectRatio: '1 / 1'}}>
-            <CircleText text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed congue est luctus lacinia euismod." />
-          </div>
-        </div>
-      </div>
 
       <div className={styles.demoSection}>
         <h2><Text>Icons</Text></h2>
@@ -63,7 +45,7 @@ export default function Test() {
       <div className={styles.demoSection}>
         <h2><Text>Text</Text></h2>
         <p><Text>
-          A custom {"<Text>"} component is used throughout the site. At a basic level, it provides a background color to ensure legibility against the site BG.
+          A custom {"<Text>"} component is used throughout the site. At a basic level, it provides a background color to ensure legibility against the site background.
           <br/><br/>
           But the wrapper can also be used for special effects such as <Text type="emphasis">emphasis</Text> and <Text type="accent">accented backgrounds</Text>.
         </Text></p>
@@ -86,6 +68,24 @@ export default function Test() {
       <div className={styles.demoSection}>
         <h2><Text>Projects</Text></h2>
         <p><Text>Project case study pages are written using Markdown and rendered with MDX. They have their own custom components and layouts that differ from other pages. To test those pages, a test project was created that is only accessible by direct link. If you&rsquo;re interested, you can <Link href="/projects/test">check out the test project</Link>.</Text></p>
+      </div>
+
+      <div className={styles.demoSection}>
+        <h2><Text>Circle text</Text></h2>
+        <div style={{
+          display: 'flex',
+          gap: '2rem'
+        }}>
+          <div style={{flexGrow: 1, aspectRatio: '1 / 1'}}>
+            <CircleText text="lorem ipsum dolor sit amet" />
+          </div>
+          <div style={{flexGrow: 1, aspectRatio: '1 / 1'}}>
+            <CircleText text="lorem ipsum dolor" />
+          </div>
+          <div style={{flexGrow: 1, aspectRatio: '1 / 1'}}>
+            <CircleText text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed congue est luctus." border="true"/>
+          </div>
+        </div>
       </div>
 
       
@@ -123,6 +123,7 @@ export default function Test() {
                 rotationY={0}
                 rotationZ={0}
                 rotationSpeed={30}
+                rotationAxis="y"
                 xInfluence={1}
                 yInfluence={0}
                 scale={.75}

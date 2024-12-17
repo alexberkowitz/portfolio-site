@@ -98,12 +98,17 @@ export const tools = [
     type: 'tool'
   },
   {
+    title: 'Liquid',
+    role: ['developer'],
+    type: 'tool'
+  },
+  {
     title: 'Photoshop, Illustrator',
     role: ['designer'],
     type: 'tool'
   },
   {
-    title: 'React, Vue, Liquid',
+    title: 'React, Next.js, Vue',
     role: ['developer'],
     type: 'tool'
   },

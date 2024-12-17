@@ -73,6 +73,17 @@ $break-custom: 1200px;
 /*-------------------------------------------------------*/
 #experience {
   align-items: flex-start;
+
+  .sectionTitle {
+    align-self: center;
+  }
+
+  @media( min-width: #{$break-custom} ){
+    .sectionTitle {
+      align-self: unset;
+      padding-left: 1rem;
+    }
+  }
 }
 
 .timeline {
@@ -90,35 +101,23 @@ $break-custom: 1200px;
     align-items: flex-start;
     gap: 1rem;
 
-    .title {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      align-items: stretch;
-      margin-left: calc(var(--pagePadding) * -1);
-      z-index: 1;
-    }
-
     .company {
       display: flex;
       align-items: center;
       min-height: 3rem;
-      padding: .5rem 2rem .3rem var(--pagePadding);
+      margin-left: calc(var(--pagePadding) * -1 - .5rem);
+      padding: .5rem 2rem .3rem calc(var(--pagePadding) + .5rem);
       border-radius: 0 1.5rem 1.5rem 0;
       background-color: var(--accentColor);
       color: var(--fgColor);
-      z-index: 2;
     }
 
     .date {
       display: block;
-      padding: 3.5rem 1.5rem .5rem 1.5rem;
-      margin: -3rem 0 0 2rem;
-      border-radius: 0 1.5rem 1.5rem 1.5rem;
-      background-color: var(--fgColor);
-      color: var(--accentColor);
+      border-radius: 0 0 .5rem .5rem;
+      color: var(--fgColor);
       font-size: .75rem;
-      font-weight: 400;
+      font-weight: 600;
       text-transform: uppercase;
       z-index: 1;
     }
@@ -156,19 +155,14 @@ $break-custom: 1200px;
         z-index: 3;
       }
 
-      .title {
+      .company {
         flex-direction: row;
         align-items: center;
         gap: 1rem;
+        padding-left: $inset;
         padding-right: 2rem;
         margin-left: #{$inset * -1};
-        background-color: var(--bodyColor);
         border-radius: 1.5rem;
-      }
-      
-      .company {
-        padding-left: $inset;
-        border-radius: inherit;
       }
       
       .date {
@@ -183,8 +177,10 @@ $break-custom: 1200px;
 /*-------------------------------------------------------*/
 /* SKILLS
 /*-------------------------------------------------------*/
-@media( min-width: #{$break-custom} ){
-  #skills {
+#skills {
+  padding-bottom: 1rem;
+  
+  @media( min-width: #{$break-custom} ){
     max-width: 450px;
   }
 }

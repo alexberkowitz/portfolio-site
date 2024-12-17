@@ -61,7 +61,7 @@
   }
 
   @media( min-width: #{$break-mobile} ){
-    padding: var(--pagePadding);
+    padding: calc(var(--pagePadding) * 2) var(--pagePadding);
   }
 }
 

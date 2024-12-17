@@ -76,39 +76,45 @@ export default function Resume() {
 
             <ul className={styles.timeline}>
               <li>
-                <div className={styles.title}>
-                  <h3 className={styles.company}>UScellular</h3>
-                  <p className={styles.date}>January 2022 - present</p>
+                <h3 className={styles.company}>UScellular</h3>
+                <div className={styles.role}>
+                  <p className={styles.title}>
+                    <Text>Senior Web UI Application Developer</Text>
+                  </p>
+                  <p className={styles.date}>
+                    <Text>January 2022 - present</Text>
+                  </p>
                 </div>
-                <p className={styles.role}>
-                  <Text>Senior Web UI Application Developer</Text>
-                </p>
                 <p>
                   <Text>Responsible for development and maintenance of reusable React/AEM components for all web platforms, as well as feature development for mobile apps via React Native. Additionally responsible for team coordination and branching/release workflow. Recently completed development of new React navigation components that resulted in 2s faster page loads across both web and mobile platforms.</Text>
                 </p>
               </li>
 
               <li>
-                <div className={styles.title}>
-                  <h3 className={styles.company}>FairVote Illinois</h3>
-                  <p className={styles.date}>July 2020 - Present</p>
+                <h3 className={styles.company}>FairVote Illinois</h3>
+                <div className={styles.role}>
+                  <p className={styles.title}>
+                    <Text>Arts & Tech Lead</Text>
+                  </p>
+                  <p className={styles.date}>
+                    <Text>July 2020 - present</Text>
+                  </p>
                 </div>
-                <p className={styles.role}>
-                  <Text>Arts & Tech Lead</Text>
-                </p>
                 <p>
                   <Text>Designed, implemented, and now maintain a new web presence for the organization. Created new FairVote IL brand guides and resources. Conceived, wrote, and animated an explainer video for ranked choice voting. Create multimedia assets for social media.</Text>
                 </p>
               </li>
 
               <li>
-                <div className={styles.title}>
-                  <h3 className={styles.company}>Eight Bit Studios</h3>
-                  <p className={styles.date}>August 2015 - December 2021</p>
+                <h3 className={styles.company}>Eight Bit Studios</h3>
+                <div className={styles.role}>
+                  <p className={styles.title}>
+                    <Text>Front-End Developer, Motion Designer, UI Designer</Text>
+                  </p>
+                  <p className={styles.date}>
+                    <Text>August 2015 - December 2021</Text>
+                  </p>
                 </div>
-                <p className={styles.role}>
-                  <Text>Front-End Developer, Motion Designer, UI Designer</Text>
-                </p>
                 <p>
                   <Text>Front-end web development, primarily (but not exclusively) focused on React. Responsible for the design and creation of motion assets including videos and animated interface elements. Developed and implemented a new motion design workflow for mobile interfaces. Helped write comprehensive guidelines for inclusive design.</Text>
               </p>
