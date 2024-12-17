@@ -24,10 +24,12 @@ const PageTransition = () => {
 
   useEffect(() => {
     getStartSquare();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [rowCount, globalContext.transition]);
 
   useEffect(() => {
     setActive(globalContext.transition.active);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [startSquare]);
 
   const setSquares = () => {

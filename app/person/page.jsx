@@ -8,7 +8,7 @@ export default function Person() {
     <main className={styles.personPage}>
 
       <div className={styles.portrait}>
-        <img src="/media/portrait.jpg" />
+        <img src="/media/portrait.jpg" alt="Photo of Alex"/>
       </div>
 
       <div className={styles.bio}>
