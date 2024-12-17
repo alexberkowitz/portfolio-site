@@ -134,7 +134,7 @@ export default function WindowBorder(props) {
       [ // Back button top left
         0 - posOffset,
         shapeSize.height - backButtonSize.height + posOffset,
-        minorCornerRadius
+        backButtonSize.height > 0 ? minorCornerRadius : cornerRadius
       ],
       [ // Title bottom left
         0 - posOffset,

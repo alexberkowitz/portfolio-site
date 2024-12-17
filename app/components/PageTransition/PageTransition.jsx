@@ -14,12 +14,18 @@ const PageTransition = () => {
   const [active, setActive] = useState(true);
   const [rowCount, setRowCount] = useState(1);
   const [colCount, setColCount] = useState(1);
+  const [squareSize, setSquareSize] = useState(100); // In pixels, approximate value
   const [startSquare, setStartSquare] = useState([0,0]);
   const elemRef = useRef(null);
-  const squareSize = 100; // In pixels, approximate value
 
   useEffect(() => {
     setSquares();
+    window.addEventListener("resize", setSquares);
+
+    // Clean up before unmounting
+    return () => {
+      window.removeEventListener("resize", setSquares);
+    }
   }, []);
 
   useEffect(() => {
@@ -33,9 +39,11 @@ const PageTransition = () => {
   }, [startSquare]);
 
   const setSquares = () => {
+    const calculatedSquareSize = Math.min(window.innerWidth / 10, window.innerHeight / 10);
     const bounds = elemRef.current.getBoundingClientRect();
-    setRowCount(Math.ceil(bounds.height / squareSize));
-    setColCount(Math.ceil(bounds.width / squareSize));
+    setRowCount(Math.ceil(bounds.height / calculatedSquareSize));
+    setColCount(Math.ceil(bounds.width / calculatedSquareSize));
+    setSquareSize(calculatedSquareSize);
   }
 
   // Determine which pixel the transition should start on, based on screen coordinates
