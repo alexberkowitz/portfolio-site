@@ -21,7 +21,7 @@ html {
 
   // Spacing
   --gap: 2rem; // Static
-  --pagePadding: clamp(1rem, 3vw, 2rem); // Dynamic
+  --pagePadding: clamp(.5rem, 3vw, 2rem); // Dynamic
 
   // Sizing
   --borderWidth: 2px; // Equal to 1 pixel of the dither effects, overridden by pixelDensity in constants.js at runtime
