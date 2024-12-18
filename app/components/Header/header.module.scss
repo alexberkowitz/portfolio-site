@@ -164,9 +164,12 @@
   z-index: 0;
 
   path {
+    position: relative;
     fill: var(--bgColor);
     stroke: var(--fgColor);
     stroke-width: var(--borderWidth);
+    transform: translateZ(0);
+    will-change: d;
 
     &.animate {
       transition: all var(--titleDuration) ease-in-out;;

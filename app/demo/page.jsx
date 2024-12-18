@@ -44,11 +44,15 @@ export default function Test() {
 
       <div className={styles.demoSection}>
         <h2><Text>Text</Text></h2>
-        <p><Text>
-          A custom {"<Text>"} component is used throughout the site. At a basic level, it provides a background color to ensure legibility against the site background.
+        <p>
+          <Text>
+            A custom {"<Text>"} component is used throughout the site. At a basic level, it provides a background color to ensure legibility against the site background.
+          </Text>
           <br/><br/>
-          But the wrapper can also be used for special effects such as <Text type="emphasis">emphasis</Text> and <Text type="accent">accented backgrounds</Text>.
-        </Text></p>
+          <Text>
+            But the wrapper can also be used for special effects such as <Text type="emphasis">emphasis</Text> and <Text type="accent">accented backgrounds</Text>.
+          </Text>
+        </p>
       </div>
 
       <div className={styles.demoSection}>
