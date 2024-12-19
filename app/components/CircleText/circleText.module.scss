@@ -15,7 +15,7 @@
   aspect-ratio: 1 / 1;
   transform-origin: 50% 50%;
   font-size: calc(400cqmin / var(--charCount));
-  font-family: var(--font-doto-rounded);
+  font-family: var(--font-doto-rounded, monospace);
   animation: rotate 24s infinite linear;
   --charCount: 0;
 

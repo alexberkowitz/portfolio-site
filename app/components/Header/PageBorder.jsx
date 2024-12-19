@@ -9,17 +9,16 @@
 "use client"
 
 import { useState, useEffect } from 'react'
-import { usePathname } from 'next/navigation';
 import { roundCorners } from '@/utils/roundPathCorners';
 import * as Constants from '@/Constants';
 
 export default function WindowBorder(props) {
-  const pathname = usePathname();
   const styles = props.styles;
   
   const [viewbox, setViewbox] = useState('0 0 0 0');
   const [svgPath, setSvgPath] = useState('');
   const [pathChanging, setPathChanging] = useState(false);
+  
   
   // Draw the initial path, and re-draw on window resize
   useEffect(() => {
@@ -32,8 +31,9 @@ export default function WindowBorder(props) {
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  
-  // Update the path on route change
+
+
+  // Update the path when the props change
   useEffect(() => {
     // The path transitions only animate for a short time, to prevent weird behavior when resizing the window.
     setPathChanging(true); // enable animated transitions
@@ -42,7 +42,7 @@ export default function WindowBorder(props) {
       setPathChanging(false);
     }, Constants.titleDuration * 1000);
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pathname]);
+  }, [props.showTitle, props.showBackButton]);
 
 
 

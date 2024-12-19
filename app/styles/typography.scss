@@ -5,7 +5,7 @@ h1 {
   max-width: 70ch;
   margin-top: $offset-museo; // Accommodate the extra spacing around characters
   margin-bottom: $offset-museo; // Accommodate the extra spacing around characters
-  font-family: var(--font-museo-moderno);
+  font-family: var(--font-museo-moderno, sans-serif);
   font-weight: 300;
   font-size: var(--titleSize);
   line-height: 1;

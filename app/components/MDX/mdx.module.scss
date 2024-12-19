@@ -188,7 +188,7 @@
   justify-content: space-between;
   padding-right: .25rem;
   background-color: rgba(0,0,0,.05);
-  font-family: var(--font-oxanium);
+  font-family: var(--font-oxanium), sans-serif;
 
   p {
     padding: .5rem 1rem;
@@ -208,7 +208,7 @@
   position: absolute;
   top: 0;
   right: 0;
-  font-family: var(--font-oxanium);
+  font-family: var(--font-oxanium, sans-serif);
   --duration: 1s;
 
   &:after {

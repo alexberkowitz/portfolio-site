@@ -71,7 +71,7 @@
   display: block;
   max-width: 20ch;
   margin-bottom: .5em;
-  font-family: var(--font-doto);
+  font-family: var(--font-doto, monospace);
   font-weight: 600;
   color: var(--fgColor);
   -webkit-text-stroke: 1px currentColor;
