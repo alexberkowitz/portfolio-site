@@ -21,6 +21,7 @@ const Loader = (props) => {
   // Start the animation immediately
   useEffect(() => {
     requestAnimationFrame(moveLoader);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -33,6 +34,7 @@ const Loader = (props) => {
         animate.current = false;
       }, disableDelay * 1000);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.active]);
 
 

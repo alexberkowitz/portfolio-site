@@ -31,6 +31,7 @@ const Header = () => {
       setShowTitle(!includesAny(pathname, titleIgnoredPages));
       setShowBackButton(!includesAny(pathname, backButtonIgnoredPages));
     }, Constants.transitionDuration / 2 * 1000);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
   
   return (
