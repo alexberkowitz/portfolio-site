@@ -63,7 +63,7 @@ export default function Home() {
               yInfluence={5}
               scale={.75}
               dither={true}
-              callback={() => {globalContext.endTransition()}}
+              callback={() => {globalContext.endTransition(true)}}
               />
           </div>
         </div>

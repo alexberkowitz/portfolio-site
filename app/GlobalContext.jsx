@@ -14,7 +14,6 @@ export default function GlobalContextContainer(props) {
   const [prevRoute, setPrevRoute] = useState('/'); // Previous route for the back button
   const [transition, setTransition] = useState({
     active: true,
-    loading: true,
     x: 0,
     y: 0
   }); // Transition parameters
@@ -34,7 +33,6 @@ export default function GlobalContextContainer(props) {
   const navigate = (e, route) => {
     setTransition({
       active: true,
-      loading: !includesAny(pathname, incompleteRoutes),
       x: e.clientX || window.innerWidth / 2,
       y: e.clientY || window.innerHeight / 2
     });
@@ -52,13 +50,14 @@ export default function GlobalContextContainer(props) {
     }, Constants.transitionDuration * 500);
   }
 
-  const endTransition = () => {
-    setTransition({
-      active: false,
-      loading: false,
-      x: window.innerWidth / 2,
-      y: window.innerHeight / 2
-    });
+  const endTransition = (delay=false) => {
+    setTimeout(() => {
+      setTransition({
+        active: false,
+        x: window.innerWidth / 2,
+        y: window.innerHeight / 2
+      });
+    }, delay ? 1000 : 0);
   }
 
   return (

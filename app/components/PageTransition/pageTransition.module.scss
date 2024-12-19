@@ -1,6 +1,11 @@
 @import '@/styles/variables.scss';
 @import '@/styles/mixins.scss';
 
+
+/*-------------------------------------------------------*/
+/* Pixel Transition
+/*-------------------------------------------------------*/
+
 .pageTransition {
   position: fixed;
   top: var(--pagePadding);
@@ -35,18 +40,35 @@
   }
 }
 
+
+
+/*-------------------------------------------------------*/
+/* Loader
+/*-------------------------------------------------------*/
+
 .loader {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translateX(-50%) translateY(-50%);
-  width: 100px;
-  height: 100px;
-  background-color: black;
+  top: var(--pageTitleHeight);
+  bottom: 0;
+  left: 0;
+  right: 0;
   opacity: 0;
   transition: opacity .5s ease;
 
   &[data-active="true"] {
     opacity: 1;
+  }
+}
+
+.icon {
+  position: absolute;
+  width: clamp(150px, 20vw, 400px);
+  height: clamp(150px, 20vw, 400px);
+
+  img,
+  svg {
+    width: 100%;
+    height: auto;
+    fill: var(--accentColor);
   }
 }

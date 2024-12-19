@@ -7,8 +7,10 @@ import Link from '@/components/Link/Link';
 import Button from '@/components/Button/Button';
 import CircleText from '@/components/CircleText/CircleText';
 import DynamicModelViewer from '@/components/ModelViewer/DynamicModelViewer';
+import Loader from '@/components/PageTransition/Loader';
 
 import styles from './page.module.scss';
+import loaderStyles from '@/components/PageTransition/pageTransition.module.scss';
 
 export default function Test() {
 
@@ -24,6 +26,7 @@ export default function Test() {
           Btw, you can find the source code for this site <Link href="https://github.com/alexberkowitz/portfolio-site" target="_blank">here</Link>.
         </Text>
       </p>
+
 
       <div className={styles.demoSection}>
         <h2><Text>Icons</Text></h2>
@@ -42,6 +45,7 @@ export default function Test() {
         </div>
       </div>
 
+
       <div className={styles.demoSection}>
         <h2><Text>Text</Text></h2>
         <p>
@@ -55,6 +59,7 @@ export default function Test() {
         </p>
       </div>
 
+
       <div className={styles.demoSection}>
         <h2><Text>Buttons and Links</Text></h2>
         <p><Text>All navigation links on the site use a custom {"<Link>"} component. This component has no default styling, and hooks into a global <Text type="accent">navigate()</Text> function to enable transitions.</Text></p>
@@ -64,15 +69,18 @@ export default function Test() {
         </div>
       </div>
 
+
       <div className={styles.demoSection}>
         <h2><Text>Cursor</Text></h2>
         <p><Text>The cursor on my site is custom-built with p5.js.<br/>Try hovering over this text, or perhaps <Link href="#">this link</Link>!</Text></p>
       </div>
 
+
       <div className={styles.demoSection}>
         <h2><Text>Projects</Text></h2>
         <p><Text>Project case study pages are written using Markdown and rendered with MDX. They have their own custom components and layouts that differ from other pages. To test those pages, a test project was created that is only accessible by direct link. If you&rsquo;re interested, you can <Link href="/projects/test">check out the test project</Link>.</Text></p>
       </div>
+
 
       <div className={styles.demoSection}>
         <h2><Text>Circle text</Text></h2>
@@ -92,6 +100,25 @@ export default function Test() {
         </div>
       </div>
 
+
+      <div className={styles.demoSection}>
+        <h2><Text>Page Loader</Text></h2>
+        <div style={{
+          display: 'flex',
+          gap: '2rem'
+        }}>
+          <div style={{
+            position: 'relative',
+            width: '100%',
+            height: '600px',
+            background: 'var(--fgColor)',
+            borderRadius: 'var(--cornerRadius)',
+            '--pageTitleHeight': '0 !important'
+          }}>
+            <Loader styles={loaderStyles} active={true}/>
+          </div>
+        </div>
+      </div>
       
 
       <div className={styles.demoSection}>
@@ -137,6 +164,7 @@ export default function Test() {
           </div>
         </div>
       </div>
+
 
       <div style={{
         height: 'calc(100vh - (6 * var(--gap)))',
