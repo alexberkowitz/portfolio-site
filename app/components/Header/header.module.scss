@@ -22,9 +22,10 @@
 
 .title {
   position: absolute;
-  top: 0;
+  top: -.5em;
   left: 0;
   width: 100%;
+  padding-top: .5em;
   display: flex;
   overflow: hidden;
   z-index: 1;
