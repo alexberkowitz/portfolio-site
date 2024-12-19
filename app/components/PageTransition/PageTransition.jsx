@@ -12,6 +12,7 @@ import styles from './pageTransition.module.scss';
 const PageTransition = () => {
   const globalContext = useGlobalContext();
   const [active, setActive] = useState(true);
+  const [loading, setLoading] = useState(true);
   const [rowCount, setRowCount] = useState(1);
   const [colCount, setColCount] = useState(1);
   const [squareSize, setSquareSize] = useState(100); // In pixels, approximate value
@@ -35,6 +36,7 @@ const PageTransition = () => {
 
   useEffect(() => {
     setActive(globalContext.transition.active);
+    setLoading(globalContext.transition.loading);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [startSquare]);
 
@@ -78,9 +80,11 @@ const PageTransition = () => {
         '--rowCount': rowCount,
         '--colCount': colCount
       }}
-      className={`${styles.pageTransition} ${active ? styles.active : ''}`}
+      className={styles.pageTransition}
+      data-active={active}
       ref={elemRef}
       >
+      {/* Squares */}
       {Array.from({ length: rowCount }, (_, y) => Array.from({ length: colCount }, (_, x) => (
         <div
           key={x * y + x}
@@ -91,6 +95,12 @@ const PageTransition = () => {
           }}
           ></div>
       )))}
+
+      {/* Loader */}
+      <div
+        className={styles.loader}
+        data-active={loading}
+        ></div>
     </div>
   );
 }
