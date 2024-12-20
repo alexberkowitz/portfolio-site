@@ -16,6 +16,7 @@
   grid-template-columns: repeat(var(--colCount), 1fr);
   grid-template-rows: repeat(var(--rowCount), 1fr);
   border-radius: var(--pagePadding);
+  outline: solid calc(var(--pagePadding) * 2) var(--bgColor); // Helps hide the bg before the page border loads
   overflow: hidden;
   transition: --wavePos var(--transitionDuration) $ease-out;
   pointer-events: none;
@@ -30,13 +31,11 @@
     justify-content: center;
     background-color: var(--fgColor);
     opacity: 0;
-    // transition: opacity var(--pixelDuration) calc(var(--delayMultiplier) * var(--pixelDuration) / 2) ease;
     transition: opacity var(--pixelDuration) calc(var(--transitionDuration) / 2 * var(--delayMultiplier)) ease;
   }
 
   &[data-active="true"] .pixel {
     opacity: 1;
-    // transition-timing-function: $ease-in;
   }
 }
 
@@ -46,6 +45,20 @@
 /* Loader
 /*-------------------------------------------------------*/
 
+// Need to define these properties ahead of time in order to animate them.
+
+@property --x {
+  syntax: '<length>';
+  initial-value: 0vw;
+  inherits: false;
+}
+
+@property --y {
+  syntax: '<length>';
+  initial-value: 0vh;
+  inherits: false;
+}
+
 .loader {
   position: absolute;
   top: var(--pageTitleHeight);
@@ -54,21 +67,47 @@
   right: 0;
   opacity: 0;
   transition: opacity .5s ease;
+  container-type: size;
+  --w: 1800; // Arbitrary value, overriden by JS at runtime
+  --h: 1000; // Arbitrary value, overriden by JS at runtime
 
   &[data-active="true"] {
     opacity: 1;
   }
+
+  &[data-running="true"] {
+    .icon {
+      animation-play-state: running;
+    }
+  }
+  
+  .icon {
+    position: absolute;
+    width: var(--size);
+    height: var(--size);
+    transform: translateX(var(--x)) translateY(var(--y));
+    animation: left-right var(--xDuration) linear infinite alternate,
+               up-down var(--yDuration) linear infinite alternate;
+    animation-play-state: paused;
+    --size: clamp(150px, 20vw, 400px);
+    --xDuration: calc(5s / (1000 / var(--w)));
+    --yDuration: calc(5s / (1000 / var(--h)));
+  
+    img,
+    svg {
+      width: 100%;
+      height: auto;
+      fill: var(--bgColor);
+    }
+  }
 }
 
-.icon {
-  position: absolute;
-  width: clamp(150px, 20vw, 400px);
-  height: clamp(150px, 20vw, 400px);
+@keyframes left-right {
+  from { --x: 0vw }
+  to   { --x: calc(100vw - (var(--pagePadding) * 2) - var(--size))}
+}
 
-  img,
-  svg {
-    width: 100%;
-    height: auto;
-    fill: var(--accentColor);
-  }
+@keyframes up-down {
+  from { --y: 0vw }
+  to   { --y: calc(100vh - (var(--pagePadding) * 2) - var(--size))}
 }

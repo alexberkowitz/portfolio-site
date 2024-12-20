@@ -103,6 +103,7 @@ export default function Test() {
 
       <div className={styles.demoSection}>
         <h2><Text>Page Loader</Text></h2>
+        <p><Text>Watching things load is boring. Watching a logo bounce around the screen is not.</Text></p>
         <div style={{
           display: 'flex',
           gap: '2rem'
@@ -111,11 +112,14 @@ export default function Test() {
             position: 'relative',
             width: '100%',
             height: '600px',
-            background: 'var(--fgColor)',
+            background: 'var(--bgColor)',
+            border: 'solid var(--borderWidth) var(--fgColor)',
             borderRadius: 'var(--cornerRadius)',
-            '--pageTitleHeight': '0 !important'
+            '--pageTitleHeight': '0px !important'
           }}>
-            <Loader styles={loaderStyles} active={true}/>
+            <div style={{ '--bgColor': 'var(--fgColor)' }}>
+              <Loader styles={loaderStyles} active={true}/>
+            </div>
           </div>
         </div>
       </div>

@@ -83,6 +83,9 @@ const PageTransition = () => {
       data-active={active}
       ref={elemRef}
       >
+      {/* Loader */}
+      <Loader styles={styles} active={active}/>
+      
       {/* Squares */}
       {Array.from({ length: rowCount }, (_, y) => Array.from({ length: colCount }, (_, x) => (
         <div
@@ -94,9 +97,6 @@ const PageTransition = () => {
           }}
           ></div>
       )))}
-
-      {/* Loader */}
-      <Loader styles={styles} active={active}/>
     </div>
   );
 }
