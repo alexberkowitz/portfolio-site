@@ -102,8 +102,8 @@ const ModelViewer = (props) => {
         const canvasBoundingRect = renderRef.current.getBoundingClientRect();
         setCanvasDimensions({w: canvasBoundingRect.width, h: canvasBoundingRect.height});
         let canvas = p.createCanvas(
-          roundToPixel(canvasBoundingRect.width, 'floor'),
-          roundToPixel(canvasBoundingRect.height, 'floor'),
+          roundToPixel(canvasBoundingRect.width),
+          roundToPixel(canvasBoundingRect.height),
           p.P2D
         );
 
@@ -253,7 +253,10 @@ const ModelViewer = (props) => {
   /*-------------------------------------------------------*/
   const setCanvasBounds = (p, buffers) => {
     const canvasBoundingRect = renderRef?.current?.getBoundingClientRect();
-    setCanvasDimensions({w: canvasBoundingRect.width, h: canvasBoundingRect.height});
+    setCanvasDimensions({
+      w: roundToPixel(canvasBoundingRect.width),
+      h: roundToPixel(canvasBoundingRect.height)
+    });
     p.resizeCanvas(canvasBoundingRect.width, canvasBoundingRect.height);
 
     buffers.forEach((buffer) => {
