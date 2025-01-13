@@ -68,8 +68,8 @@
   opacity: 0;
   transition: opacity .5s ease;
   container-type: size;
-  --w: 1800; // Arbitrary value, overriden by JS at runtime
-  --h: 1000; // Arbitrary value, overriden by JS at runtime
+  --w: 1920; // Arbitrary value, overriden by JS at runtime
+  --h: 1080; // Arbitrary value, overriden by JS at runtime
 
   &[data-active="true"] {
     opacity: 1;
@@ -103,11 +103,11 @@
 }
 
 @keyframes left-right {
-  from { --x: 0vw }
-  to   { --x: calc(100vw - (var(--pagePadding) * 2) - var(--size))}
+  from { --x: 0px }
+  to   { --x: calc(100% - var(--size))}
 }
 
 @keyframes up-down {
-  from { --y: 0vw }
-  to   { --y: calc(100vh - (var(--pagePadding) * 2) - var(--size))}
+  from { --y: 0px }
+  to   { --y: calc(100% - var(--size))}
 }

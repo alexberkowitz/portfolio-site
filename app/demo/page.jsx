@@ -105,21 +105,16 @@ export default function Test() {
         <h2><Text>Page Loader</Text></h2>
         <p><Text>Watching things load is boring. Watching a logo bounce around the screen is not.</Text></p>
         <div style={{
-          display: 'flex',
-          gap: '2rem'
+          position: 'relative',
+          width: '100%',
+          height: '600px',
+          background: 'var(--bgColor)',
+          border: 'solid var(--borderWidth) var(--fgColor)',
+          borderRadius: 'var(--cornerRadius)',
+          '--pageTitleHeight': '0px !important'
         }}>
-          <div style={{
-            position: 'relative',
-            width: '100%',
-            height: '600px',
-            background: 'var(--bgColor)',
-            border: 'solid var(--borderWidth) var(--fgColor)',
-            borderRadius: 'var(--cornerRadius)',
-            '--pageTitleHeight': '0px !important'
-          }}>
-            <div style={{ '--bgColor': 'var(--fgColor)' }}>
-              <Loader styles={loaderStyles} active={true}/>
-            </div>
+          <div style={{ '--bgColor': 'var(--fgColor)' }}>
+            <Loader styles={loaderStyles} active={true}/>
           </div>
         </div>
       </div>

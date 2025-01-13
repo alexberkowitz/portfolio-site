@@ -24,7 +24,10 @@
 
 import { useEffect, useState, useRef } from "react";
 import p5 from 'p5';
-import { roundToPixel, dither } from '@/utils/drawing';
+import {
+  roundToPixel,
+  dither
+} from '@/utils/drawing';
 import * as Constants from '@/Constants';
 
 import styles from "./modelView.module.scss";
@@ -137,7 +140,7 @@ const ModelViewer = (props) => {
 
         // Apply dither effect
         if( props.dither ){
-          dither(p, Constants.fgColor, Constants.bgColor, true);
+          dither(p, Constants.fgColor, Constants.bgColor);
         }
 
         setCallbackInitiated(true);
@@ -254,8 +257,8 @@ const ModelViewer = (props) => {
   const setCanvasBounds = (p, buffers) => {
     const canvasBoundingRect = renderRef?.current?.getBoundingClientRect();
     setCanvasDimensions({
-      w: roundToPixel(canvasBoundingRect.width),
-      h: roundToPixel(canvasBoundingRect.height)
+      w: canvasBoundingRect.width,
+      h: canvasBoundingRect.height
     });
     p.resizeCanvas(canvasBoundingRect.width, canvasBoundingRect.height);
 

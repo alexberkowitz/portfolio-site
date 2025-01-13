@@ -43,7 +43,7 @@ export const updateTransition = (amount, duration, active) => {
 /*-------------------------------------------------------*/
 // Based on Bayer Dithering by illus0r
 // https://editor.p5js.org/illus0r/sketches/YkkcqhLmY
-export const dither = (context, fgColor, bgColor, autoUpdate) => {
+export const dither = (context, fgColor, bgColor) => {
   const valueFactor = 255 / 5;
   const normalizedWidth = Math.floor(context.width / Constants.pixelDensity);
   const m = [
@@ -73,9 +73,7 @@ export const dither = (context, fgColor, bgColor, autoUpdate) => {
     }
   }
 
-  if( autoUpdate !== undefined && autoUpdate ){
-    context.updatePixels();
-  }
+  context.updatePixels();
 }
 
 

@@ -140,7 +140,7 @@ const Background = () => {
         p.image(explosionBuffer, 0, 0);
 
         // Apply dither effect
-        dither(p, Constants.fgColor, [0,0,0,0], true);
+        dither(p, Constants.fgColor, [0,0,0,0]);
       }
     });
   }
