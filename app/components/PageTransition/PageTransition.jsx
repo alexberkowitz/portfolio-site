@@ -6,7 +6,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { useGlobalContext } from '@/GlobalContext';
-import Loader from './Loader';
+// import Loader from './Loader';
 
 import styles from './pageTransition.module.scss';
 
