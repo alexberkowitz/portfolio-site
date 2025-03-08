@@ -84,7 +84,7 @@ const PageTransition = () => {
       ref={elemRef}
       >
       {/* Loader */}
-      <Loader styles={styles} active={active}/>
+      {/* <Loader styles={styles} active={active}/> */}
       
       {/* Squares */}
       {Array.from({ length: rowCount }, (_, y) => Array.from({ length: colCount }, (_, x) => (
