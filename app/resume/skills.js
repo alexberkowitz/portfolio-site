@@ -98,7 +98,7 @@ export const tools = [
     type: 'tool'
   },
   {
-    title: 'Liquid',
+    title: 'Liquid, Shopify, NationBuilder',
     role: ['developer'],
     type: 'tool'
   },
