@@ -7,10 +7,10 @@ import Link from '@/components/Link/Link';
 import Button from '@/components/Button/Button';
 import CircleText from '@/components/CircleText/CircleText';
 import DynamicModelViewer from '@/components/ModelViewer/DynamicModelViewer';
-import Loader from '@/components/PageTransition/Loader';
+// import Loader from '@/components/PageTransition/Loader';
 
 import styles from './page.module.scss';
-import loaderStyles from '@/components/PageTransition/pageTransition.module.scss';
+// import loaderStyles from '@/components/PageTransition/pageTransition.module.scss';
 
 export default function Test() {
 
