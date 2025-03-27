@@ -7,6 +7,8 @@ import DynamicCursor from '@/components/Cursor/DynamicCursor';
 import DynamicMarquee from '@/components/Marquee/DynamicMarquee';
 import PageTransition from '@/components/PageTransition/PageTransition';
 import ScrollBar from '@/components/ScrollBar/ScrollBar';
+import Toast from '@/components/Toast/Toast';
+import Link from '@/components/Link/Link';
 import * as Constants from '@/Constants';
 
 import "./styles/globals.scss";
@@ -89,6 +91,7 @@ export default function RootLayout({ children }) {
             <DynamicMarquee />
             <ScrollBar>
               {children}
+              <Toast id="resume"><small>Want to cut to the chase? Check out my <Link href="/resume">digital résumé</Link>.</small></Toast>
             </ScrollBar>
             <PageTransition />
             <DynamicCursor />

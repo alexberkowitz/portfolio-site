@@ -2,7 +2,6 @@
 
 import { useGlobalContext } from '@/GlobalContext';
 import Link from '@/components/Link/Link';
-import Toast from '@/components/Toast/Toast';
 import DemoButton from '@/components/DemoButton/DemoButton';
 import DynamicModelViewer from '@/components/ModelViewer/DynamicModelViewer';
 import CircleText from '@/components/CircleText/CircleText';
@@ -69,7 +68,6 @@ export default function Home() {
           </div>
         </div>
       </main>
-      <Toast id="resume"><small>Want to cut to the chase? Check out my <Link href="/resume">digital résumé</Link>.</small></Toast>
       <DemoButton />
     </>
   );
