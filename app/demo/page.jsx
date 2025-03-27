@@ -101,7 +101,7 @@ export default function Test() {
       </div>
 
 
-      <div className={styles.demoSection}>
+      {/* <div className={styles.demoSection}>
         <h2><Text>Page Loader</Text></h2>
         <p><Text>Watching things load is boring. Watching a logo bounce around the screen is not.</Text></p>
         <div style={{
@@ -117,7 +117,7 @@ export default function Test() {
             <Loader styles={loaderStyles} active={true}/>
           </div>
         </div>
-      </div>
+      </div> */}
       
 
       <div className={styles.demoSection}>
