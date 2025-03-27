@@ -19,7 +19,7 @@ export default function Test() {
       <PageTitle>Demos</PageTitle>
       <p>
         <Text>
-          You&rsquo;ve found my &ldquo;super secret&rdquo; demo page! This is where I test the reusable components found throughout the site. Feel free to play around!
+          You&apos;ve found my &ldquo;super secret&rdquo; demo page! This is where I test the reusable components found throughout the site. Feel free to play around!
         </Text>
         <br/><br/>
         <Text>
@@ -30,7 +30,7 @@ export default function Test() {
 
       <div className={styles.demoSection}>
         <h2><Text>Icons</Text></h2>
-        <p><Text>There aren&rsquo;t many icons in use on this site, but the ones that are present are entirely custom.</Text></p>
+        <p><Text>There aren&apos;t many icons in use on this site, but the ones that are present are entirely custom.</Text></p>
         <div style={{
           alignSelf: 'flex-start',
           display: 'flex',
@@ -64,8 +64,8 @@ export default function Test() {
         <h2><Text>Buttons and Links</Text></h2>
         <p><Text>All navigation links on the site use a custom {"<Link>"} component. This component has no default styling, and hooks into a global <Text type="accent">navigate()</Text> function to enable transitions.</Text></p>
         <div style={{display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '1rem'}}>
-          <Link href="#"><Text>Here&rsquo;s a link</Text></Link>
-          <Button>And here&rsquo;s a button</Button>
+          <Link href="#"><Text>Here&apos;s a link</Text></Link>
+          <Button>And here&apos;s a button</Button>
         </div>
       </div>
 
@@ -78,7 +78,7 @@ export default function Test() {
 
       <div className={styles.demoSection}>
         <h2><Text>Projects</Text></h2>
-        <p><Text>Project case study pages are written using Markdown and rendered with MDX. They have their own custom components and layouts that differ from other pages. To test those pages, a test project was created that is only accessible by direct link. If you&rsquo;re interested, you can <Link href="/projects/test">check out the test project</Link>.</Text></p>
+        <p><Text>Project case study pages are written using Markdown and rendered with MDX. They have their own custom components and layouts that differ from other pages. To test those pages, a test project was created that is only accessible by direct link. If you&apos;re interested, you can <Link href="/projects/test">check out the test project</Link>.</Text></p>
       </div>
 
 
