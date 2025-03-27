@@ -5,14 +5,12 @@
 'use client'
 
 import { useState, useEffect } from 'react';
-import { useGlobalContext } from '@/GlobalContext';
 import Button from '@/components/Button/Button';
 import Icon from '@/components/Icon/Icon';
 
 import styles from './toast.module.scss';
 
 const Toast = (props) => {
-  const globalContext = useGlobalContext();
   const [initialized, setInitialized] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -28,13 +26,6 @@ const Toast = (props) => {
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  // Close the toast on page change
-  useEffect(() => {
-    if( globalContext.transition ){
-      setOpen(false);
-    }
-  }, [globalContext.transition]);
 
   // Close the toast permanently
   const closeToast = () => {
