@@ -17,14 +17,11 @@ const Toast = (props) => {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    if( !initialized ){
-      setInitialized(true);
-
-      if( !localStorage.getItem(`toastClosed-${props.id}`) ){
-        setTimeout(() => {
-          setOpen(true);
-        }, 2000);
-      }
+    if( !initialized && !localStorage.getItem(`toastClosed-${props.id}`) ){
+      setTimeout(() => {
+        setInitialized(true);
+        setOpen(true);
+      }, 2000);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

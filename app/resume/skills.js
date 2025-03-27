@@ -35,11 +35,6 @@ export const skills = [
     type: 'skill'
   },
   {
-    title: 'Real-time Asset Creation',
-    role: ['designer'],
-    type: 'skill'
-  },
-  {
     title: 'Graphic Design',
     role: ['designer'],
     type: 'skill'
@@ -56,6 +51,11 @@ export const skills = [
   },
   {
     title: 'Motion Design',
+    role: ['designer'],
+    type: 'skill'
+  },
+  {
+    title: 'Real-time Asset Creation',
     role: ['designer'],
     type: 'skill'
   },
@@ -99,6 +99,11 @@ export const tools = [
   },
   {
     title: 'Liquid',
+    role: ['developer'],
+    type: 'tool'
+  },
+  {
+    title: 'p5.js',
     role: ['developer'],
     type: 'tool'
   },
