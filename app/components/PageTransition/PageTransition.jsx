@@ -97,6 +97,13 @@ const PageTransition = () => {
           }}
           ></div>
       )))}
+
+      <p
+        className={styles.loadingText}
+        data-active={active}
+        >
+        Loading...
+      </p>
     </div>
   );
 }

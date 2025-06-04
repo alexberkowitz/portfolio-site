@@ -39,6 +39,20 @@
   }
 }
 
+.loadingText {
+  position: absolute;
+  bottom: var(--pagePadding);
+  right: var(--pagePadding);
+  color: var(--bgColor);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--transitionDuration) ease;
+
+  &[data-active="true"] {
+    opacity: 1;
+  }
+}
+
 
 
 /*-------------------------------------------------------*/

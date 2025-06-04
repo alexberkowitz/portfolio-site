@@ -179,6 +179,7 @@ $break-custom: 1200px;
 /*-------------------------------------------------------*/
 #skills {
   padding-bottom: 1rem;
+  max-width: 800px;
   
   @media( min-width: #{$break-custom} ){
     max-width: 450px;

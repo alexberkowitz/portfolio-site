@@ -18,7 +18,7 @@ export default function Person() {
           <br/><br/>
           I&apos;m currently working as a <Text type="emphasis">Senior Front-End Developer at UScellular</Text>, helping to build new experiences&mdash;and keep the old ones from falling apart&mdash;across all platforms.
           <br/><br/>
-          When I&apos;m not lost in <Link href="/developer">JavaScript debugging hell</Link>, I can usually be found working on new <Link href="/designer">designs</Link> or tinkering with some <Link href="/maker">project</Link>. But sometimes I get tired of doing those things and just hang out with my cat and my wife (in that order).
+          When I&apos;m not lost in <Link href="/developer">JavaScript debugging hell</Link>, I can usually be found working on new <Link href="/designer">designs</Link> or tinkering with some <Link href="/maker">project</Link>.
           <br/><br/>
           For more info on my work experience and skillset, check out my <Link href="/resume">digital résumé</Link>. If you&apos;d like to talk about my work, or if you have a project you&apos;d like to discuss, feel free to <Link href="mailto:alex@alexberkowitz.com">get in touch</Link>.
         </p>

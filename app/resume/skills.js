@@ -88,7 +88,22 @@ export const tools = [
     type: 'tool'
   },
   {
-    title: 'Cinema 4D, Maya',
+    title: 'Photoshop',
+    role: ['designer'],
+    type: 'tool'
+  },
+  {
+    title: 'Illustrator',
+    role: ['designer'],
+    type: 'tool'
+  },
+  {
+    title: 'Cinema 4D',
+    role: ['designer'],
+    type: 'tool'
+  },
+  {
+    title: 'Maya',
     role: ['designer'],
     type: 'tool'
   },
@@ -98,7 +113,12 @@ export const tools = [
     type: 'tool'
   },
   {
-    title: 'Liquid, Shopify, NationBuilder',
+    title: 'Liquid/Shopify/NationBuilder',
+    role: ['developer'],
+    type: 'tool'
+  },
+  {
+    title: 'Lottie',
     role: ['developer'],
     type: 'tool'
   },
@@ -108,17 +128,27 @@ export const tools = [
     type: 'tool'
   },
   {
-    title: 'Photoshop, Illustrator',
-    role: ['designer'],
-    type: 'tool'
-  },
-  {
-    title: 'React, Next.js, Vue',
+    title: 'React',
     role: ['developer'],
     type: 'tool'
   },
   {
-    title: 'SolidWorks, Fusion 360',
+    title: 'Next.js',
+    role: ['developer'],
+    type: 'tool'
+  },
+  {
+    title: 'Vue',
+    role: ['developer'],
+    type: 'tool'
+  },
+  {
+    title: 'SolidWorks',
+    role: ['maker'],
+    type: 'tool'
+  },
+  {
+    title: 'Fusion 360',
     role: ['maker'],
     type: 'tool'
   },
