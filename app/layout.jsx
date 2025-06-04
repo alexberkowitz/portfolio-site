@@ -1,4 +1,3 @@
-import { MuseoModerno, Oxanium } from "next/font/google";
 import localFont from 'next/font/local';
 import GlobalContextContainer from './GlobalContext';
 import Header from '@/components/Header/Header';
@@ -14,13 +13,25 @@ import * as Constants from '@/Constants';
 import "./styles/globals.scss";
 
 // Font definitions
-const museoModerno = MuseoModerno({
-  subsets: ["latin"],
+const museoModerno = localFont({
+  src: [
+    {
+      path: 'fonts/museomoderno/MuseoModerno-VariableFont_wght.ttf',
+      weight: '200',
+      style: 'normal',
+    },
+  ],
   variable: '--font-museo-moderno'
 });
 
-const oxanium = Oxanium({
-  subsets: ["latin"],
+const oxanium = localFont({
+  src: [
+    {
+      path: 'fonts/oxanium/Oxanium-VariableFont_wght.ttf',
+      weight: '400',
+      style: 'normal',
+    },
+  ],
   variable: '--font-oxanium'
 });
 
