@@ -208,7 +208,7 @@
   position: absolute;
   top: 0;
   right: 0;
-  font-family: var(--font-oxanium, sans-serif);
+  font-family: var(--font-oxanium), sans-serif;
   --duration: 1s;
 
   &:after {

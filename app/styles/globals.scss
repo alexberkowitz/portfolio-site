@@ -48,7 +48,7 @@ body {
   background-color: var(--bgColor);
   color: var(--bodyColor);
   accent-color: var(--fgColor);
-  font-family: var(--font-oxanium, sans-serif);
+  font-family: var(--font-oxanium), sans-serif;
   transition: padding var(--titleDuration) ease-in-out;
 
   // Grid background
