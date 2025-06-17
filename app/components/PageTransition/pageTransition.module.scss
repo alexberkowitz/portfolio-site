@@ -47,10 +47,10 @@
   pointer-events: none;
   opacity: 0;
   transition: opacity var(--transitionDuration) ease;
-  animation: pulse 2s linear infinite;
-
+  
   &[data-active="true"] {
     opacity: 1;
+    animation: pulse 2s linear infinite;
   }
 }
 
